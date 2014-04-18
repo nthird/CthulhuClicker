@@ -1,0 +1,1480 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>Cthulu Clicker</title>
+	<link href="css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jquery-ui-1.10.4.custom.js"></script>
+
+</head>
+
+<body style="background-color:black" id="thewholebody">
+<style>
+.convertdiv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:100px;
+  max-width:600px;
+}
+.upgradediv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:100px;
+  max-width:600px;
+}
+.boughtupgradediv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:100px;
+  max-width:600px;
+}
+.divheader
+{
+  color:white;
+  font-weight:bold;
+}
+.itemtitle
+{
+  position:absolute;
+  left:10px;
+  top:10px;
+}
+.itemtotal
+{
+  position:absolute;
+  right:10px;
+  top:10px;
+}
+.itemtext
+{
+  position:absolute;
+  left:15px;
+  top:30px;
+}
+.itemcost
+{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+}
+.itembutton
+{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+}
+</style>
+<div id="outerWrapper" style="position:relative; width:500px; height:500px">
+  <div id="innerWrapper" style="position:absolute; top:0px; left:0px; width:500px; height:500px;">
+    <h1 style="color:white">Cthulhu Clicker</h1>
+
+    <div id="madnessDisplay" style="color:white">
+      <div id="madness">Madness: 0</div>
+      <div id="madnessPerSecond">Madness Per Second: 0</div>
+      <div id="madnessButtonDiv"><img src="images/TempCthuluImage.jpg" id="madnessClickButton"></div>
+    </div>
+  </div>
+  <canvas id="wholeScreenCanvas" style="position:absolute; top:0px; left:0px;" width="500" height="500"></canvas>
+</div>
+
+<div id="madnessTabs">
+	<button id="madnessMadnessTab" onclick="changeMadnessTab('madnessMadnessTab')" style="width:25%" hidden=true>Madness</button>
+	<button id="madnessMoneyTab" onclick="changeMadnessTab('madnessMoneyTab')" style="width:25%" hidden=true>Money</button>
+	<button id="madnessKnowledgeTab" onclick="changeMadnessTab('madnessKnowledgeTab')" style="width:25%" hidden=true>Knowledge</button>
+	<button id="madnessMightTab" onclick="changeMadnessTab('madnessMightTab')" style="width:25%" hidden=true>Might</button>
+</div>
+
+<div id="madnessStats">
+  <div id="madnessMinionsOne" hidden=true>Madness Minions 1: 0</div>
+  <div id="madnessMinionsTwo" hidden=true>Madness Minions 2: 0</div>
+  <div id="madnessMinionsThree" hidden=true>Madness Minions 3: 0</div>
+  <div id="madnessMinionsFour" hidden=true>Madness Minions 4: 0</div>
+</div>
+
+<div id="madnessSpread">
+  <div id="madnessSpreadUpgrades">
+    <div id="madnessMadnessUpgrades" hidden=true class="divheader">UPGRADES</div>
+	
+	<div id="upgradeMadnessUnlockMinionsFive" hidden=true class="upgradediv">
+      <div id="upgradeMadnessUnlockMinionsFiveTitle" class="itemtitle">Unlock Madness Minions 5</div>
+	  <div id="upgradeMadnessUnlockMinionsFiveTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessUnlockMinionsFiveText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessUnlockMinionsFiveCost" class="itemcost">10000 Madness 2 Madness Minions 4</div>
+	  <button id="upgradeMadnessUnlockMinionsFiveButton" class="itembutton" title="Unlock more minion options" onclick="madnessClick('upgradeMadnessUnlockMinionsFiveButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessPerSecondFour" hidden=true class="upgradediv">
+      <div id="upgradeMadnessPerSecondFourTitle" class="itemtitle">Madness Per Second Four</div>
+	  <div id="upgradeMadnessPerSecondFourTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessPerSecondFourText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessPerSecondFourCost" class="itemcost">1000 Madness 5 Madness Minions 4</div>
+	  <button id="upgradeMadnessPerSecondFourButton" class="itembutton" title="More madness per second" onclick="madnessClick('upgradeMadnessPerSecondFourButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessUnlockMinionsFour" hidden=true class="upgradediv">
+      <div id="upgradeMadnessUnlockMinionsFourTitle" class="itemtitle">Unlock Madness Minions 4</div>
+	  <div id="upgradeMadnessUnlockMinionsFourTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessUnlockMinionsFourText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessUnlockMinionsFourCost" class="itemcost">2500 Madness 2 Madness Minions 3</div>
+	  <button id="upgradeMadnessUnlockMinionsFourButton" class="itembutton" title="Unlock more minion options" onclick="madnessClick('upgradeMadnessUnlockMinionsFourButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessPerSecondThree" hidden=true class="upgradediv">
+      <div id="upgradeMadnessPerSecondThreeTitle" class="itemtitle">Madness Per Second Three</div>
+	  <div id="upgradeMadnessPerSecondThreeTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessPerSecondThreeText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessPerSecondThreeCost" class="itemcost">250 Madness 4 Madness Minions 3</div>
+	  <button id="upgradeMadnessPerSecondThreeButton" class="itembutton" title="More madness per second" onclick="madnessClick('upgradeMadnessPerSecondThreeButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessUnlockMinionsThree" hidden=true class="upgradediv">
+      <div id="upgradeMadnessUnlockMinionsThreeTitle" class="itemtitle">Unlock Madness Minions 3</div>
+	  <div id="upgradeMadnessUnlockMinionsThreeTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessUnlockMinionsThreeText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessUnlockMinionsThreeCost" class="itemcost">1000 Madness 2 Madness Minions 2</div>
+	  <button id="upgradeMadnessUnlockMinionsThreeButton" class="itembutton" title="Unlock more minion options" onclick="madnessClick('upgradeMadnessUnlockMinionsThreeButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessPerSecondTwo" hidden=true class="upgradediv">
+      <div id="upgradeMadnessPerSecondTwoTitle" class="itemtitle">Madness Per Second Two</div>
+	  <div id="upgradeMadnessPerSecondTwoTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessPerSecondTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessPerSecondTwoCost" class="itemcost">100 Madness 3 Madness Minions 2</div>
+	  <button id="upgradeMadnessPerSecondTwoButton" class="itembutton" title="More madness per second" onclick="madnessClick('upgradeMadnessPerSecondTwoButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessUnlockMinionsTwo" hidden=true class="upgradediv">
+      <div id="upgradeMadnessUnlockMinionsTwoTitle" class="itemtitle">Unlock Madness Minions 2</div>
+	  <div id="upgradeMadnessUnlockMinionsTwoTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessUnlockMinionsTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessUnlockMinionsTwoCost" class="itemcost">250 Madness 2 Madness Minions 1</div>
+	  <button id="upgradeMadnessUnlockMinionsTwoButton" class="itembutton" title="Unlock more minion options" onclick="madnessClick('upgradeMadnessUnlockMinionsTwoButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessPerSecondOne" hidden=true class="upgradediv">
+      <div id="upgradeMadnessPerSecondOneTitle" class="itemtitle">Madness Per Second One</div>
+	  <div id="upgradeMadnessPerSecondOneTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessPerSecondOneText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessPerSecondOneCost" class="itemcost">25 Madness 2 Madness Minions 1</div>
+	  <button id="upgradeMadnessPerSecondOneButton" class="itembutton" title="More madness per second" onclick="madnessClick('upgradeMadnessPerSecondOneButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessClicksFromBuildingsTwo" hidden=true class="upgradediv">
+      <div id="upgradeMadnessClicksFromBuildingsTwoTitle" class="itemtitle">Madness From Buildings 2</div>
+	  <div id="upgradeMadnessClicksFromBuildingsTwoTotal" class="itemtotal">Unbought</div>
+      <div id="uupgradeMadnessClicksFromBuildingsTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessClicksFromBuildingsTwoCost" class="itemcost">500 Madness</div>
+	  <button id="upgradeMadnessClicksFromBuildingsTwoButton" class="itembutton" title="More madness from clicks" onclick="madnessClick('upgradeMadnessClicksFromBuildingsTwoButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessClicksFromBuildingsOne" hidden=true class="upgradediv">
+      <div id="upgradeMadnessClicksFromBuildingsOneTitle" class="itemtitle">Madness From Buildings 1</div>
+	  <div id="upgradeMadnessClicksFromBuildingsOneTotal" class="itemtotal">Unbought</div>
+      <div id="uupgradeMadnessClicksFromBuildingsOneText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessClicksFromBuildingsOneCost" class="itemcost">250 Madness</div>
+	  <button id="upgradeMadnessClicksFromBuildingsOneButton" class="itembutton" title="More madness from clicks" onclick="madnessClick('upgradeMadnessClicksFromBuildingsOneButton')" disabled=true>Buy</button>
+    </div>
+	<div id="upgradeMadnessClicksTwo" hidden=true class="upgradediv">
+      <div id="upgradeMadnessClicksTwoTitle" class="itemtitle">Madness Clicks Two</div>
+	  <div id="upgradeMadnessClicksTwoTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessClicksTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessClicksTwoCost" class="itemcost">100 Madness</div>
+	  <button id="upgradeMadnessClicksTwoButton" class="itembutton" title="More madness from clicks" onclick="madnessClick('upgradeMadnessClicksTwoButton')" disabled=true>Buy</button>
+    </div>
+    <div id="upgradeMadnessClicksOne" hidden=true class="upgradediv">
+      <div id="upgradeMadnessClicksOneTitle" class="itemtitle">Madness Clicks One</div>
+	  <div id="upgradeMadnessClicksOneTotal" class="itemtotal">Unbought</div>
+      <div id="upgradeMadnessClicksOneText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="upgradeMadnessClicksOneCost" class="itemcost">50 Madness</div>
+	  <button id="upgradeMadnessClicksOneButton" class="itembutton" title="More madness from clicks" onclick="madnessClick('upgradeMadnessClicksOneButton')" disabled=true>Buy</button>
+    </div>
+  </div>
+
+  <div id="madnessSpreadConvert">
+    <div id="madnessMadnessBuildings" hidden=true class="divheader">CONVERT</div>
+	
+	<div id="madnessMinionsFourConvert" hidden=true class="convertdiv">
+      <div id="madnessMinionsFourConvertTitle" class="itemtitle">Madness Minions Four</div>
+	  <div id="madnessMinionsFourConvertTotal" class="itemtotal">0</div>
+	  <div id="madnessMinionsFourConvertText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="madnessMinionsFourConvertCost" class="itemcost">1000 Madness</div>
+	  <button id="madnessMinionsFourConvertButton" class="itembutton" title="Convert a minion to spread madness" onclick="madnessClick('madnessMinionsFourConvertButton')" disabled=true>Buy</button>
+    </div>
+	<div id="madnessMinionsThreeConvert" hidden=true class="convertdiv">
+      <div id="madnessMinionsThreeConvertTitle" class="itemtitle">Madness Minions Three</div>
+	  <div id="madnessMinionsThreeConvertTotal" class="itemtotal">0</div>
+	  <div id="madnessMinionsThreeConvertText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="madnessMinionsThreeConvertCost" class="itemcost">250 Madness</div>
+	  <button id="madnessMinionsThreeConvertButton" class="itembutton" title="Convert a minion to spread madness" onclick="madnessClick('madnessMinionsThreeConvertButton')" disabled=true>Buy</button>
+    </div>
+	<div id="madnessMinionsTwoConvert" hidden=true class="convertdiv">
+      <div id="madnessMinionsTwoConvertTitle" class="itemtitle">Madness Minions Two</div>
+	  <div id="madnessMinionsTwoConvertTotal" class="itemtotal">0</div>
+	  <div id="madnessMinionsTwoConvertText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="madnessMinionsTwoConvertCost" class="itemcost">50 Madness</div>
+	  <button id="madnessMinionsTwoConvertButton" class="itembutton" title="Convert a minion to spread madness" onclick="madnessClick('madnessMinionsTwoConvertButton')" disabled=true>Buy</button>
+    </div>
+    <div id="madnessMinionsOneConvert" hidden=true class="convertdiv">
+      <div id="madnessMinionsOneConvertTitle" class="itemtitle">Madness Minions One</div>
+	  <div id="madnessMinionsOneConvertTotal" class="itemtotal">0</div>
+	  <div id="madnessMinionsOneConvertText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+      <div id="madnessMinionsOneConvertCost" class="itemcost">10 Madness</div>
+	  <button id="madnessMinionsOneConvertButton" class="itembutton" title="Convert a minion to spread madness" onclick="madnessClick('madnessMinionsOneConvertButton')" disabled=true>Buy</button>
+    </div>
+  </div>
+  
+  <div id="madnessSpreadBoughtUpgrades">
+    <div id="madnessMadnessBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
+	
+	<div id="boughtUpgradeMadnessUnlockMinionsFive" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessUnlockMinionsFiveTitle" class="itemtitle">Unlock Madness Minions 5</div>
+	  <div id="boughtUpgradeMadnessUnlockMinionsFiveTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessUnlockMinionsFiveText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessPerSecondFour" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessPerSecondFourTitle" class="itemtitle">Madness Per Second Four</div>
+	  <div id="boughtUpgradeMadnessPerSecondFourTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessPerSecondFourText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessUnlockMinionsFour" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessUnlockMinionsFourTitle" class="itemtitle">Unlock Madness Minions 4</div>
+	  <div id="boughtUpgradeMadnessUnlockMinionsFourTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessUnlockMinionsFourText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessPerSecondThree" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessPerSecondThreeTitle" class="itemtitle">Madness Per Second Three</div>
+	  <div id="boughtUpgradeMadnessPerSecondThreeTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessPerSecondThreeText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessUnlockMinionsThree" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessUnlockMinionsThreeTitle" class="itemtitle">Unlock Madness Minions 3</div>
+	  <div id="boughtUpgradeMadnessUnlockMinionsThreeTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessUnlockMinionsThreeText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessPerSecondTwo" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessPerSecondTwoTitle" class="itemtitle">Madness Per Second Two</div>
+	  <div id="boughtUpgradeMadnessPerSecondTwoTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessPerSecondTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessUnlockMinionsTwo" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessUnlockMinionsTwoTitle" class="itemtitle">Unlock Madness Minions 2</div>
+	  <div id="boughtUpgradeMadnessUnlockMinionsTwoTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessUnlockMinionsTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessPerSecondOne" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessPerSecondOneTitle" class="itemtitle">Madness Per Second One</div>
+	  <div id="boughtUpgradeMadnessPerSecondOneTotal" class="itemtotal">Bought</div>
+      <div id="boughtUpgradeMadnessPerSecondOneText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessClicksFromBuildingsTwo" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessClicksFromBuildingsTwoTitle" class="itemtitle">Madness From Buildings 2</div>
+	  <div id="boughtUpgradeMadnessClicksFromBuildingsTwoTotal" class="itemtotal">Bought</div>
+	  <div id="boughtUpgradeMadnessClicksFromBuildingsTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessClicksFromBuildingsOne" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessClicksFromBuildingsOneTitle" class="itemtitle">Madness From Buildings 1</div>
+	  <div id="boughtUpgradeMadnessClicksFromBuildingsOneTotal" class="itemtotal">Bought</div>
+	  <div id="boughtUpgradeMadnessClicksFromBuildingsOneText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessClicksTwo" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessClicksTwoTitle" class="itemtitle">Madness Clicks Two</div>
+	  <div id="boughtUpgradeMadnessClicksTwoTotal" class="itemtotal">Bought</div>
+	  <div id="boughtUpgradeMadnessClicksTwoText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+	<div id="boughtUpgradeMadnessClicksOne" hidden=true class="boughtupgradediv">
+      <div id="boughtUpgradeMadnessClicksOneTitle" class="itemtitle">Madness Clicks One</div>
+	  <div id="boughtUpgradeMadnessClicksOneTotal" class="itemtotal">Bought</div>
+	  <div id="boughtUpgradeMadnessClicksOneText" class="itemtext">Text for what this upgrade does is going to go here.</div>
+    </div>
+  </div>
+  
+</div>
+
+<div id="madnessInvest" hidden=true>
+  <div id="madnessInvestUpgrades">
+    <div id="madnessMoneyUpgrades" hidden=true class="divheader">UPGRADES</div>
+  </div>
+  
+  <div id="madnessInvestBuildings">
+    <div id="madnessMoneyBuildings" hidden=true class="divheader">BUILDINGS</div>
+  </div>
+
+  <div id="madnessInvestBoughtUpgrades">
+    <div id="madnessMoneyBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
+  </div>
+</div>
+
+	<script>
+	
+	var canvas = document.getElementById('wholeScreenCanvas');
+    var context = canvas.getContext('2d');
+	
+	var sources = {
+	  zzz: "images/zzz.png",
+	};
+	
+	var GameOn = true;
+	var frameCounter = 1;
+	var secondCounter = 1;
+	var minuteCounter = 1;
+	var currMadness = 0;
+	var currMoney = 0;
+	var currKnow = 0;
+	var currMight = 0;
+	
+	var madnessPerClick = 1;
+	var madnessPerClickBonus = 1; // FIXME: use this later to get extra madness from money or something
+	var madnessPerBuildingClickMult = 0;
+	var moneyPerClick = 1;
+	var knowPerClick = 1;
+	var mightPerClick = 1;
+	
+	var totalClicks = 0;
+	var totalMadnessFromClicking = 0;
+	var madnessSpent = 0; // FIXME: I'm not currently calling this at all
+	var totalConvertClicks = 0;
+	var convertCostReduction = 0;
+	var totalMinionsConverted = 0;
+	var totalUpgrades = 0;
+	
+	var madnessMinions = [];
+	var currMadnessPerSecond = 0;
+	var madnessPerSecondBonus = 1;
+	var triggeredMadnessDivs = []; // this is the array for divs which get unlocked by a direct action (new areas)
+	var unlockableMadnessDivs = []; // these unlock whenever the right conditions are met
+	var visibleMadnessDivs = [];
+	var boughtMadnessDivs = [];
+	
+	var visibleMadnessClickButtons = [];
+	var disabledMadnessClickButtons = [];
+	
+	var visibleMadnessButtons = [];
+	var disabledMadnessButtons = [];
+	
+	var hiddenMadnessTabs = [];
+	var visibleMadnessTabs = [];
+	var tabsUnlocked = 0;
+	
+	var popUpNumbers = [];
+	
+	var currTab = "madnessMadnessTab";
+	
+	function madnessCost(aMadnessCost) {
+	  return aMadnessCost;
+	}
+	
+	function madnessMinion(aMadnessMinion) {
+	  return aMadnessMinion;
+	}
+	
+	function madnessMinionCost(aMadnessMinionCost) {
+	  return aMadnessMinionCost;
+	}
+	
+	function madnessDiv(aMadnessDiv) {
+	  return aMadnessDiv;
+	}
+	
+	function madnessClickButton(aMadnessClickButton) {
+	  return aMadnessClickButton;
+	}
+	
+	function madnessButton(aMadnessButton) {
+	  return aMadnessButton;
+	}
+	
+	function madnessTab(aMadnessTab) {
+	  return aMadnessTab;
+	}
+	
+	function popUpNumber(aPopUpNumber) {
+	  return aPopUpNumber;
+	}
+	
+	function loadImages(sources, callback) {
+      images = {};
+      var loadedImages = 0;
+      var numImages = 0;
+      // get num of sources
+      for(var src in sources) {
+        numImages++;
+      }
+      for(var src in sources) {
+        images[src] = new Image();
+        images[src].onload = function() {
+          if(++loadedImages >= numImages) {
+            callback();
+          }
+        };
+        images[src].src = sources[src];
+      }
+    }
+
+	function madnessClickClick(id) {
+	  visibleMadnessClickButtons[id].click();
+	}
+	
+	function madnessClick(id) {
+	  visibleMadnessButtons[id].click();
+	}
+	
+	function doMouseDown(event) {
+	  event.preventDefault();
+	  mouseX = event.pageX;
+	  mouseY = event.pageY;
+	  // FIXME: change these numbers when I put a real image in
+	  if (mouseX >= 8 && mouseX <= 332 && mouseY >= 127 && mouseY <= 451) { // click on the picture
+	    if (currTab == "madnessMadnessTab") {
+		  visibleMadnessClickButtons['madnessClickButton'].click(mouseX, mouseY);
+		}
+	  }
+	}
+	
+	function doMouseUp(event) {
+	
+	}
+
+	function changeMadnessTab(id) {
+	  currTab = id;
+	  for (var key in visibleMadnessTabs) {
+	    visibleMadnessTabs[key].contains.hidden = true;
+		visibleMadnessTabs[key].active = false;
+	  }
+	  visibleMadnessTabs[id].contains.hidden = false;
+	  visibleMadnessTabs[id].active = true;
+	  visibleMadnessTabs[id].notifications = 0;
+	  visibleMadnessTabs[id].id.innerHTML = visibleMadnessTabs[id].title;
+	}
+	
+	function addNotifyTab(id) {
+	  if (typeof(visibleMadnessTabs[id]) == "object") {
+	    if (!visibleMadnessTabs[id].active)
+		  visibleMadnessTabs[id].notifications++;
+	  }
+	  else {
+	    if (!hiddenMadnessTabs[id].active)
+		  hiddenMadnessTabs[id].notifications++;
+	  }
+	}
+	
+	function calculateMadnessPerSecond() {
+	
+	  currMadnessPerSecond = 0; // set it to 0
+	  
+	  for (var key in madnessMinions) { // increase it for each minion type
+	    currMadnessPerSecond += madnessPerSecondBonus * madnessMinions[key].current * madnessMinions[key].madnessPerSecond; 
+		// increase by minions times per minion times bonus
+	  }
+	}
+	
+	function updateMadness() {
+	  currMadness += currMadnessPerSecond;
+	}
+	
+	function setDayNightCycle(timeOfDay) {
+	  if (timeOfDay > 16 && timeOfDay < 46) // day
+		document.getElementById('thewholebody').style.background = "SkyBlue";
+	  else if (timeOfDay < 13 || timeOfDay > 49) // night
+	    document.getElementById('thewholebody').style.background = "Black";
+	  else if (timeOfDay == 13 || timeOfDay == 49) // astronomical twilight
+	    document.getElementById('thewholebody').style.background = "MidnightBlue";
+	  else if (timeOfDay == 14 || timeOfDay == 48) // nautical twilight
+	    document.getElementById('thewholebody').style.background = "DodgerBlue";
+	  else if (timeOfDay == 15 || timeOfDay == 47) // civil twilight
+	    document.getElementById('thewholebody').style.background = "DeepSkyBlue";
+	  else if (timeOfDay == 16) // sunrise
+	    document.getElementById('thewholebody').style.background = "Gold";
+	  else if (timeOfDay == 46) // sunset
+	    document.getElementById('thewholebody').style.background = "OrangeRed";
+	}
+	
+	//FIXME: I don't want these to be tabs anymore
+	function checkUnlockMadnessTabs() {
+	  for (var key in hiddenMadnessTabs) {
+	    if (hiddenMadnessTabs[key].unlock()) {
+		  visibleMadnessTabs[key] = madnessTab(hiddenMadnessTabs[key]);
+		  delete hiddenMadnessTabs[key];
+		  document.getElementById(key).hidden = false;
+		  tabsUnlocked++;
+		}
+	  }
+	}
+	
+	function checkUnlockableMadnessDivs() {
+	  for (var key in unlockableMadnessDivs) {
+	    if (unlockableMadnessDivs[key].unlock()) {
+		  visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		  delete unlockableMadnessDivs[key];
+		  document.getElementById(key).hidden = false;
+		  if (typeof(visibleMadnessTabs[visibleMadnessDivs[key].tab]) == "object") {
+		    if (!visibleMadnessTabs[visibleMadnessDivs[key].tab].active)
+		      visibleMadnessTabs[visibleMadnessDivs[key].tab].notifications++;
+		  }
+		  else {
+		    if (!hiddenMadnessTabs[visibleMadnessDivs[key].tab].active)
+		      hiddenMadnessTabs[visibleMadnessDivs[key].tab].notifications++;
+		  }
+		}
+	  }
+	}
+	
+	function checkMadnessDisabledButtons() {
+	  for (var key in visibleMadnessButtons) {
+	  
+	    var enabled = true; // start at true make false if it fails any check
+		
+		for (var i=0; i<visibleMadnessButtons[key].costs.length; i++) {
+		  if (visibleMadnessButtons[key].costs[i].type == "madness") {
+		    if (currMadness < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleMadnessButtons[key].costs[i].type == "money") {
+		    if (currMoney < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleMadnessButtons[key].costs[i].type == "know") {
+		    if (currKnow < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleMadnessButtons[key].costs[i].type == "might") {
+		    if (currMight < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		}
+		
+		for (var j=0; j<visibleMadnessButtons[key].minionCosts.length; j++) {
+		  var madnessMinType = visibleMadnessButtons[key].minionCosts[j].type;
+		  if (madnessMinions[madnessMinType].current < visibleMadnessButtons[key].minionCosts[j].current)
+		    enabled = false;
+		}
+
+	    if (enabled) { // then it should be enabled
+		  document.getElementById(key).disabled = false;
+		}
+		else { // it should be disabled
+		  document.getElementById(key).disabled = true;
+		}
+	  }
+	}
+	
+	function checkShowMadnessDivDividers() {
+	  var showUpgrades = false;
+	  var showBuildings = false;
+	  var showBoughtUpgrades = false;
+	  for (var key in visibleMadnessDivs) {
+	    if (visibleMadnessDivs[key].tab == currTab) {
+		  if (visibleMadnessDivs[key].type == "upgrade")
+		    showUpgrades = true;
+		  if (visibleMadnessDivs[key].type == "boughtupgrade")
+		    showBoughtUpgrades = true;
+		  if (visibleMadnessDivs[key].type == "building")
+		    showBuildings = true;
+		}
+	  }
+	  if (showUpgrades)
+	    visibleMadnessTabs[currTab].upgradesdiv.hidden=false;
+	  else
+	    visibleMadnessTabs[currTab].upgradesdiv.hidden=true;
+	  if (showBoughtUpgrades)
+	    visibleMadnessTabs[currTab].boughtupgradesdiv.hidden=false;
+	  else
+	    visibleMadnessTabs[currTab].boughtupgradesdiv.hidden=true;
+	  if (showBuildings)
+	    visibleMadnessTabs[currTab].buildingsdiv.hidden=false;
+	  else
+	    visibleMadnessTabs[currTab].buildingsdiv.hidden=true;
+	}
+	
+	// FIXME: not tabs anymore
+	function madnessTabNotificationsDisplay() {
+	  for (var key in visibleMadnessTabs) {
+	    if (visibleMadnessTabs[key].notifications > 0 && !visibleMadnessTabs[key].active) {
+		   visibleMadnessTabs[key].id.innerHTML = visibleMadnessTabs[key].title + " (" + visibleMadnessTabs[key].notifications + ")";
+		}
+	  }
+	}
+	
+	// FIXME: the first display would only be for stats screen
+	function madnessMinionDisplay() {
+	  for (var key in madnessMinions) {
+	    document.getElementById(key).innerHTML = madnessMinions[key].text + ": " + madnessMinions[key].current;
+		document.getElementById(madnessMinions[key].idindiv).innerHTML = madnessMinions[key].current;
+	  }
+	}
+	
+	function madnessResourceDisplay() {
+	  // FIXME: have this display only the current resource for the tab
+	  document.getElementById("madness").innerHTML = "Madness: " + Math.floor(currMadness);
+	  document.getElementById("madnessPerSecond").innerHTML = "Madness Per Second: " + currMadnessPerSecond.toFixed(1);
+	  //document.getElementById("bloodspent").innerHTML = "Total Blood Spent: " + bloodSpent;
+	}
+	
+	function clickPopUpDisplay() {
+	  context = canvas.getContext('2d');
+	  context.clearRect(0,0,500,500);
+	  for (var i=0; i<popUpNumbers.length; i++) {
+	    if (popUpNumbers[i].timer < 1) {
+		  popUpNumbers.splice(i,1);
+		  i--;
+		}
+		else {
+		  var alpha = popUpNumbers[i].timer / 60;
+		  context.font = '16px Arial bold';
+          context.fillStyle = "rgba(255, 0, 0, " + alpha + ")";
+		  context.textAlign = 'center';
+          context.fillText("+" + popUpNumbers[i].amount + " " + popUpNumbers[i].type, popUpNumbers[i].xpos, (popUpNumbers[i].ypos - 70 + popUpNumbers[i].timer));
+		  popUpNumbers[i].timer--;
+		}
+	  }	
+	}
+	
+	function Game(){  // every frame this happens
+	  if (GameOn) {
+	    frameCounter++;
+		calculateMadnessPerSecond();
+		if (frameCounter >= 60) { // do once per second stuff
+		  frameCounter = 1;
+		  secondCounter++;
+		  updateMadness();
+		  //setDayNightCycle(secondCounter); // day cycles once per second with this on
+		}
+		if (secondCounter >= 60) { // do once per minute stuff
+		  secondCounter = 1;
+		  minuteCounter++;
+		  setDayNightCycle(minuteCounter);
+		}
+		if (minuteCounter >= 60) { // do once per hour stuff
+		  minuteCounter = 1;
+		  // FIXME: new day stuff here
+		}
+		checkUnlockMadnessTabs();
+		checkUnlockableMadnessDivs();
+		checkMadnessDisabledButtons();
+		if (tabsUnlocked > 0)
+		  checkShowMadnessDivDividers();
+		madnessTabNotificationsDisplay();
+		madnessMinionDisplay();
+		madnessResourceDisplay();
+		clickPopUpDisplay();
+		
+        loop = setTimeout(Game, 1000 / 60); // 60 FPS
+	  }
+    }  
+	
+	  // --------------------- API ----------------------------
+	  
+	function calculateAndDisplayCost(key) {
+	  
+	  var costDisplayString = "";
+	  
+	  for (var costKey in visibleMadnessButtons[key].costs) {
+	    var currMult = visibleMadnessButtons[key].costMultiplier - convertCostReduction;
+		if (currMult < 1.05)
+		  currMult = 1.05;
+		visibleMadnessButtons[key].costs[costKey].current = Math.floor(visibleMadnessButtons[key].costs[costKey].base
+			* Math.pow(currMult, visibleMadnessButtons[key].costCount));
+	    if (visibleMadnessButtons[key].costs[costKey].type == "madness") {
+		  costDisplayString = costDisplayString + visibleMadnessButtons[key].costs[costKey].current + " Madness ";
+		}
+	  }
+	  
+	  for (var minCostKey in visibleMadnessButtons[key].minionCosts) {
+	    var currMult = visibleMadnessButtons[key].costMultiplier - convertCostReduction;
+		if (currMult < 1.05)
+		  currMult = 1.05;
+		visibleMadnessButtons[key].minionCosts[minCostKey].current = Math.floor(visibleMadnessButtons[key].minionCosts[minCostKey].base
+			* Math.pow(currMult, visibleMadnessButtons[key].costCount));
+	    costDisplayString = costDisplayString + visibleMadnessButtons[key].minionCosts[minCostKey].current + " " + 
+			madnessMinions[visibleMadnessButtons[key].minionCosts[minCostKey].type].text + " ";
+	  }
+	  
+	  if (costDisplayString != "")
+	    visibleMadnessButtons[key].costid.innerHTML = costDisplayString.slice(0, costDisplayString.length-1);
+	}
+	
+	function Init() {
+	  // --------------------- SETUP ------------------------------
+	  
+	  canvas.addEventListener("mousedown", doMouseDown, false);
+	  canvas.addEventListener("mouseup", doMouseUp, false);
+	
+	
+	  // --------------------- MINIONS ----------------------------
+	  
+	  madnessMinions['madnessMinionsOne'] = 
+	    (madnessMinion({
+          id: madnessMinionsOne,
+		  idindiv: 'madnessMinionsOneConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0.1,
+		  text: 'Madness Minions 1'
+        }));
+		
+	  madnessMinions['madnessMinionsTwo'] = 
+	    (madnessMinion({
+          id: madnessMinionsTwo,
+		  idindiv: 'madnessMinionsTwoConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0.5,
+		  text: 'Madness Minions 2'
+        }));
+		
+	  madnessMinions['madnessMinionsThree'] = 
+	    (madnessMinion({
+          id: madnessMinionsThree,
+		  idindiv: 'madnessMinionsThreeConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 2,
+		  text: 'Madness Minions 3'
+        }));
+		
+	  madnessMinions['madnessMinionsFour'] = 
+	    (madnessMinion({
+          id: madnessMinionsFour,
+		  idindiv: 'madnessMinionsFourConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 10,
+		  text: 'Madness Minions 4'
+        }));
+		
+	  // --------------------- TABS ----------------------------
+		
+		hiddenMadnessTabs['madnessMadnessTab'] = 
+	    (madnessTab({
+          id: madnessMadnessTab,
+		  title: "Madness",
+		  contains: madnessSpread,
+		  upgradesdiv: madnessMadnessUpgrades,
+		  buildingsdiv: madnessMadnessBuildings,
+		  boughtupgradesdiv: madnessMadnessBoughtUpgrades,
+		  active: true,
+		  notifications: 0,
+		  unlock: function () {
+		    // this unlocks at 10 madness, same as the first madness button
+		    if (currMadness >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		hiddenMadnessTabs['madnessMoneyTab'] = 
+	    (madnessTab({
+          id: madnessMoneyTab,
+		  title: "Money",
+		  contains: madnessInvest,
+		  upgradesdiv: madnessMoneyUpgrades,
+		  buildingsdiv: madnessMoneyBuildings,
+		  boughtupgradesdiv: madnessMoneyUpgrades,
+		  active: false,
+		  notifications: 0,
+		  unlock: function () {
+		    // this unlocks as soon as you get any upgrade
+		    var anyUpgrades = 0;
+			for (var key in visibleMadnessButtons) {
+			  if (visibleMadnessButtons[key].tab == "madnessMoneyTab")
+			    anyUpgrades++;
+			}
+			
+			if (anyUpgrades > 0)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// FIXME: add in other tabs, bloodRitualTab, bloodMoneyTab, bloodResearchTab, bloodFightTab
+		// FIXME: also clarify the active tab and make it clearer its a tab when its new by theming
+		
+	  // --------------------- CLICK BUTTONS ----------------------------
+	  
+	  visibleMadnessClickButtons['madnessClickButton'] = 
+	    (madnessButton({
+          id: madnessClickButton,
+		  tab: "madnessClickTab",
+		  type: "click",
+          click: function (mouseX, mouseY) {
+			  totalClicks++;
+			  var moreMadness = (madnessPerClick * madnessPerClickBonus) + (madnessPerBuildingClickMult * totalMinionsConverted);
+			  currMadness += moreMadness;
+			  totalMadnessFromClicking += moreMadness;
+			  
+			  popUpNumbers.push(popUpNumber({
+		        amount: Math.floor(moreMadness),
+                type: "Madness",
+		        xpos: mouseX - 8,
+		        ypos: mouseY - 8,
+		        timer: 60
+              }));
+		  },
+		  costs: [],
+		  minionCosts: [],
+        }));
+		
+	  // --------------------- ACHIEVEMENT BASED UPGRADES ----------------------------
+	  
+	  visibleMadnessButtons['upgradeMadnessClicksOneButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessClicksOne',
+		  divid: upgradeMadnessClicksOne,
+		  boughtdivid: boughtUpgradeMadnessClicksOne,
+		  id: upgradeMadnessClicksOneButton,
+		  costid: upgradeMadnessClicksOneCost,
+		  click: function () {
+		    //displayMessages("You are even hungrier for blood than before.  Feeding will give more blood.");
+		    currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerClick *= 2;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 50, current: 50}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksOne'] = 
+	    (madnessDiv({
+          id: upgradeMadnessClicksOne,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessClicksOneButton,          
+		  unlock: function () {
+		    // 50 clicks or 100 madness from clicks so on ascension they could conceivably get this sooner
+		    if (totalClicks >= 50 || totalMadnessFromClicking >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessClicksTwoButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessClicksTwo',
+		  divid: upgradeMadnessClicksTwo,
+		  boughtdivid: boughtUpgradeMadnessClicksTwo,
+		  id: upgradeMadnessClicksTwoButton,
+		  costid: upgradeMadnessClicksTwoCost,
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerClick *= 2;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 100, current: 100}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksTwo'] = 
+	    (madnessDiv({
+          id: upgradeMadnessClicksTwo,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessClicksTwoButton,          
+		  unlock: function () {
+		    // 250 clicks or 1000 madness from clicks so on ascension they could conceivably get this sooner
+			// double the madness from clicks since its the second upgrade
+		    if (totalClicks >= 250 || totalMadnessFromClicking >= 1000)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessClicksFromBuildingsOneButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessClicksFromBuildingsOne',
+		  divid: upgradeMadnessClicksFromBuildingsOne,
+		  boughtdivid: boughtUpgradeMadnessClicksFromBuildingsOne,
+		  id: upgradeMadnessClicksFromBuildingsOneButton,
+		  costid: upgradeMadnessClicksFromBuildingsOneCost,
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerBuildingClickMult += 0.1;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksFromBuildingsOne'] = 
+	    (madnessDiv({
+          id: upgradeMadnessClicksFromBuildingsOne,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessClicksFromBuildingsOneButton,          
+		  unlock: function () {
+		    // 25 total minions converted
+		    if (totalMinionsConverted >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessClicksFromBuildingsTwoButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessClicksFromBuildingsTwo',
+		  divid: upgradeMadnessClicksFromBuildingsTwo,
+		  boughtdivid: boughtUpgradeMadnessClicksFromBuildingsTwo,
+		  id: upgradeMadnessClicksFromBuildingsTwoButton,
+		  costid: upgradeMadnessClicksFromBuildingsTwoCost,
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerBuildingClickMult += 0.2;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 500, current: 500}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksFromBuildingsTwo'] = 
+	    (madnessDiv({
+          id: upgradeMadnessClicksFromBuildingsTwo,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessClicksFromBuildingsTwoButton,          
+		  unlock: function () {
+		    if (totalMinionsConverted >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+
+		
+		// ------------------- MADNESS MINIONS 1 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsOneConvertButton'] = 
+	    (madnessButton({
+		  id: madnessMinionsOneConvertButton,
+		  costid: madnessMinionsOneConvertCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsOneConvertButton');
+			madnessMinions['madnessMinionsOne'].current++;
+			madnessMinions['madnessMinionsOne'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 10, current: 10}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsOneConvert'] = 
+	    (madnessDiv({
+          id: madnessMinionsOneConvert,
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: madnessMinionsOneConvertButton,
+          
+		  unlock: function () {
+		    if (currMadness >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	    
+		visibleMadnessButtons['upgradeMadnessPerSecondOneButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessPerSecondOne',
+		  divid: upgradeMadnessPerSecondOne,
+		  boughtdivid: boughtUpgradeMadnessPerSecondOne,
+		  id: upgradeMadnessPerSecondOneButton,
+		  costid: upgradeMadnessPerSecondOneCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsOne'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerSecondBonus *= 2;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 25, current: 25}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsOne", base: 2, current: 2}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessPerSecondOne'] = 
+	    (madnessDiv({
+          id: upgradeMadnessPerSecondOne,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessPerSecondOneButton,          
+		  unlock: function () {
+		    // 10 madness minions 1
+		    if (madnessMinions['madnessMinionsOne'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsTwoButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessUnlockMinionsTwo',
+		  divid: upgradeMadnessUnlockMinionsTwo,
+		  boughtdivid: boughtUpgradeMadnessUnlockMinionsTwo,
+		  id: upgradeMadnessUnlockMinionsTwoButton,
+		  costid: upgradeMadnessUnlockMinionsTwoCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsOne'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsTwoConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			addNotifyTab('madnessMadnessTab');
+
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsOne", base: 2, current: 2}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsTwo'] = 
+	    (madnessDiv({
+          id: upgradeMadnessUnlockMinionsTwo,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessUnlockMinionsTwoButton,          
+		  unlock: function () {
+		    if (currMadness >= 125 && madnessMinions['madnessMinionsOne'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MADNESS MINIONS 2 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsTwoConvertButton'] = 
+	    (madnessButton({
+		  id: madnessMinionsTwoConvertButton,
+		  costid: madnessMinionsTwoConvertCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsTwoConvertButton');
+			madnessMinions['madnessMinionsTwo'].current++;
+			madnessMinions['madnessMinionsTwo'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 50, current: 50}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsTwoConvert'] = 
+	    (madnessDiv({
+          id: madnessMinionsTwoConvert,
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: madnessMinionsTwoConvertButton,
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessPerSecondTwoButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessPerSecondTwo',
+		  divid: upgradeMadnessPerSecondTwo,
+		  boughtdivid: boughtUpgradeMadnessPerSecondTwo,
+		  id: upgradeMadnessPerSecondTwoButton,
+		  costid: upgradeMadnessPerSecondTwoCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsTwo'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerSecondBonus *= 2;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 100, current: 100}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsTwo", base: 3, current: 3}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessPerSecondTwo'] = 
+	    (madnessDiv({
+          id: upgradeMadnessPerSecondTwo,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessPerSecondTwoButton,          
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsTwo'].current >= 20)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsThreeButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessUnlockMinionsThree',
+		  divid: upgradeMadnessUnlockMinionsThree,
+		  boughtdivid: boughtUpgradeMadnessUnlockMinionsThree,
+		  id: upgradeMadnessUnlockMinionsThreeButton,
+		  costid: upgradeMadnessUnlockMinionsThreeCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsTwo'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsThreeConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			addNotifyTab('madnessMadnessTab');
+
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsTwo", base: 2, current: 2}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsThree'] = 
+	    (madnessDiv({
+          id: upgradeMadnessUnlockMinionsThree,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessUnlockMinionsThreeButton,          
+		  unlock: function () {
+		    if (currMadness >= 500 && madnessMinions['madnessMinionsTwo'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MADNESS MINIONS 3 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsThreeConvertButton'] = 
+	    (madnessButton({
+		  id: madnessMinionsThreeConvertButton,
+		  costid: madnessMinionsThreeConvertCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsThreeConvertButton');
+			madnessMinions['madnessMinionsThree'].current++;
+			madnessMinions['madnessMinionsThree'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsThreeConvert'] = 
+	    (madnessDiv({
+          id: madnessMinionsThreeConvert,
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: madnessMinionsThreeConvertButton,
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessPerSecondThreeButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessPerSecondThree',
+		  divid: upgradeMadnessPerSecondThree,
+		  boughtdivid: boughtUpgradeMadnessPerSecondThree,
+		  id: upgradeMadnessPerSecondThreeButton,
+		  costid: upgradeMadnessPerSecondThreeCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsThree'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerSecondBonus *= 2;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsThree", base: 4, current: 4}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessPerSecondThree'] = 
+	    (madnessDiv({
+          id: upgradeMadnessPerSecondThree,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessPerSecondThreeButton,          
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsThree'].current >= 20)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsFourButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessUnlockMinionsFour',
+		  divid: upgradeMadnessUnlockMinionsFour,
+		  boughtdivid: boughtUpgradeMadnessUnlockMinionsFour,
+		  id: upgradeMadnessUnlockMinionsFourButton,
+		  costid: upgradeMadnessUnlockMinionsFourCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsThree'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsFourConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			addNotifyTab('madnessMadnessTab');
+
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 2500, current: 2500}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsThree", base: 2, current: 2}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsFour'] = 
+	    (madnessDiv({
+          id: upgradeMadnessUnlockMinionsFour,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessUnlockMinionsFourButton,          
+		  unlock: function () {
+		    if (currMadness >= 1250 && madnessMinions['madnessMinionsThree'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MADNESS MINIONS 4 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsFourConvertButton'] = 
+	    (madnessButton({
+		  id: madnessMinionsFourConvertButton,
+		  costid: madnessMinionsFourConvertCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsFourConvertButton');
+			madnessMinions['madnessMinionsFour'].current++;
+			madnessMinions['madnessMinionsFour'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsFourConvert'] = 
+	    (madnessDiv({
+          id: madnessMinionsFourConvert,
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: madnessMinionsFourConvertButton,
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessPerSecondFourButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessPerSecondFour',
+		  divid: upgradeMadnessPerSecondFour,
+		  boughtdivid: boughtUpgradeMadnessPerSecondFour,
+		  id: upgradeMadnessPerSecondFourButton,
+		  costid: upgradeMadnessPerSecondFourCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsFour'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerSecondBonus *= 2;
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsFour", base: 5, current: 5}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessPerSecondFour'] = 
+	    (madnessDiv({
+          id: upgradeMadnessPerSecondFour,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessPerSecondFourButton,          
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFour'].current >= 20)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsFiveButton'] = 
+	    (madnessButton({
+		  dividkey: 'upgradeMadnessUnlockMinionsFive',
+		  divid: upgradeMadnessUnlockMinionsFive,
+		  boughtdivid: boughtUpgradeMadnessUnlockMinionsFive,
+		  id: upgradeMadnessUnlockMinionsFiveButton,
+		  costid: upgradeMadnessUnlockMinionsFiveCost,
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsFour'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			/*var key = 'madnessMinionsFiveConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			addNotifyTab('madnessMadnessTab');*/
+			
+			alert("You win for now");
+			
+			// FIXME: this is where I start unlocking money minions
+
+			visibleMadnessDivs[this.dividkey].type = "boughtupgrade";
+			this.divid.hidden = true;		
+			this.boughtdivid.hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 10000, current: 10000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsFour", base: 2, current: 2}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsFive'] = 
+	    (madnessDiv({
+          id: upgradeMadnessUnlockMinionsFive,
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: upgradeMadnessUnlockMinionsFiveButton,          
+		  unlock: function () {
+		    if (currMadness >= 5000 && madnessMinions['madnessMinionsFour'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+	  Game();
+	}
+	
+	loadImages(sources, Init); 
+	
+	</script>
+
+
+
+
+
+
+</body>
+</html>

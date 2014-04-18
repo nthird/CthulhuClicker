@@ -1,0 +1,5110 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>Cthulhu Clicker</title>
+	<link href="css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jquery-ui-1.10.4.custom.js"></script>
+
+</head>
+
+<body style="background-color:black" id="thewholebody">
+<style>
+.convertdiv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:110px;
+  max-width:600px;
+}
+.upgradediv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:110px;
+  max-width:600px;
+}
+.boughtupgradediv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:110px;
+  max-width:600px;
+}
+.divheader
+{
+  color:white;
+  font-weight:bold;
+}
+.itemtitle
+{
+  position:absolute;
+  left:10px;
+  top:10px;
+}
+.itemtotal
+{
+  position:absolute;
+  right:10px;
+  top:10px;
+}
+.itemtext
+{
+  position:absolute;
+  margin:30px 20px;
+}
+.itemcost
+{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+}
+.itembutton
+{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+}
+</style>
+<div id="outerWrapper" style="position:relative; width:500px; height:500px">
+  <div id="innerWrapper" style="position:absolute; top:0px; left:0px; width:500px; height:500px;">
+    <h1 style="color:white">Cthulhu Clicker</h1>
+
+    <div id="madnessDisplay" style="color:white">
+      <div id="madness">Madness: 0</div>
+      <div id="madnessPerSecond">Madness Per Second: 0</div>
+      <div id="madnessButtonDiv"><img src="images/CthulhuShawnDrawing.png" id="madnessClickButton"></div>
+	  <div id="madnessStatusDiv">The elder gods are stirring</div>
+    </div>
+	<div id="moneyDisplay" style="color:white" hidden=true>
+      <div id="money">Money: 0</div>
+      <div id="moneyPerSecond">Money Per Second: 0</div>
+      <div id="moneyButtonDiv"><img src="images/CthulhuShawnDrawing.png" id="moneyClickButton"></div>
+	  <div id="moneyStatusDiv">No account earning you no interest in </div>
+    </div>
+  </div>
+  <canvas id="wholeScreenCanvas" style="position:absolute; top:0px; left:0px;" width="500" height="500"></canvas>
+</div>
+
+<div id="madnessTabs">
+	<button id="madnessMadnessTab" onclick="changeMadnessTab('madnessMadnessTab')" style="width:25%" hidden=true>Madness</button>
+	<button id="madnessMoneyTab" onclick="changeMadnessTab('madnessMoneyTab')" style="width:25%" hidden=true>Money</button>
+	<button id="madnessKnowledgeTab" onclick="changeMadnessTab('madnessKnowledgeTab')" style="width:25%" hidden=true>Knowledge</button>
+	<button id="madnessMightTab" onclick="changeMadnessTab('madnessMightTab')" style="width:25%" hidden=true>Might</button>
+</div>
+
+<div id="madnessStats">
+  <div id="madnessMinionsOne" hidden=true>Madness Minions 1: 0</div>
+  <div id="madnessMinionsTwo" hidden=true>Madness Minions 2: 0</div>
+  <div id="madnessMinionsThree" hidden=true>Madness Minions 3: 0</div>
+  <div id="madnessMinionsFour" hidden=true>Madness Minions 4: 0</div>
+  <div id="madnessMinionsFive" hidden=true>Madness Minions 5: 0</div>
+  <div id="madnessMinionsSix" hidden=true>Madness Minions 6: 0</div>
+  <div id="madnessMinionsSeven" hidden=true>Madness Minions 7: 0</div>
+  <div id="madnessMinionsEight" hidden=true>Madness Minions 8: 0</div>
+</div>
+
+<div id="madnessSpread">
+  <div id="madnessSpreadUpgrades">
+    <div id="madnessMadnessUpgrades" hidden=true class="divheader">UPGRADES</div>
+  </div>
+
+  <div id="madnessSpreadConvert">
+    <div id="madnessMadnessBuildings" hidden=true class="divheader">CONVERT</div>
+  </div>
+  
+  <div id="madnessSpreadBoughtUpgrades">
+    <div id="madnessMadnessBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
+  </div>
+  
+</div>
+
+<div id="moneyStats">
+  <div id="moneyBuildingsOne" hidden=true>Money Buildings 1: 0</div>
+  <div id="moneyBuildingsTwo" hidden=true>Money Buildings 2: 0</div>
+  <div id="moneyBuildingsThree" hidden=true>Money Buildings 3: 0</div>
+  <div id="moneyBuildingsFour" hidden=true>Money Buildings 4: 0</div>
+  <div id="moneyBuildingsFive" hidden=true>Money Buildings 5: 0</div>
+  <div id="moneyBuildingsSix" hidden=true>Money Buildings 6: 0</div>
+  <div id="moneyBuildingsSeven" hidden=true>Money Buildings 7: 0</div>
+  <div id="moneyBuildingsEight" hidden=true>Money Buildings 8: 0</div>
+</div>
+
+<div id="madnessInvest" hidden=true>
+  <div id="madnessInvestUpgrades">
+    <div id="madnessMoneyUpgrades" hidden=true class="divheader">UPGRADES</div>
+  </div>
+  
+  <div id="madnessInvestBuildings">
+    <div id="madnessMoneyBuildings" hidden=true class="divheader">BUILDINGS</div>
+  </div>
+
+  <div id="madnessInvestBoughtUpgrades">
+    <div id="madnessMoneyBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
+  </div>
+</div>
+
+	<script>
+	
+	var canvas = document.getElementById('wholeScreenCanvas');
+    var context = canvas.getContext('2d');
+	
+	var sources = {
+	  zzz: "images/zzz.png",
+	  wait: "images/ellipsis.png",
+	};
+	var images;
+	
+	var GameOn = true;
+	var frameCounter = 1;
+	var secondCounter = 1;
+	var minuteCounter = 1;
+	var currMadness = 0;
+	var currMoney = 0;
+	var currKnow = 0;
+	var currMight = 0;
+	
+	var madnessPerClick = 1;
+	var madnessPerClickBonus = 1; // FIXME: use this later to get extra madness from money or something
+	var madnessPerBuildingClickMult = 0;
+	var moneyPerClick = 1;
+	var moneyPerClickBonus = 1;
+	var moneyPerBuildingClickMult = 0;
+	var knowPerClick = 1;
+	var knowPerClickBonus = 1;
+	var knowPerBuildingClickMult = 0;
+	var mightPerClick = 1;
+	var mightPerClickBonus = 1;
+	var mightPerBuildingClickMult = 0;
+	
+	var moneyDailyInterest = 0;
+	var moneyBankAccountKey = "none";
+	
+	var totalClicks = 0;
+	var totalMadnessClicks = 0;
+	var totalMadnessFromClicking = 0;
+	var madnessSpent = 0; // FIXME: I'm not currently calling this at all
+	var totalMoneyClicks = 0;
+	var totalMoneyFromClicking = 0;
+	var moneySpent = 0;
+	var totalKnowClicks = 0;
+	var totalKnowFromClicking = 0;
+	var knowSpent = 0;
+	var totalMightClicks = 0;
+	var totalMightFromClicking = 0;
+	var mightSpent = 0;
+	var totalConvertClicks = 0;
+	var convertCostReduction = 0;
+	var totalMinionsConverted = 0;
+	var totalMoneyBuildingsConverted = 0;
+	var totalUpgrades = 0;
+	
+	var madnessMinions = [];
+	var currMadnessPerSecond = 0;
+	var madnessPerSecondBonus = 1;
+	var currMoneyPerSecond = 0;
+	var moneyPerSecondBonus = 1;
+	var currKnowPerSecond = 0;
+	var knowPerSecondBonus = 1;
+	var currMightPerSecond = 0;
+	var mightPerSecondBonus = 1;
+	var triggeredMadnessDivs = []; // this is the array for divs which get unlocked by a direct action (new areas)
+	var unlockableMadnessDivs = []; // these unlock whenever the right conditions are met
+	var visibleMadnessDivs = [];
+	var boughtMadnessDivs = [];
+	
+	var visibleMadnessClickButtons = [];
+	var disabledMadnessClickButtons = [];
+	
+	var visibleMadnessButtons = [];
+	var disabledMadnessButtons = [];
+	
+	var hiddenMadnessTabs = [];
+	var visibleMadnessTabs = [];
+	var tabsUnlocked = 0;
+	
+	var popUpNumbers = [];
+	var showClickImage = false;
+	var clickImage;
+	
+	var currTab = "madnessMadnessTab";
+	
+	function madnessCost(aMadnessCost) {
+	  return aMadnessCost;
+	}
+	
+	function madnessMinion(aMadnessMinion) {
+	  return aMadnessMinion;
+	}
+	
+	function madnessMinionCost(aMadnessMinionCost) {
+	  return aMadnessMinionCost;
+	}
+	
+	function madnessDiv(aMadnessDiv) {
+	  return aMadnessDiv;
+	}
+	
+	function madnessClickButton(aMadnessClickButton) {
+	  return aMadnessClickButton;
+	}
+	
+	function madnessButton(aMadnessButton) {
+	  aMadnessButton.costMultiplier = 1.1;
+	  aMadnessButton.costCount = 0;
+	  aMadnessButton.timesClicked = 0;
+	  return aMadnessButton;
+	}
+	
+	function madnessTab(aMadnessTab) {
+	  return aMadnessTab;
+	}
+	
+	function popUpNumber(aPopUpNumber) {
+	  return aPopUpNumber;
+	}
+	
+	function loadImages(sources, callback) {
+      images = {};
+      var loadedImages = 0;
+      var numImages = 0;
+      // get num of sources
+      for(var src in sources) {
+        numImages++;
+      }
+      for(var src in sources) {
+        images[src] = new Image();
+        images[src].onload = function() {
+          if(++loadedImages >= numImages) {
+            callback();
+          }
+        };
+        images[src].src = sources[src];
+      }
+    }
+
+	function madnessClickClick(id) {
+	  visibleMadnessClickButtons[id].click();
+	}
+	
+	function madnessClick(id) {
+	  visibleMadnessButtons[id].click();
+	}
+	
+	function doMouseDown(event) {
+	  event.preventDefault();
+	  mouseX = event.pageX;
+	  mouseY = event.pageY;
+	  // FIXME: change these numbers when I put a real image in
+	  if (mouseX >= 8 && mouseX <= 332 && mouseY >= 127 && mouseY <= 451) { // click on the picture
+	    if (currTab == "madnessMadnessTab") {
+		  visibleMadnessClickButtons['madnessClickButton'].click(mouseX, mouseY);
+		  showClickImage = true;
+		  clickImage = images.zzz;
+		}
+		else if (currTab == "madnessMoneyTab") {
+		  visibleMadnessClickButtons['moneyClickButton'].click(mouseX, mouseY);
+		  showClickImage = true;
+		  clickImage = images.wait;
+		}
+	  }
+	}
+	
+	function doMouseUp(event) {
+	  showClickImage = false;
+	}
+
+	function changeMadnessTab(id) {
+	  currTab = id;
+	  for (var key in visibleMadnessTabs) {
+	    visibleMadnessTabs[key].contains.hidden = true;
+		visibleMadnessTabs[key].display.hidden = true;
+		visibleMadnessTabs[key].active = false;
+	  }
+	  visibleMadnessTabs[id].contains.hidden = false;
+	  visibleMadnessTabs[id].display.hidden = false;
+	  visibleMadnessTabs[id].active = true;
+	  visibleMadnessTabs[id].notifications = 0;
+	  visibleMadnessTabs[id].id.innerHTML = visibleMadnessTabs[id].title;
+	}
+	
+	function addNotifyTab(id) {
+	  if (typeof(visibleMadnessTabs[id]) == "object") {
+	    if (!visibleMadnessTabs[id].active)
+		  visibleMadnessTabs[id].notifications++;
+	  }
+	  else {
+	    if (!hiddenMadnessTabs[id].active)
+		  hiddenMadnessTabs[id].notifications++;
+	  }
+	}
+	
+	function calculateMadnessPerSecond() {
+	
+	  currMadnessPerSecond = 0; // set it to 0
+	  
+	  for (var key in madnessMinions) { // increase it for each minion type
+	    currMadnessPerSecond += madnessPerSecondBonus * madnessMinions[key].current * madnessMinions[key].madnessPerSecond * madnessMinions[key].bonus; 
+		// increase by minions times per minion times bonus
+	  }
+	}
+	
+	function updateMadness() {
+	  currMadness += currMadnessPerSecond;
+	}
+	
+	function calculateMoneyPerSecond() {
+	
+	  currMoneyPerSecond = 0; // set it to 0
+	  
+	  for (var key in madnessMinions) { // increase it for each minion type
+	    currMoneyPerSecond += moneyPerSecondBonus * madnessMinions[key].current * madnessMinions[key].moneyPerSecond * madnessMinions[key].bonus; 
+		// increase by minions times per minion times bonus
+	  }
+	}
+	
+	function updateMoney() {
+	  currMoney += currMoneyPerSecond;
+	}
+	
+	function setDayNightCycle(timeOfDay) {
+	  if (timeOfDay > 16 && timeOfDay < 46) // day
+		document.getElementById('thewholebody').style.background = "SkyBlue";
+	  else if (timeOfDay < 13 || timeOfDay > 49) // night
+	    document.getElementById('thewholebody').style.background = "Black";
+	  else if (timeOfDay == 13 || timeOfDay == 49) // astronomical twilight
+	    document.getElementById('thewholebody').style.background = "MidnightBlue";
+	  else if (timeOfDay == 14 || timeOfDay == 48) // nautical twilight
+	    document.getElementById('thewholebody').style.background = "DodgerBlue";
+	  else if (timeOfDay == 15 || timeOfDay == 47) // civil twilight
+	    document.getElementById('thewholebody').style.background = "DeepSkyBlue";
+	  else if (timeOfDay == 16) // sunrise
+	    document.getElementById('thewholebody').style.background = "Gold";
+	  else if (timeOfDay == 46) // sunset
+	    document.getElementById('thewholebody').style.background = "OrangeRed";
+	}
+	
+	function dailyInterest() {
+	  var interestMoney = currMoney * moneyDailyInterest;
+	  currMoney += interestMoney;
+	}
+	
+	//FIXME: I don't want these to be tabs anymore
+	function checkUnlockMadnessTabs() {
+	  for (var key in hiddenMadnessTabs) {
+	    if (hiddenMadnessTabs[key].unlock()) {
+		  visibleMadnessTabs[key] = madnessTab(hiddenMadnessTabs[key]);
+		  delete hiddenMadnessTabs[key];
+		  document.getElementById(key).hidden = false;
+		  tabsUnlocked++;
+		}
+	  }
+	}
+	
+	function checkUnlockableMadnessDivs() {
+	  for (var key in unlockableMadnessDivs) {
+	    if (unlockableMadnessDivs[key].unlock()) {
+		  visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		  delete unlockableMadnessDivs[key];
+		  document.getElementById(key).hidden = false;
+		  calculateAndDisplayCost(visibleMadnessDivs[key].button);
+		  if (typeof(visibleMadnessTabs[visibleMadnessDivs[key].tab]) == "object") {
+		    if (!visibleMadnessTabs[visibleMadnessDivs[key].tab].active)
+		      visibleMadnessTabs[visibleMadnessDivs[key].tab].notifications++;
+		  }
+		  else {
+		    if (!hiddenMadnessTabs[visibleMadnessDivs[key].tab].active)
+		      hiddenMadnessTabs[visibleMadnessDivs[key].tab].notifications++;
+		  }
+		}
+	  }
+	}
+	
+	function checkMadnessDisabledButtons() {
+	  for (var key in visibleMadnessButtons) {
+	  
+	    var enabled = true; // start at true make false if it fails any check
+		
+		for (var i=0; i<visibleMadnessButtons[key].costs.length; i++) {
+		  if (visibleMadnessButtons[key].costs[i].type == "madness") {
+		    if (currMadness < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleMadnessButtons[key].costs[i].type == "money") {
+		    if (currMoney < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleMadnessButtons[key].costs[i].type == "know") {
+		    if (currKnow < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleMadnessButtons[key].costs[i].type == "might") {
+		    if (currMight < visibleMadnessButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		}
+		
+		for (var j=0; j<visibleMadnessButtons[key].minionCosts.length; j++) {
+		  var madnessMinType = visibleMadnessButtons[key].minionCosts[j].type;
+		  if (madnessMinions[madnessMinType].current < visibleMadnessButtons[key].minionCosts[j].current)
+		    enabled = false;
+		}
+
+	    if (enabled) { // then it should be enabled
+		  document.getElementById(key).disabled = false;
+		}
+		else { // it should be disabled
+		  document.getElementById(key).disabled = true;
+		}
+	  }
+	}
+	
+	function checkShowMadnessDivDividers() {
+	  var showUpgrades = false;
+	  var showBuildings = false;
+	  var showBoughtUpgrades = false;
+	  for (var key in visibleMadnessDivs) {
+	    if (visibleMadnessDivs[key].tab == currTab) {
+		  if (visibleMadnessDivs[key].type == "upgrade")
+		    showUpgrades = true;
+		  if (visibleMadnessDivs[key].type == "boughtupgrade")
+		    showBoughtUpgrades = true;
+		  if (visibleMadnessDivs[key].type == "building")
+		    showBuildings = true;
+		}
+	  }
+	  if (showUpgrades)
+	    visibleMadnessTabs[currTab].upgradesdiv.hidden=false;
+	  else
+	    visibleMadnessTabs[currTab].upgradesdiv.hidden=true;
+	  if (showBoughtUpgrades)
+	    visibleMadnessTabs[currTab].boughtupgradesdiv.hidden=false;
+	  else
+	    visibleMadnessTabs[currTab].boughtupgradesdiv.hidden=true;
+	  if (showBuildings)
+	    visibleMadnessTabs[currTab].buildingsdiv.hidden=false;
+	  else
+	    visibleMadnessTabs[currTab].buildingsdiv.hidden=true;
+	}
+	
+	// FIXME: not tabs anymore
+	function madnessTabNotificationsDisplay() {
+	  for (var key in visibleMadnessTabs) {
+	    if (visibleMadnessTabs[key].notifications > 0 && !visibleMadnessTabs[key].active) {
+		   visibleMadnessTabs[key].id.innerHTML = visibleMadnessTabs[key].title + " (" + visibleMadnessTabs[key].notifications + ")";
+		}
+	  }
+	}
+	
+	// FIXME: the first display would only be for stats screen
+	function madnessMinionDisplay() {
+	  for (var key in madnessMinions) {
+	    document.getElementById(key).innerHTML = madnessMinions[key].text + ": " + madnessMinions[key].current;
+		document.getElementById(madnessMinions[key].idindiv).innerHTML = madnessMinions[key].current;
+	  }
+	}
+	
+	function madnessResourceDisplay() {
+	  // FIXME: add in other two tabs
+	  if (currTab == "madnessMadnessTab") {
+	    document.getElementById("madness").innerHTML = "Madness: " + commafy(Math.floor(currMadness));
+	    document.getElementById("madnessPerSecond").innerHTML = "Madness Per Second: " + commafy(currMadnessPerSecond.toFixed(1));
+	  }
+	  else if (currTab == "madnessMoneyTab") {
+	    document.getElementById("money").innerHTML = "Money: " + commafy(Math.floor(currMoney));
+	    document.getElementById("moneyPerSecond").innerHTML = "Money Per Second: " + commafy(currMoneyPerSecond.toFixed(1));
+	  }
+	}
+	
+	function madnessStatusDisplay() {
+	  if (currTab == "madnessMadnessTab") {
+	    // FIXME: reconsider this but manually updating for now
+	    //document.getElementById("madnessStatusDiv").innerHTML = "The world is only slightly mad.";
+	  }
+	  else if (currTab == "madnessMoneyTab") {
+	    var moneyBankTitle;
+	    if (moneyBankAccountKey == "none")
+		  moneyBankTitle = "No account";
+		else
+		  moneyBankTitle = visibleMadnessDivs[moneyBankAccountKey].title;
+		var minString = (60 - minuteCounter).toString();
+		var secString = (60 - secondCounter).toString();
+	    var moneyStatusString = moneyBankTitle + " earning " + moneyDailyInterest*100 + "% interest in " + 
+		minString + ":" + secString;
+	    document.getElementById("moneyStatusDiv").innerHTML = moneyStatusString;
+	  }
+	}
+	
+	function clearDisplay() {
+	  context.clearRect(0,0,500,500);
+	}
+	
+	function madnessClickImageDisplay() {
+	  if (showClickImage) {
+	    context.drawImage(clickImage, 100, 100);
+	  }
+	}
+	
+	function clickPopUpDisplay() {
+	  for (var i=0; i<popUpNumbers.length; i++) {
+	    if (popUpNumbers[i].timer < 1) {
+		  popUpNumbers.splice(i,1);
+		  i--;
+		}
+		else {
+		  var alpha = popUpNumbers[i].timer / 60;
+		  context.font = '16px Arial bold';
+          context.fillStyle = "rgba(255, 0, 0, " + alpha + ")";
+		  context.textAlign = 'center';
+          context.fillText("+" + commafy(popUpNumbers[i].amount) + " " + popUpNumbers[i].type, popUpNumbers[i].xpos, (popUpNumbers[i].ypos - 70 + popUpNumbers[i].timer));
+		  popUpNumbers[i].timer--;
+		}
+	  }	
+	}
+	
+	function updateMadWorldDiv(aString) {
+	  document.getElementById('madnessStatusDiv').innerHTML = aString;
+	}
+	
+	function Game(){  // every frame this happens
+	  if (GameOn) {
+	    frameCounter++;
+		calculateMadnessPerSecond();
+		calculateMoneyPerSecond();
+		if (frameCounter >= 60) { // do once per second stuff
+		  frameCounter = 1;
+		  secondCounter++;
+		  updateMadness();
+		  updateMoney();
+		  //setDayNightCycle(secondCounter); // day cycles once per second with this on
+		}
+		if (secondCounter >= 60) { // do once per minute stuff
+		  secondCounter = 1;
+		  minuteCounter++;
+		  setDayNightCycle(minuteCounter);
+		  //dailyInterest(); // interest every minute here
+		}
+		if (minuteCounter >= 60) { // do once per hour stuff
+		  minuteCounter = 1;
+		  dailyInterest();
+		  // FIXME: new day stuff here
+		}
+		checkUnlockMadnessTabs();
+		checkUnlockableMadnessDivs();
+		checkMadnessDisabledButtons();
+		if (tabsUnlocked > 0)
+		  checkShowMadnessDivDividers();
+		madnessTabNotificationsDisplay();
+		madnessMinionDisplay();
+		madnessResourceDisplay();
+		madnessStatusDisplay();
+		clearDisplay();
+		madnessClickImageDisplay();
+		clickPopUpDisplay();
+		
+        loop = setTimeout(Game, 1000 / 60); // 60 FPS
+	  }
+    }  
+	
+	  // --------------------- API ----------------------------
+	  
+	function commafy( num ) {
+	// taken from http://stackoverflow.com/questions/6784894/add-commas-or-spaces-to-group-every-three-digits
+      var str = num.toString().split('.');
+      if (str[0].length >= 4) {
+        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+      }
+      if (str[1] && str[1].length >= 5) {
+        str[1] = str[1].replace(/(\d{3})/g, '$1,');
+      }
+      return str.join('.');
+	}
+	  
+	function calculateAndDisplayCost(key) {
+	  var costDisplayString = "";
+	  
+	  for (var costKey in visibleMadnessButtons[key].costs) {
+	    var currMult = visibleMadnessButtons[key].costMultiplier - convertCostReduction;
+		if (currMult < 1.05)
+		  currMult = 1.05;
+		visibleMadnessButtons[key].costs[costKey].current = Math.floor(visibleMadnessButtons[key].costs[costKey].base
+			* Math.pow(currMult, visibleMadnessButtons[key].costCount));
+	    if (visibleMadnessButtons[key].costs[costKey].type == "madness") {
+		  costDisplayString = costDisplayString + commafy(visibleMadnessButtons[key].costs[costKey].current) + " Madness ";
+		}
+		else if (visibleMadnessButtons[key].costs[costKey].type == "money") {
+		  costDisplayString = costDisplayString + commafy(visibleMadnessButtons[key].costs[costKey].current) + " Money ";
+		}
+		else if (visibleMadnessButtons[key].costs[costKey].type == "know") {
+		  costDisplayString = costDisplayString + commafy(visibleMadnessButtons[key].costs[costKey].current) + " Knowledge ";
+		}
+		else if (visibleMadnessButtons[key].costs[costKey].type == "might") {
+		  costDisplayString = costDisplayString + commafy(visibleMadnessButtons[key].costs[costKey].current) + " Might ";
+		}
+	  }
+	  
+	  for (var minCostKey in visibleMadnessButtons[key].minionCosts) {
+	    var currMult = visibleMadnessButtons[key].costMultiplier - convertCostReduction;
+		if (currMult < 1.05)
+		  currMult = 1.05;
+		visibleMadnessButtons[key].minionCosts[minCostKey].current = Math.floor(visibleMadnessButtons[key].minionCosts[minCostKey].base
+			* Math.pow(currMult, visibleMadnessButtons[key].costCount));
+	    costDisplayString = costDisplayString + commafy(visibleMadnessButtons[key].minionCosts[minCostKey].current) + " " + 
+			madnessMinions[visibleMadnessButtons[key].minionCosts[minCostKey].type].text + " ";
+	  }
+	  
+	  if (costDisplayString != "")
+	    document.getElementById(visibleMadnessButtons[key].costid).innerHTML = costDisplayString.slice(0, costDisplayString.length-1);
+	}
+	
+	function upgradeDoubleBonus(key) {
+	  var upgradeButton = visibleMadnessButtons[key];
+	  if (upgradeButton.costs[0].type == "madness")
+	    currMadness -= upgradeButton.costs[0].current;
+	  else if (upgradeButton.costs[0].type == "money")
+	    currMoney -= upgradeButton.costs[0].current;
+	  else if (upgradeButton.costs[0].type == "know")
+	    currKnow -= upgradeButton.costs[0].current;
+	  else if (upgradeButton.costs[0].type == "might")
+	    currMight -= upgradeButton.costs[0].current;
+	  upgradeButton.timesClicked++;
+	  upgradeButton.costCount++;
+	  totalUpgrades++;
+	  madnessMinions[upgradeButton.minion].bonus *= 2;
+			
+	  visibleMadnessDivs[upgradeButton.divid].type = "boughtupgrade";
+	  document.getElementById(upgradeButton.divid).hidden = true;		
+	  document.getElementById(upgradeButton.boughtdivid).hidden = false;
+	}
+	
+	function upgradeIncreaseBase(key, otherDiv, madness1, madness2, money1, money2, know1, know2, might1, might2) {
+	  var upgradeButton = visibleMadnessButtons[key];
+	  if (upgradeButton.costs[0].type == "madness")
+	    currMadness -= upgradeButton.costs[0].current;
+	  else if (upgradeButton.costs[0].type == "money")
+	    currMoney -= upgradeButton.costs[0].current;
+	  else if (upgradeButton.costs[0].type == "know")
+	    currKnow -= upgradeButton.costs[0].current;
+	  else if (upgradeButton.costs[0].type == "might")
+	    currMight -= upgradeButton.costs[0].current;
+	  upgradeButton.timesClicked++;
+	  upgradeButton.costCount++;
+	  totalUpgrades++;
+	  
+	  if (typeof(visibleMadnessDivs[visibleMadnessButtons[otherDiv].divid]) == "object" ) {
+	    if (visibleMadnessDivs[visibleMadnessButtons[otherDiv].divid].type == "boughtupgrade") { // the other has been bought use 2
+	      madnessMinions[upgradeButton.minion].madnessPerSecond = madness2;
+		  madnessMinions[upgradeButton.minion].moneyPerSecond = money2;
+		  madnessMinions[upgradeButton.minion].knowPerSecond = know2;
+		  madnessMinions[upgradeButton.minion].mightPerSecond = might2;
+	    }
+	    else {
+	  	  madnessMinions[upgradeButton.minion].madnessPerSecond = madness1;
+		  madnessMinions[upgradeButton.minion].moneyPerSecond = money1;
+		  madnessMinions[upgradeButton.minion].knowPerSecond = know1;
+		  madnessMinions[upgradeButton.minion].mightPerSecond = might1;
+	    }
+	  }
+	  else { // other div does not exist yet, use 1
+	    madnessMinions[upgradeButton.minion].madnessPerSecond = madness1;
+		madnessMinions[upgradeButton.minion].moneyPerSecond = money1;
+		madnessMinions[upgradeButton.minion].knowPerSecond = know1;
+		madnessMinions[upgradeButton.minion].mightPerSecond = might1;
+	  }
+			
+	  visibleMadnessDivs[upgradeButton.divid].type = "boughtupgrade";
+	  document.getElementById(upgradeButton.divid).hidden = true;		
+	  document.getElementById(upgradeButton.boughtdivid).hidden = false;
+	
+	
+	}
+	
+	function Init() {
+	  // --------------------- SETUP ------------------------------
+	  
+	  canvas.addEventListener("mousedown", doMouseDown, false);
+	  canvas.addEventListener("mouseup", doMouseUp, false);
+	
+	  // --------------------- MONEY BUILDINGS ----------------------------
+	  
+	  madnessMinions['moneyBuildingsEight'] = 
+	    (madnessMinion({
+          id: moneyBuildingsEight,
+		  idindiv: 'moneyBuildingsEightBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 10,
+		  moneyPerSecond: 5000,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Pharmaceutical Company'
+        }));
+	  
+	  madnessMinions['moneyBuildingsSeven'] = 
+	    (madnessMinion({
+          id: moneyBuildingsSeven,
+		  idindiv: 'moneyBuildingsSevenBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 2,
+		  moneyPerSecond: 1000,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Talk Radio Station'
+        }));
+	  
+	  madnessMinions['moneyBuildingsSix'] = 
+	    (madnessMinion({
+          id: moneyBuildingsSix,
+		  idindiv: 'moneyBuildingsSixBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: .5,
+		  moneyPerSecond: 200,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Asylum'
+        }));
+	  
+	  madnessMinions['moneyBuildingsFive'] = 
+	    (madnessMinion({
+          id: moneyBuildingsFive,
+		  idindiv: 'moneyBuildingsFiveBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: .1,
+		  moneyPerSecond: 50,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Half Way House'
+        }));
+	  
+	  madnessMinions['moneyBuildingsFour'] = 
+	    (madnessMinion({
+          id: moneyBuildingsFour,
+		  idindiv: 'moneyBuildingsFourBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0,
+		  moneyPerSecond: 10,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Rock Candy Store'
+        }));
+	  
+	  madnessMinions['moneyBuildingsThree'] = 
+	    (madnessMinion({
+          id: moneyBuildingsThree,
+		  idindiv: 'moneyBuildingsThreeBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0,
+		  moneyPerSecond: 2,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Candy Store'
+        }));
+	  
+	  madnessMinions['moneyBuildingsTwo'] = 
+	    (madnessMinion({
+          id: moneyBuildingsTwo,
+		  idindiv: 'moneyBuildingsTwoBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0,
+		  moneyPerSecond: .5,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Cookie Store'
+        }));
+	  
+	  madnessMinions['moneyBuildingsOne'] = 
+	    (madnessMinion({
+          id: moneyBuildingsOne,
+		  idindiv: 'moneyBuildingsOneBuyTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0,
+		  moneyPerSecond: .1,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Lemonade Stand'
+        }));
+	
+	  // --------------------- MADNESS MINIONS ----------------------------
+	  
+	  madnessMinions['madnessMinionsEight'] = 
+	    (madnessMinion({
+          id: madnessMinionsEight,
+		  idindiv: 'madnessMinionsEightConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 5000,
+		  moneyPerSecond: 10,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Greedy CEO'
+        }));
+	  
+	  madnessMinions['madnessMinionsSeven'] = 
+	    (madnessMinion({
+          id: madnessMinionsSeven,
+		  idindiv: 'madnessMinionsSevenConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 1000,
+		  moneyPerSecond: 2,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Pirate Captain'
+        }));
+	  
+	  madnessMinions['madnessMinionsSix'] = 
+	    (madnessMinion({
+          id: madnessMinionsSix,
+		  idindiv: 'madnessMinionsSixConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 200,
+		  moneyPerSecond: 0.5,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Carcosan Architect'
+        }));
+	  
+	  madnessMinions['madnessMinionsFive'] = 
+	    (madnessMinion({
+          id: madnessMinionsFive,
+		  idindiv: 'madnessMinionsFiveConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 50,
+		  moneyPerSecond: 0.1,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Avant-Garde Artist'
+        }));
+	  
+	  madnessMinions['madnessMinionsFour'] = 
+	    (madnessMinion({
+          id: madnessMinionsFour,
+		  idindiv: 'madnessMinionsFourConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 10,
+		  moneyPerSecond: 0,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Conspiracy Theorist'
+        }));
+	  
+	  madnessMinions['madnessMinionsThree'] = 
+	    (madnessMinion({
+          id: madnessMinionsThree,
+		  idindiv: 'madnessMinionsThreeConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 2,
+		  moneyPerSecond: 0,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'CDC Investigator'
+        }));
+	  
+	  madnessMinions['madnessMinionsTwo'] = 
+	    (madnessMinion({
+          id: madnessMinionsTwo,
+		  idindiv: 'madnessMinionsTwoConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0.5,
+		  moneyPerSecond: 0,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Suspicious Sailor'
+        }));
+	  
+	  madnessMinions['madnessMinionsOne'] = 
+	    (madnessMinion({
+          id: madnessMinionsOne,
+		  idindiv: 'madnessMinionsOneConvertTotal',
+          current: 0,
+		  allTime: 0,
+		  madnessPerSecond: 0.1,
+		  moneyPerSecond: 0,
+		  knowPerSecond: 0,
+		  mightPerSecond: 0,
+		  bonus: 1,
+		  text: 'Crazy Homeless Person'
+        }));
+		
+		
+	  // --------------------- TABS ----------------------------
+		
+		hiddenMadnessTabs['madnessMadnessTab'] = 
+	    (madnessTab({
+          id: madnessMadnessTab,
+		  title: "Madness",
+		  contains: madnessSpread,
+		  display: madnessDisplay,
+		  upgradesdiv: madnessMadnessUpgrades,
+		  buildingsdiv: madnessMadnessBuildings,
+		  boughtupgradesdiv: madnessMadnessBoughtUpgrades,
+		  active: true,
+		  notifications: 0,
+		  unlock: function () {
+		    // this unlocks at 10 madness, same as the first madness button
+		    if (currMadness >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		hiddenMadnessTabs['madnessMoneyTab'] = 
+	    (madnessTab({
+          id: madnessMoneyTab,
+		  title: "Money",
+		  contains: madnessInvest,
+		  display: moneyDisplay,
+		  upgradesdiv: madnessMoneyUpgrades,
+		  buildingsdiv: madnessMoneyBuildings,
+		  boughtupgradesdiv: madnessMoneyBoughtUpgrades,
+		  active: false,
+		  notifications: 0,
+		  unlock: function () {
+		    // this unlocks as soon as you get money
+			if (currMoney > 0)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// FIXME: add in other tabs, bloodRitualTab, bloodMoneyTab, bloodResearchTab, bloodFightTab
+		// FIXME: also clarify the active tab and make it clearer its a tab when its new by theming
+		
+	  // --------------------- CLICK BUTTONS ----------------------------
+	  
+	  visibleMadnessClickButtons['madnessClickButton'] = 
+	    (madnessButton({
+          id: madnessClickButton,
+		  tab: "madnessClickTab",
+		  type: "click",
+          click: function (mouseX, mouseY) {
+			  totalClicks++;
+			  totalMadnessClicks++;
+			  var moreMadness = (madnessPerClick * madnessPerClickBonus) * (1 + madnessPerBuildingClickMult * totalMinionsConverted);
+			  currMadness += moreMadness;
+			  totalMadnessFromClicking += moreMadness;
+			  
+			  popUpNumbers.push(popUpNumber({
+		        amount: Math.floor(moreMadness),
+                type: "Madness",
+		        xpos: mouseX - 8,
+		        ypos: mouseY - 8,
+		        timer: 60
+              }));
+		  },
+		  costs: [],
+		  minionCosts: [],
+        }));
+		
+		visibleMadnessClickButtons['moneyClickButton'] = 
+	    (madnessButton({
+          id: moneyClickButton,
+		  tab: "moneyClickTab",
+		  type: "click",
+          click: function (mouseX, mouseY) {
+			  totalClicks++;
+			  totalMoneyClicks++;
+			  var moreMoney = (moneyPerClick * moneyPerClickBonus) * (1 + moneyPerBuildingClickMult * totalMoneyBuildingsConverted);
+			  currMoney += moreMoney;
+			  totalMoneyFromClicking += moreMoney;
+			  
+			  popUpNumbers.push(popUpNumber({
+		        amount: Math.floor(moreMoney),
+                type: "Money",
+		        xpos: mouseX - 8,
+		        ypos: mouseY - 8,
+		        timer: 60
+              }));
+		  },
+		  costs: [],
+		  minionCosts: [],
+        }));
+		
+	  // --------------------- ACHIEVEMENT BASED UPGRADES ----------------------------
+	  
+	  // --------------------- MONEY ACHIEVEMENTS ------------------------------------
+	  
+	  visibleMadnessButtons['upgradeMoneyInterestFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyInterestFour',
+		  boughtdivid: 'boughtUpgradeMoneyInterestFour',
+		  id: 'upgradeMoneyInterestFourButton',
+		  costid: 'upgradeMoneyInterestFourCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyDailyInterest = .05;
+			moneyBankAccountKey = "upgradeMoneyInterestFour";
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 500, current: 500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyInterestFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyInterestFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyInterestFourButton', 
+		  title: "Platinum Account",
+		  text: "You've proven your worth and qualify for a platinum account which will earn 5% interest.",
+		  unlock: function () {
+		  // half the cost, one money Four building, bought previous interest.
+		    if (currMoney >= 50000 && madnessMinions['moneyBuildingsFour'].allTime > 0 
+			&& typeof(visibleMadnessDivs['upgradeMoneyInterestThree']) == "object" && visibleMadnessDivs['upgradeMoneyInterestThree'].type == "boughtupgrade")
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	  visibleMadnessButtons['upgradeMoneyInterestThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyInterestThree',
+		  boughtdivid: 'boughtUpgradeMoneyInterestThree',
+		  id: 'upgradeMoneyInterestThreeButton',
+		  costid: 'upgradeMoneyInterestThreeCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyDailyInterest = .03;
+			moneyBankAccountKey = "upgradeMoneyInterestThree";
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 100, current: 100}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyInterestThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyInterestThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyInterestThreeButton', 
+		  title: "Gold Account",
+		  text: "You have enough money to open a gold account which will earn 5% interest.",
+		  unlock: function () {
+		  // half the cost, one money Three building, bought previous interest.
+		    if (currMoney >= 5000 && madnessMinions['moneyBuildingsThree'].allTime > 0 
+			&& typeof(visibleMadnessDivs['upgradeMoneyInterestTwo']) == "object" && visibleMadnessDivs['upgradeMoneyInterestTwo'].type == "boughtupgrade")
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	  visibleMadnessButtons['upgradeMoneyInterestTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyInterestTwo',
+		  boughtdivid: 'boughtUpgradeMoneyInterestTwo',
+		  id: 'upgradeMoneyInterestTwoButton',
+		  costid: 'upgradeMoneyInterestTwoCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyDailyInterest = .02;
+			moneyBankAccountKey = "upgradeMoneyInterestTwo";
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 50, current: 50}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyInterestTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyInterestTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyInterestTwoButton', 
+		  title: "Silver Account",
+		  text: "You can now upgrade to a silver account earning 2% interest.",
+		  unlock: function () {
+		  // high cost, one money two building, bought previous interest.
+		    if (currMoney >= 500 && madnessMinions['moneyBuildingsTwo'].allTime > 0
+			&& typeof(visibleMadnessDivs['upgradeMoneyInterestOne']) == "object" && visibleMadnessDivs['upgradeMoneyInterestOne'].type == "boughtupgrade")
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	  visibleMadnessButtons['upgradeMoneyInterestOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyInterestOne',
+		  boughtdivid: 'boughtUpgradeMoneyInterestOne',
+		  id: 'upgradeMoneyInterestOneButton',
+		  costid: 'upgradeMoneyInterestOneCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyDailyInterest = .01;
+			moneyBankAccountKey = "upgradeMoneyInterestOne";
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 10, current: 10}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyInterestOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyInterestOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyInterestOneButton', 
+		  title: "Basic Account",
+		  text: "You open a basic checking account earning you 1% interest.",
+		  unlock: function () {
+		    if (currMoney >= 50 && madnessMinions['moneyBuildingsOne'].allTime > 0)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+	  visibleMadnessButtons['upgradeMoneyClicksTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyClicksTwo',
+		  boughtdivid: 'boughtUpgradeMoneyClicksTwo',
+		  id: 'upgradeMoneyClicksTwoButton',
+		  costid: 'upgradeMoneyClicksTwoCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyPerClick *= 2;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 100, current: 100}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyClicksTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyClicksTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyClicksTwoButton', 
+		  title: "Stock Portfolio",
+		  text: "Setting up a portfolio of stocks will let you earn more money from clicks.",
+		  unlock: function () {
+		    // 250 clicks or 1000 money from clicks so on ascension they could conceivably get this sooner
+			// double the money from clicks since its the second upgrade
+		    if (totalMoneyClicks >= 250 || totalMoneyFromClicking >= 1000)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	  visibleMadnessButtons['upgradeMoneyClicksOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyClicksOne',
+		  boughtdivid: 'boughtUpgradeMoneyClicksOne',
+		  id: 'upgradeMoneyClicksOneButton',
+		  costid: 'upgradeMoneyClicksOneCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyPerClick *= 2;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 50, current: 50}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyClicksOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyClicksOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyClicksOneButton',  
+		  title: "Mutual Funds",
+		  text: "You invest in mutual funds allowing you to get more money from clicks.",
+		  unlock: function () {
+		    // 50 clicks or 100 money from clicks so on ascension they could conceivably get this sooner
+		    if (totalMoneyClicks >= 50 || totalMoneyFromClicking >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyClicksFromBuildingsFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyClicksFromBuildingsFour',
+		  boughtdivid: 'boughtUpgradeMoneyClicksFromBuildingsFour',
+		  id: 'upgradeMoneyClicksFromBuildingsFourButton',
+		  costid: 'upgradeMoneyClicksFromBuildingsFourCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyPerBuildingClickMult += 1;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 2500, current: 2500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyClicksFromBuildingsFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyClicksFromBuildingsFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyClicksFromBuildingsFourButton',   
+		  title: "Exclusive Deals",
+		  text: "Adding deals between your stores exclusive to each other you further increase the money you make " +
+		  "from clicks for each building you have.",
+		  unlock: function () {
+		    if (totalMoneyBuildingsConverted >= 500 && madnessMinions['moneyBuildingsFour'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyClicksFromBuildingsThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyClicksFromBuildingsThree',
+		  boughtdivid: 'boughtUpgradeMoneyClicksFromBuildingsThree',
+		  id: 'upgradeMoneyClicksFromBuildingsThreeButton',
+		  costid: 'upgradeMoneyClicksFromBuildingsThreeCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyPerBuildingClickMult += 0.5;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyClicksFromBuildingsThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyClicksFromBuildingsThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyClicksFromBuildingsThreeButton',   
+		  title: "Cross Promotion",
+		  text: "Your businesses start to advertise for each other increasing your money per click further for " +
+		  "each business.",
+		  unlock: function () {
+		    if (totalMoneyBuildingsConverted >= 250 && madnessMinions['moneyBuildingsThree'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyClicksFromBuildingsTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyClicksFromBuildingsTwo',
+		  boughtdivid: 'boughtUpgradeMoneyClicksFromBuildingsTwo',
+		  id: 'upgradeMoneyClicksFromBuildingsTwoButton',
+		  costid: 'upgradeMoneyClicksFromBuildingsTwoCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyPerBuildingClickMult += 0.2;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 500, current: 500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyClicksFromBuildingsTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyClicksFromBuildingsTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyClicksFromBuildingsTwoButton',   
+		  title: "Targeted Promotion",
+		  text: "You have so many businesses you can afford to target your audience better giving even more " +
+		  "money for each building per click.",
+		  unlock: function () {
+		    if (totalMoneyBuildingsConverted >= 100 && madnessMinions['moneyBuildingsTwo'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyClicksFromBuildingsOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyClicksFromBuildingsOne',
+		  boughtdivid: 'boughtUpgradeMoneyClicksFromBuildingsOne',
+		  id: 'upgradeMoneyClicksFromBuildingsOneButton',
+		  costid: 'upgradeMoneyClicksFromBuildingsOneCost',
+		  click: function () {
+			currMoney -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    moneyPerBuildingClickMult += 0.1;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "money", base: 250, current: 250}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyClicksFromBuildingsOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyClicksFromBuildingsOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyClicksFromBuildingsOneButton',  
+		  title: "Promotion",
+		  text: "You have so many businesses that you start to promote them. You'll get extra money from " +
+		  "clicks for each building.",
+		  unlock: function () {
+		    // 25 total money buildings converted
+		    if (totalMoneyBuildingsConverted >= 25 && madnessMinions['moneyBuildingsOne'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	  // --------------------- MADNESS ACHIEVEMENTS ----------------------------------
+	  
+	  visibleMadnessButtons['upgradeMadnessClicksTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessClicksTwo',
+		  boughtdivid: 'boughtUpgradeMadnessClicksTwo',
+		  id: 'upgradeMadnessClicksTwoButton',
+		  costid: 'upgradeMadnessClicksTwoCost',
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerClick *= 2;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 100, current: 100}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessClicksTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessClicksTwoButton', 
+		  title: "Unrelenting Slumber",
+		  text: "Cthulhu continues to slumber, even more madness from clicks.",
+		  unlock: function () {
+		    // 250 clicks or 1000 madness from clicks so on ascension they could conceivably get this sooner
+			// double the madness from clicks since its the second upgrade
+		    if (totalMadnessClicks >= 250 || totalMadnessFromClicking >= 1000)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	  visibleMadnessButtons['upgradeMadnessClicksOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessClicksOne',
+		  boughtdivid: 'boughtUpgradeMadnessClicksOne',
+		  id: 'upgradeMadnessClicksOneButton',
+		  costid: 'upgradeMadnessClicksOneCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerClick *= 2;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 50, current: 50}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessClicksOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessClicksOneButton',  
+		  title: "Deep Slumber",
+		  text: "Cthulhu's slumber is deeper than ever granting you more madness from clicks.",
+		  unlock: function () {
+		    // 50 clicks or 100 madness from clicks so on ascension they could conceivably get this sooner
+		    if (totalMadnessClicks >= 50 || totalMadnessFromClicking >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessClicksFromBuildingsFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessClicksFromBuildingsFour',
+		  boughtdivid: 'boughtUpgradeMadnessClicksFromBuildingsFour',
+		  id: 'upgradeMadnessClicksFromBuildingsFourButton',
+		  costid: 'upgradeMadnessClicksFromBuildingsFourCost',
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerBuildingClickMult += 1;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 2500, current: 2500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksFromBuildingsFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessClicksFromBuildingsFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessClicksFromBuildingsFourButton',   
+		  title: "Religion of Cthulhu",
+		  text: "Your church has enough members its officially recognized as a religion. Cthulhu will produce more " +
+		    "madness when clicked for each minion.",
+		  unlock: function () {
+		    if (totalMinionsConverted >= 500 && madnessMinions['madnessMinionsFour'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessClicksFromBuildingsThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessClicksFromBuildingsThree',
+		  boughtdivid: 'boughtUpgradeMadnessClicksFromBuildingsThree',
+		  id: 'upgradeMadnessClicksFromBuildingsThreeButton',
+		  costid: 'upgradeMadnessClicksFromBuildingsThreeCost',
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerBuildingClickMult += 0.5;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksFromBuildingsThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessClicksFromBuildingsThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessClicksFromBuildingsThreeButton',   
+		  title: "Church of Cthulhu",
+		  text: "Your minions form an official church for their dark worship. Cthulhu will produce more madness when " +
+		    "clicked for each minion.",
+		  unlock: function () {
+		    if (totalMinionsConverted >= 250 && madnessMinions['madnessMinionsThree'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessClicksFromBuildingsTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessClicksFromBuildingsTwo',
+		  boughtdivid: 'boughtUpgradeMadnessClicksFromBuildingsTwo',
+		  id: 'upgradeMadnessClicksFromBuildingsTwoButton',
+		  costid: 'upgradeMadnessClicksFromBuildingsTwoCost',
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerBuildingClickMult += 0.2;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 500, current: 500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksFromBuildingsTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessClicksFromBuildingsTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessClicksFromBuildingsTwoButton',   
+		  title: "Cult of Cthulhu",
+		  text: "Your minions begin to organize into a cult. Cthulhu will produce more madness when clicked " +
+		  "for each minion.",
+		  unlock: function () {
+		    if (totalMinionsConverted >= 100 && madnessMinions['madnessMinionsTwo'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessClicksFromBuildingsOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessClicksFromBuildingsOne',
+		  boughtdivid: 'boughtUpgradeMadnessClicksFromBuildingsOne',
+		  id: 'upgradeMadnessClicksFromBuildingsOneButton',
+		  costid: 'upgradeMadnessClicksFromBuildingsOneCost',
+		  click: function () {
+			currMadness -= this.costs[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+		    madnessPerBuildingClickMult += 0.1;
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessClicksFromBuildingsOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessClicksFromBuildingsOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessClicksFromBuildingsOneButton',  
+		  title: "Secret Gatherings",
+		  text: "Your minions begin to meet with each other in secret. Cthulhu will produce more madness when " +
+		  "clicked for each minion.",
+		  unlock: function () {
+		    // 25 total minions converted
+		    if (totalMinionsConverted >= 25 && madnessMinions['madnessMinionsOne'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 8 ------------------------------
+		
+		visibleMadnessButtons['moneyBuildingsEightBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsEightBuyButton',
+		  costid: 'moneyBuildingsEightBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsEightBuyButton');
+			madnessMinions['moneyBuildingsEight'].current++;
+			madnessMinions['moneyBuildingsEight'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 500000, current: 500000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsEightBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsEightBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsEightBuyButton',
+		  title: "Pharmaceutical Company",
+		  text: "With madness on the rise pharmaceutical drugs are in high demand. Yours won't help ease " +
+		  "the madness but will make the user accept it more readily.",
+		  unlock: function () {
+		    if (currMoney > 500000) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsEightBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsEightBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsEightBonusFive',
+		  id: 'upgradeMoneyBuildingsEightBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsEightBonusFiveCost',
+		  minion: 'moneyBuildingsEight',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsEightBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 50000000000, current: 50000000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsEightBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsEightBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsEightBonusFiveButton',
+		  title: "Major Chain Distribution",
+		  text: "Getting your medicines into a major chain improves the reach of your pharmaceutical companies " +
+		  "getting their corrupting drugs to more people.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsEight'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsEightBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsEightBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsEightBonusFour',
+		  id: 'upgradeMoneyBuildingsEightBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsEightBonusFourCost',
+		  minion: 'moneyBuildingsEight',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsEightBonusFourButton', 
+		  'upgradeMoneyBuildingsEightBonusTwoButton', 50, 250, 20000, 100000, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 50000000, current: 50000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsEightBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsEightBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsEightBonusFourButton',
+		  title: "Designer Drugs",
+		  text: "Designer modifications to your pharmaceutical companies drugs allow them to charge more " +
+		  "for selling them outside the normal channels.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsEight'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsEightBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsEightBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsEightBonusThree',
+		  id: 'upgradeMoneyBuildingsEightBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsEightBonusThreeCost',
+		  minion: 'moneyBuildingsEight',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsEightBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 5000000, current: 5000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsEightBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsEightBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsEightBonusThreeButton',
+		  title: "Psychiatrist Recommended",
+		  text: "A few psychiatrists on your payroll means your drugs get prescribed more often. This allows your " +
+		  "pharmaceutical companies more profit and spreads more madness.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsEight'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsEightBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsEightBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsEightBonusTwo',
+		  id: 'upgradeMoneyBuildingsEightBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsEightBonusTwoCost',
+		  minion: 'moneyBuildingsEight',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsEightBonusTwoButton', 
+		  'upgradeMoneyBuildingsEightBonusFourButton', 50, 250, 20000, 100000, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 1000000, current: 1000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsEightBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsEightBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsEightBonusTwoButton',
+		  title: "Drug Patent",
+		  text: "After patenting new drugs your pharmaceutical companies can raise the price without fear of " +
+		  "competition. This will allow you to sell increasingly unstable drugs for a higerh price.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsEight'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsEightBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsEightBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsEightBonusOne',
+		  id: 'upgradeMoneyBuildingsEightBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsEightBonusOneCost',
+		  minion: 'moneyBuildingsEight',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsEightBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 500000, current: 500000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsEightBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsEightBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsEightBonusOneButton',
+		  title: "Debilitating Side Effects",
+		  text: "By building awful side effects into their drugs your pharmaceutical companies can ensure " +
+		  "they can sell other pills to counteract them.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsEight'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 7 ------------------------------
+		
+		visibleMadnessButtons['moneyBuildingsSevenBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsSevenBuyButton',
+		  costid: 'moneyBuildingsSevenBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsSevenBuyButton');
+			madnessMinions['moneyBuildingsSeven'].current++;
+			madnessMinions['moneyBuildingsSeven'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 100000, current: 100000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsSevenBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsSevenBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsSevenBuyButton',
+		  title: "Talk Radio Station",
+		  text: "Whether they listen for entertainment or earnestly belive in what they hear talk radio is " +
+		  "a big business and spreads distrust and thereby madness very effectively.",
+		  unlock: function () {
+		    if (currMoney > 100000) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSevenBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSevenBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSevenBonusFive',
+		  id: 'upgradeMoneyBuildingsSevenBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsSevenBonusFiveCost',
+		  minion: 'moneyBuildingsSeven',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsSevenBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 1500000000, current: 1500000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSevenBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSevenBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSevenBonusFiveButton',
+		  title: "Political Agenda",
+		  text: "Aligning with increasingly fringe political activists your talk radio shows move further out "
+		  + "of the mainstream and move your listeners opinions as well.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSeven'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSevenBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSevenBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSevenBonusFour',
+		  id: 'upgradeMoneyBuildingsSevenBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsSevenBonusFourCost',
+		  minion: 'moneyBuildingsSeven',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsSevenBonusFourButton', 
+		  'upgradeMoneyBuildingsSevenBonusTwoButton', 10, 50, 5000, 20000, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 10000000, current: 10000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSevenBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSevenBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSevenBonusFourButton',
+		  title: "Satellite Radio",
+		  text: "By moving to satellite radio your talk shows earn even more money from subscription fees "
+		  + "and spread their corrupting message more effectively.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSeven'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSevenBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSevenBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSevenBonusThree',
+		  id: 'upgradeMoneyBuildingsSevenBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsSevenBonusThreeCost',
+		  minion: 'moneyBuildingsSeven',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsSevenBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 1000000, current: 1000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSevenBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSevenBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSevenBonusThreeButton',
+		  title: "Subliminal Messages",
+		  text: "Adding subliminal messages to the your talk radio shows will subtley corrupt the minds " +
+		  "of your listeners and keep bringing them back for more.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSeven'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSevenBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSevenBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSevenBonusTwo',
+		  id: 'upgradeMoneyBuildingsSevenBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsSevenBonusTwoCost',
+		  minion: 'moneyBuildingsSeven',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsSevenBonusTwoButton', 
+		  'upgradeMoneyBuildingsSevenBonusFourButton', 10, 50, 5000, 20000, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 250000, current: 250000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSevenBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSevenBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSevenBonusTwoButton',
+		  title: "FM Band",
+		  text: "Moving your talk radio shows to FM radio expands your listenership allowing you to charge " +
+		  "more for advertising.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSeven'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSevenBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSevenBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSevenBonusOne',
+		  id: 'upgradeMoneyBuildingsSevenBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsSevenBonusOneCost',
+		  minion: 'moneyBuildingsSeven',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsSevenBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 150000, current: 150000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSevenBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSevenBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSevenBonusOneButton',
+		  title: "Aggressive Guests",
+		  text: "Having aggressive and argumentative guests on your talk radio shows draws more people to " +
+		  "listen and take in the crazy things they say.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSeven'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 6 ------------------------------
+		
+		visibleMadnessButtons['moneyBuildingsSixBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsSixBuyButton',
+		  costid: 'moneyBuildingsSixBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsSixBuyButton');
+			madnessMinions['moneyBuildingsSix'].current++;
+			madnessMinions['moneyBuildingsSix'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 20000, current: 20000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsSixBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsSixBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsSixBuyButton',
+		  title: "Asylum",
+		  text: "Asylums are a great way to spread madness while turning a profit. No one improves within " +
+		  "these walls but they get released eventually nonetheless.",
+		  unlock: function () {
+		    if (currMoney > 20000) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSixBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSixBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSixBonusFive',
+		  id: 'upgradeMoneyBuildingsSixBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsSixBonusFiveCost',
+		  minion: 'moneyBuildingsSix',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsSixBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 300000000, current: 300000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSixBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSixBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSixBonusFiveButton',
+		  title: "Organ Harvesting",
+		  text: "Harvesting the organs of inmates who die at your asylums allow you to profit twice. Once " +
+		  "from their miserable lifes and again from their deaths.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSix'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSixBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSixBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSixBonusFour',
+		  id: 'upgradeMoneyBuildingsSixBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsSixBonusFourCost',
+		  minion: 'moneyBuildingsSix',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsSixBonusFourButton', 
+		  'upgradeMoneyBuildingsSixBonusTwoButton', 2, 10, 1000, 5000, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 2500000, current: 2500000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSixBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSixBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSixBonusFourButton',
+		  title: "Secure Cells",
+		  text: "Adding bars to some of the cells in your asylums will allow you to take in criminally dangerous " +
+		  "inmates and charge more for their care.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSix'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSixBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSixBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSixBonusThree',
+		  id: 'upgradeMoneyBuildingsSixBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsSixBonusThreeCost',
+		  minion: 'moneyBuildingsSix',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsSixBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 200000, current: 200000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSixBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSixBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSixBonusThreeButton',
+		  title: "Drug Testing",
+		  text: "By testing out new drugs on the inmates if you asylum you can earn some extra money on the side. "
+		  +"The inmates will deal with the side effects while you reap the benefits.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSix'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSixBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSixBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSixBonusTwo',
+		  id: 'upgradeMoneyBuildingsSixBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsSixBonusTwoCost',
+		  minion: 'moneyBuildingsSix',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsSixBonusTwoButton', 
+		  'upgradeMoneyBuildingsSixBonusFourButton', 2, 10, 1000, 5000, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 50000, current: 50000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSixBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSixBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSixBonusTwoButton',
+		  title: "Padded Rooms",
+		  text: "Adding padded rooms to your asylums will allow you to take in patients who are a danger to " +
+		  "themselves, and this allows you to charge more.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSix'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsSixBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsSixBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsSixBonusOne',
+		  id: 'upgradeMoneyBuildingsSixBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsSixBonusOneCost',
+		  minion: 'moneyBuildingsSix',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsSixBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 25000, current: 25000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsSixBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsSixBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsSixBonusOneButton',
+		  title: "Experimental Treatments",
+		  text: "By using experimental treatments on the inmates in your asylums you can increase your profit " +
+		  "while driving the inmates further over the edge.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsSix'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 5 ------------------------------
+		
+		visibleMadnessButtons['moneyBuildingsFiveBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsFiveBuyButton',
+		  costid: 'moneyBuildingsFiveBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsFiveBuyButton');
+			madnessMinions['moneyBuildingsFive'].current++;
+			madnessMinions['moneyBuildingsFive'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 5000, current: 5000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsFiveBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsFiveBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsFiveBuyButton',
+		  title: "Halfway House",
+		  text: "There is profit to be made in housing troubled people as they try to turn their lives around. " +
+		  "At your halfway houses the experience will also be maddening.",
+		  unlock: function () {
+		    if (currMoney > 5000) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+			// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFiveBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFiveBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFiveBonusFive',
+		  id: 'upgradeMoneyBuildingsFiveBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsFiveBonusFiveCost',
+		  minion: 'moneyBuildingsFive',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsFiveBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 50000000, current: 50000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFiveBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFiveBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFiveBonusFiveButton',
+		  title: "Security System",
+		  text: "An advanced security system at your halfway houses will ensure your wards can not leave and " +
+		  "unnerve them in the process.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFive'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFiveBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFiveBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFiveBonusFour',
+		  id: 'upgradeMoneyBuildingsFiveBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsFiveBonusFourCost',
+		  minion: 'moneyBuildingsFive',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsFiveBonusFourButton', 
+		  'upgradeMoneyBuildingsFiveBonusTwoButton', .5, 2, 250, 1000, 0, 0, 0, 0)},
+		  costs: [(madnessCost({type: "money", base: 500000, current: 500000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFiveBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFiveBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFiveBonusFourButton',
+		  title: "National Contract",
+		  text: "Securing a national contract for your halfway houses will allow you to charge even more and " +
+		  "get away with undermining the youth more freely.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFive'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFiveBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFiveBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFiveBonusThree',
+		  id: 'upgradeMoneyBuildingsFiveBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsFiveBonusThreeCost',
+		  minion: 'moneyBuildingsFive',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsFiveBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 50000, current: 50000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFiveBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFiveBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFiveBonusThreeButton',
+		  title: "Bribed Parole Officer",
+		  text: "Some choice bribes get parole officers in your pocket. They'll extend the stays at your " +
+		  "halway houses earning you more money at the cost of your wards mental well being.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFive'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFiveBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFiveBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFiveBonusTwo',
+		  id: 'upgradeMoneyBuildingsFiveBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsFiveBonusTwoCost',
+		  minion: 'moneyBuildingsFive',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsFiveBonusTwoButton', 
+		  'upgradeMoneyBuildingsFiveBonusFourButton', .5, 2, 250, 1000, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 15000, current: 15000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFiveBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFiveBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFiveBonusTwoButton',
+		  title: "State Contract",
+		  text: "You make a contract with the state making your halfway houses the official residence for " +
+		  "recently released teens allowing you to charge more.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFive'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFiveBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFiveBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFiveBonusOne',
+		  id: 'upgradeMoneyBuildingsFiveBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsFiveBonusOneCost',
+		  minion: 'moneyBuildingsFive',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsFiveBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 10000, current: 10000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFiveBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFiveBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFiveBonusOneButton',
+		  title: "Strict Orderlies",
+		  text: "Stricter orderlies will keep your wards in line through intimidation. They'll stay at " +
+		  "your halfway houses longer and earn you more money.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFive'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 4 ------------------------------
+	    
+		visibleMadnessButtons['moneyBuildingsFourBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsFourBuyButton',
+		  costid: 'moneyBuildingsFourBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsFourBuyButton');
+			madnessMinions['moneyBuildingsFour'].current++;
+			madnessMinions['moneyBuildingsFour'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsFourBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsFourBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsFourBuyButton',
+		  title: "Rock Candy Store",
+		  text: "They only sell blue and operate exclusively out of basements but for some reason are " +
+		  "extremely popular.",
+		  unlock: function () {
+		    if (currMoney > 1000) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFourBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFourBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFourBonusFive',
+		  id: 'upgradeMoneyBuildingsFourBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsFourBonusFiveCost',
+		  minion: 'moneyBuildingsFour',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsFourBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 15000000, current: 15000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFourBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFourBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFourBonusFiveButton',
+		  title: "Mules",
+		  text: "You start using mules to transport your rock candy to and from foreign lands.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFour'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFourBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFourBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFourBonusFour',
+		  id: 'upgradeMoneyBuildingsFourBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsFourBonusFourCost',
+		  minion: 'moneyBuildingsFour',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsFourBonusFourButton', 
+		  'upgradeMoneyBuildingsFourBonusTwoButton', 0, 0, 50, 250, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 100000, current: 100000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFourBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFourBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFourBonusFourButton',
+		  title: "Platinum Boilers",
+		  text: "Boiling in platinum increases the purity of your rock candy even more. Your rock candy " +
+		  "is the best and you can charge a premium for it.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFour'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFourBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFourBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFourBonusThree',
+		  id: 'upgradeMoneyBuildingsFourBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsFourBonusThreeCost',
+		  minion: 'moneyBuildingsFour',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsFourBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 10000, current: 10000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFourBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFourBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFourBonusThreeButton',
+		  title: "Sleazy Lawyers",
+		  text: "You hire lawyers willing to do anything to protect your rock candy business from " +
+		  "potential lawsuits. They're so popular they might get their own tv show.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFour'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFourBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFourBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFourBonusTwo',
+		  id: 'upgradeMoneyBuildingsFourBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsFourBonusTwoCost',
+		  minion: 'moneyBuildingsFour',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsFourBonusTwoButton', 
+		  'upgradeMoneyBuildingsFourBonusFourButton', 0, 0, 50, 250, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 2500, current: 2500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFourBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFourBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFourBonusTwoButton',
+		  title: "Stainless Steel Boilers",
+		  text: "Cooking your rock candy in stainless steel improves its purity which for some reason " +
+		  "means you can charge more for it.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFour'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsFourBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsFourBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsFourBonusOne',
+		  id: 'upgradeMoneyBuildingsFourBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsFourBonusOneCost',
+		  minion: 'moneyBuildingsFour',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsFourBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 1500, current: 1500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsFourBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsFourBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsFourBonusOneButton',
+		  title: "Free Candy Van",
+		  text: "A not at all creepy van that gives out free samples of your rock candy. Once they try it " +
+		  "people are hooked.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsFour'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 3 ------------------------------
+	    
+		visibleMadnessButtons['moneyBuildingsThreeBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsThreeBuyButton',
+		  costid: 'moneyBuildingsThreeBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsThreeBuyButton');
+			madnessMinions['moneyBuildingsThree'].current++;
+			madnessMinions['moneyBuildingsThree'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 250, current: 250}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsThreeBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsThreeBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsThreeBuyButton',
+		  title: "Candy Store",
+		  text: "A retro shop filled with all kinds of candies. The classic decor really brings the customers in.",
+		  unlock: function () {
+		    if (currMoney > 250) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsThreeBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsThreeBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsThreeBonusFive',
+		  id: 'upgradeMoneyBuildingsThreeBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsThreeBonusFiveCost',
+		  minion: 'moneyBuildingsThree',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsThreeBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 5000000, current: 5000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsThreeBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsThreeBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsThreeBonusFiveButton',
+		  title: "Witch",
+		  text: "You hire a witch and get her to cast a spell that doubles your candy production.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsThree'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsThreeBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsThreeBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsThreeBonusFour',
+		  id: 'upgradeMoneyBuildingsThreeBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsThreeBonusFourCost',
+		  minion: 'moneyBuildingsThree',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsThreeBonusFourButton', 
+		  'upgradeMoneyBuildingsThreeBonusTwoButton', 0, 0, 10, 50, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 25000, current: 25000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsThreeBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsThreeBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsThreeBonusFourButton',
+		  title: "Chocolate Bars",
+		  text: "Rumored to have magical powers your chocolate bars are quite the draw and fetch a hefty price " +
+		  "at your candy stores.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsThree'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsThreeBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsThreeBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsThreeBonusThree',
+		  id: 'upgradeMoneyBuildingsThreeBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsThreeBonusThreeCost',
+		  minion: 'moneyBuildingsThree',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsThreeBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 2500, current: 2500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsThreeBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsThreeBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsThreeBonusThreeButton',
+		  title: "Frog Mascot",
+		  text: "You brand your candy stores with an adorable frog mascot who is constantly asking questions. " +
+		  "It proves very popular with the kids.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsThree'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsThreeBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsThreeBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsThreeBonusTwo',
+		  id: 'upgradeMoneyBuildingsThreeBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsThreeBonusTwoCost',
+		  minion: 'moneyBuildingsThree',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsThreeBonusTwoButton', 
+		  'upgradeMoneyBuildingsThreeBonusFourButton', 0, 0, 10, 50, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsThreeBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsThreeBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsThreeBonusTwoButton',
+		  title: "Lollipops",
+		  text: "You start carrying lollipops and they are worth a lot more than candies.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsThree'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsThreeBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsThreeBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsThreeBonusOne',
+		  id: 'upgradeMoneyBuildingsThreeBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsThreeBonusOneCost',
+		  minion: 'moneyBuildingsThree',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsThreeBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 500, current: 500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsThreeBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsThreeBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsThreeBonusOneButton',
+		  title: "Arcade Cabinet",
+		  text: "Installing an arcade cabinet in your stores gives the customers something to do while " +
+		  "they wait for you to produce enough candies.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsThree'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 2 ------------------------------
+	    
+		visibleMadnessButtons['moneyBuildingsTwoBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsTwoBuyButton',
+		  costid: 'moneyBuildingsTwoBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsTwoBuyButton');
+			madnessMinions['moneyBuildingsTwo'].current++;
+			madnessMinions['moneyBuildingsTwo'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 50, current: 50}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsTwoBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsTwoBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsTwoBuyButton',
+		  title: "Cookie Store",
+		  text: "The best cookies you've ever tasted sold here. You just can't wait to get a few more.",
+		  unlock: function () {
+		    if (currMoney > 50) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsTwoBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsTwoBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsTwoBonusFive',
+		  id: 'upgradeMoneyBuildingsTwoBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsTwoBonusFiveCost',
+		  minion: 'moneyBuildingsTwo',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsTwoBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 500000, current: 500000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsTwoBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsTwoBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsTwoBonusFiveButton',
+		  title: "Shipment",
+		  text: "You start receiving shipments from far away. You don't question too much where they come from " +
+		  "because the extra cookies make you more money.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsTwo'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsTwoBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsTwoBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsTwoBonusFour',
+		  id: 'upgradeMoneyBuildingsTwoBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsTwoBonusFourCost',
+		  minion: 'moneyBuildingsTwo',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsTwoBonusFourButton', 
+		  'upgradeMoneyBuildingsTwoBonusTwoButton', 0, 0, 2, 10, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 5000, current: 5000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsTwoBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsTwoBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsTwoBonusFourButton',
+		  title: "Christmas Cookies",
+		  text: "Your Christmas themed cookies are the talk of the town. You can now charge a lot more for " +
+		  "them and your other cookies as well.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsTwo'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsTwoBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsTwoBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsTwoBonusThree',
+		  id: 'upgradeMoneyBuildingsTwoBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsTwoBonusThreeCost',
+		  minion: 'moneyBuildingsTwo',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsTwoBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 500, current: 500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsTwoBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsTwoBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsTwoBonusThreeButton',
+		  title: "Factories",
+		  text: "Industrialization of the cookie making process allows you to bake way more cookies.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsTwo'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsTwoBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsTwoBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsTwoBonusTwo',
+		  id: 'upgradeMoneyBuildingsTwoBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsTwoBonusTwoCost',
+		  minion: 'moneyBuildingsTwo',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsTwoBonusTwoButton', 
+		  'upgradeMoneyBuildingsTwoBonusFourButton', 0, 0, 2, 10, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 150, current: 150}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsTwoBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsTwoBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsTwoBonusTwoButton',
+		  title: "Halloween Cookies",
+		  text: "Unique halloween themed shapes and flavors allow you to charge more for cookies.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsTwo'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsTwoBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsTwoBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsTwoBonusOne',
+		  id: 'upgradeMoneyBuildingsTwoBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsTwoBonusOneCost',
+		  minion: 'moneyBuildingsTwo',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsTwoBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 100, current: 100}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsTwoBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsTwoBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsTwoBonusOneButton',
+		  title: "Grandmas",
+		  text: "Hiring grandmas will allow you to bake more cookies and her secret recipe is to die for.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsTwo'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MONEY BUILDINGS 1 ------------------------------
+	    
+		visibleMadnessButtons['moneyBuildingsOneBuyButton'] = 
+	    (madnessButton({
+		  id: 'moneyBuildingsOneBuyButton',
+		  costid: 'moneyBuildingsOneBuyCost',
+		  click: function () {
+		    currMoney -= this.costs[0].current;
+			moneySpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('moneyBuildingsOneBuyButton');
+			madnessMinions['moneyBuildingsOne'].current++;
+			madnessMinions['moneyBuildingsOne'].allTime++;
+			totalMoneyBuildingsConverted++;
+		  },
+		  costs: [(madnessCost({type: "money", base: 10, current: 10}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['moneyBuildingsOneBuy'] = 
+	    (madnessDiv({
+          id: 'moneyBuildingsOneBuy',
+		  tab: "madnessMoneyTab",
+		  type: "building",
+		  button: 'moneyBuildingsOneBuyButton',
+		  title: "Lemonade Stand",
+		  text: "The starting point for every child's economic endeavours.",
+		  unlock: function () {
+		    if (currMoney > 10) 
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsOneBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsOneBonusFive',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsOneBonusFive',
+		  id: 'upgradeMoneyBuildingsOneBonusFiveButton',
+		  costid: 'upgradeMoneyBuildingsOneBonusFiveCost',
+		  minion: 'moneyBuildingsOne',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsOneBonusFiveButton')},
+		  costs: [(madnessCost({type: "money", base: 150000, current: 150000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsOneBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsOneBonusFive',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsOneBonusFiveButton',
+		  title: "Weather Channel",
+		  text: "You begin to use advanced information from to weather channel to maximize profit each day, " +
+		  "preparing more lemonade on hot days and making more money.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsOne'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsOneBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsOneBonusFour',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsOneBonusFour',
+		  id: 'upgradeMoneyBuildingsOneBonusFourButton',
+		  costid: 'upgradeMoneyBuildingsOneBonusFourCost',
+		  minion: 'moneyBuildingsOne',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsOneBonusFourButton', 
+		  'upgradeMoneyBuildingsOneBonusTwoButton', 0, 0, .5, 2, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsOneBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsOneBonusFour',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsOneBonusFourButton',
+		  title: "Organic Lemons",
+		  text: "You found a supplier for organic lemons allowing you to charge significantly more for each " +
+		  "cup of lemonade you sell.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsOne'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsOneBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsOneBonusThree',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsOneBonusThree',
+		  id: 'upgradeMoneyBuildingsOneBonusThreeButton',
+		  costid: 'upgradeMoneyBuildingsOneBonusThreeCost',
+		  minion: 'moneyBuildingsOne',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsOneBonusThreeButton')},
+		  costs: [(madnessCost({type: "money", base: 100, current: 100}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsOneBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsOneBonusThree',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsOneBonusThreeButton',
+		  title: "Pushy Children",
+		  text: "The children at your lemonade stand are getting pushier seeking out customers and bringing " +
+		  "them back to the stand.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsOne'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsOneBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsOneBonusTwo',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsOneBonusTwo',
+		  id: 'upgradeMoneyBuildingsOneBonusTwoButton',
+		  costid: 'upgradeMoneyBuildingsOneBonusTwoCost',
+		  minion: 'moneyBuildingsOne',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsOneBonusTwoButton', 
+		  'upgradeMoneyBuildingsOneBonusFourButton', 0, 0, .5, 2, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "money", base: 30, current: 30}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsOneBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsOneBonusTwo',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsOneBonusTwoButton',
+		  title: "Mint Leaves",
+		  text: "Adding mint to your lemonade will add an exotic flavor allowing you to charge more.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsOne'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMoneyBuildingsOneBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMoneyBuildingsOneBonusOne',
+		  boughtdivid: 'boughtUpgradeMoneyBuildingsOneBonusOne',
+		  id: 'upgradeMoneyBuildingsOneBonusOneButton',
+		  costid: 'upgradeMoneyBuildingsOneBonusOneCost',
+		  minion: 'moneyBuildingsOne',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsOneBonusOneButton')},
+		  costs: [(madnessCost({type: "money", base: 20, current: 20}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMoneyBuildingsOneBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMoneyBuildingsOneBonusOne',
+		  tab: "madnessMoneyTab",
+		  type: "upgrade",
+		  button: 'upgradeMoneyBuildingsOneBonusOneButton',
+		  title: "Better Signs",
+		  text: "Clearer signs with large pretty letters will draw more customers to your lemonade stands.",
+		  unlock: function () {
+		    if (madnessMinions['moneyBuildingsOne'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MADNESS MINIONS 8 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsEightConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsEightConvertButton',
+		  costid: 'madnessMinionsEightConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsEightConvertButton');
+			madnessMinions['madnessMinionsEight'].current++;
+			madnessMinions['madnessMinionsEight'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 500000, current: 500000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsEightConvert'] = 
+	    (madnessDiv({
+          id: 'madnessMinionsEightConvert',
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: 'madnessMinionsEightConvertButton',
+		  title: "Greedy CEO",
+		  text: "The thirst for power is well known to those at the top of the fortune food chain. With Azathoth's " +
+		    "influence their means will feel justified and their ends will be horrifying.",
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsNineButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsNine',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsNine',
+		  id: 'upgradeMadnessUnlockMinionsNineButton',
+		  costid: 'upgradeMadnessUnlockMinionsNineCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsEight'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			//var key = 'madnessMinionsNineConvert';
+			//visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    //delete unlockableMadnessDivs[key];
+		    //document.getElementById(key).hidden = false;
+			//calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			//addNotifyTab('madnessMadnessTab');
+			
+			updateMadWorldDiv("You have the highest possible current madness level");
+			
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 5000000, current: 5000000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsEight", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsNine'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsNine',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsNineButton',
+		  title: "Win Game",
+		  text: "Win the game for now",
+		  unlock: function () {
+		    if (currMadness >= 2500000 && madnessMinions['madnessMinionsEight'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsEightBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsEightBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsEightBonusFive',
+		  id: 'upgradeMadnessMinionsEightBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsEightBonusFiveCost',
+		  minion: 'madnessMinionsEight',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsEightBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 10000000000, current: 10000000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsEightBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsEightBonusFiveButton',
+		  title: "Unholy Hours",
+		  text: "Your CEOs barely count as human anymore. They are working around the clock and expect the same " +
+		  "of everyone else. Morale is non-existant but productivity is up.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsEight'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsEightBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsEightBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsEightBonusFour',
+		  id: 'upgradeMadnessMinionsEightBonusFourButton',
+		  costid: 'upgradeMadnessMinionsEightBonusFourCost',
+		  minion: 'madnessMinionsEight',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsEightBonusFourButton', 
+		  'upgradeMadnessMinionsEightBonusTwoButton', 25000, 100000, 50, 250, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 50000000, current: 50000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsEightBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsEightBonusFourButton',
+		  title: "Environmental Deregulation",
+		  text: "Fear of dwindling resources and some clever lobbying open up previously protected lands ripe " +
+		  "for exploitation. The expansion will benefit your CEOs greatly.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsEight'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsEightBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsEightBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsEightBonusThree',
+		  id: 'upgradeMadnessMinionsEightBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsEightBonusThreeCost',
+		  minion: 'madnessMinionsEight',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsEightBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 5000000, current: 5000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsEightBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsEightBonusThreeButton',
+		  title: "Efficiency Training",
+		  text: "Your CEOs implement efficiency training, a thinly vieled excuse to squeeze more productivity " +
+		  "out of all your employees.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsEight'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsEightBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsEightBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsEightBonusTwo',
+		  id: 'upgradeMadnessMinionsEightBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsEightBonusTwoCost',
+		  minion: 'madnessMinionsEight',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsEightBonusTwoButton', 
+		  'upgradeMadnessMinionsEightBonusFourButton', 25000, 100000, 50, 250, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 1500000, current: 1500000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsEightBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsEightBonusTwoButton',
+		  title: "Back Door Deals",
+		  text: "With desperate times comes desperate measures. Even the usually wholesome are open to some " +
+		  "terrifying compromise and new markets open up.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsEight'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsEightBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsEightBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsEightBonusOne',
+		  id: 'upgradeMadnessMinionsEightBonusOneButton',
+		  costid: 'upgradeMadnessMinionsEightBonusOneCost',
+		  minion: 'madnessMinionsEight',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsEightBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 1000000, current: 1000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsEightBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsEightBonusOneButton',
+		  title: "Cheap Labor",
+		  text: "With madness and fear spreading people are worried about their security. Your CEOs exploit" +
+		  "this to get dirt cheap labourers.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsEight'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+	    // ------------------- MADNESS MINIONS 7 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsSevenConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsSevenConvertButton',
+		  costid: 'madnessMinionsSevenConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsSevenConvertButton');
+			madnessMinions['madnessMinionsSeven'].current++;
+			madnessMinions['madnessMinionsSeven'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 100000, current: 100000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsSevenConvert'] = 
+	    (madnessDiv({
+          id: 'madnessMinionsSevenConvert',
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: 'madnessMinionsSevenConvertButton',
+		  title: "Pirate Captain",
+		  text: "It takes a hardened soul to survive the new dangers in the sea.  Those who can keep their sanity (or " +
+			"more likely only a part) will find their pick of weak and profitable prey.",
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsEightButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsEight',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsEight',
+		  id: 'upgradeMadnessUnlockMinionsEightButton',
+		  costid: 'upgradeMadnessUnlockMinionsEightCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsSeven'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsEightConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			addNotifyTab('madnessMadnessTab');
+			
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+			updateMadWorldDiv("Azathoth is awoken");
+		  },
+		  costs: [(madnessCost({type: "madness", base: 1000000, current: 1000000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsSeven", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsEight'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsEight',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsEightButton',
+		  title: "Awaken Azathoth",
+		  text: "From the center of the unseen universe beyond ours Azathoth once ruled the cosmos " +
+			"until Cthulhu usurped him.  His thirst for power is unquenchable, the sacrifice must be great.",
+		  unlock: function () {
+		    if (currMadness >= 500000 && madnessMinions['madnessMinionsSeven'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSevenBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSevenBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSevenBonusFive',
+		  id: 'upgradeMadnessMinionsSevenBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsSevenBonusFiveCost',
+		  minion: 'madnessMinionsSeven',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsSevenBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 1500000000, current: 1500000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSevenBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSevenBonusFiveButton',
+		  title: "Blood for Oil",
+		  text: "Your pirates own the seas. They can pillage from oil rigs freely and even governments are willing " +
+		  "to make deals with them.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSeven'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSevenBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSevenBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSevenBonusFour',
+		  id: 'upgradeMadnessMinionsSevenBonusFourButton',
+		  costid: 'upgradeMadnessMinionsSevenBonusFourCost',
+		  minion: 'madnessMinionsSeven',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsSevenBonusFourButton', 
+		  'upgradeMadnessMinionsSevenBonusTwoButton', 5000, 25000, 10, 50, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 10000000, current: 10000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSevenBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSevenBonusFourButton',
+		  title: "Raiding Parties",
+		  text: "Your pirate captains no longer know fear as anything other than a constant vibration in the " +
+		  "back of their minds. They now raid cities as well.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSeven'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSevenBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSevenBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSevenBonusThree',
+		  id: 'upgradeMadnessMinionsSevenBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsSevenBonusThreeCost',
+		  minion: 'madnessMinionsSeven',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsSevenBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 1000000, current: 1000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSevenBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSevenBonusThreeButton',
+		  title: "Synthetic Drug",
+		  text: "Random infections from the sea monsters have led to the creation of a synthetic drug. The " +
+		  "single mindedness of the fury it generates is impressive and concerning.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSeven'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSevenBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSevenBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSevenBonusTwo',
+		  id: 'upgradeMadnessMinionsSevenBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsSevenBonusTwoCost',
+		  minion: 'madnessMinionsSeven',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsSevenBonusTwoButton', 
+		  'upgradeMadnessMinionsSevenBonusFourButton', 5000, 25000, 10, 50, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 250000, current: 250000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSevenBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSevenBonusTwoButton',
+		  title: "Occult Trade",
+		  text: "Increasingly frequent battles with impossible creatures yields some terrifying leftovers. Turns " +
+		  "out there are certain people willing to pay for them.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSeven'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSevenBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSevenBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSevenBonusOne',
+		  id: 'upgradeMadnessMinionsSevenBonusOneButton',
+		  costid: 'upgradeMadnessMinionsSevenBonusOneCost',
+		  minion: 'madnessMinionsSeven',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsSevenBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 150000, current: 150000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSevenBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSevenBonusOneButton',
+		  title: "Terrifying Visage",
+		  text: "Your captains and their ships are slowly being transformed by their time at sea. Frightful " +
+		  "and intense they can now steal more.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSeven'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	    // ------------------- MADNESS MINIONS 6 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsSixConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsSixConvertButton',
+		  costid: 'madnessMinionsSixConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsSixConvertButton');
+			madnessMinions['madnessMinionsSix'].current++;
+			madnessMinions['madnessMinionsSix'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 20000, current: 20000}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsSixConvert'] = 
+	    (madnessDiv({
+          id: 'madnessMinionsSixConvert',
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: 'madnessMinionsSixConvertButton',
+		  title: "Carcosan Architect",
+		  text: "After an architect sees the buildings in Carcosa nothing they create will ever be the same.",
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsSevenButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsSeven',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsSeven',
+		  id: 'upgradeMadnessUnlockMinionsSevenButton',
+		  costid: 'upgradeMadnessUnlockMinionsSevenCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsSix'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsSevenConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			addNotifyTab('madnessMadnessTab');
+			
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+			updateMadWorldDiv("Father Dagon is active in the seas");
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250000, current: 250000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsSix", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsSeven'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsSeven',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsSevenButton',
+		  title: "Enter the Dagon",
+		  text: "The time has come to wake Father Dagon. The seas roar with madness in anticipation. The journey will " +
+		    "be fraught with genuinely unimaginable danger.",
+		  unlock: function () {
+		    if (currMadness >= 125000 && madnessMinions['madnessMinionsSix'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSixBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSixBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSixBonusFive',
+		  id: 'upgradeMadnessMinionsSixBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsSixBonusFiveCost',
+		  minion: 'madnessMinionsSix',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsSixBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 300000000, current: 300000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSixBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSixBonusFiveButton',
+		  title: "Imposing Office Building",
+		  text: "The terrifying look your architects have cultivated is perfect for businesses trying to " +
+		  "intimidate their competition.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSix'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSixBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSixBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSixBonusFour',
+		  id: 'upgradeMadnessMinionsSixBonusFourButton',
+		  costid: 'upgradeMadnessMinionsSixBonusFourCost',
+		  minion: 'madnessMinionsSix',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsSixBonusFourButton', 
+		  'upgradeMadnessMinionsSixBonusTwoButton', 1000, 5000, 2, 10, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 2500000, current: 2500000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSixBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSixBonusFourButton',
+		  title: "Maximized Profit",
+		  text: "Using math that would drive a saner man mad your architects find ways to cut corners and " +
+		  "and charge more for it.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSix'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSixBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSixBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSixBonusThree',
+		  id: 'upgradeMadnessMinionsSixBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsSixBonusThreeCost',
+		  minion: 'madnessMinionsSix',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsSixBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 200000, current: 200000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSixBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSixBonusThreeButton',
+		  title: "Horrible Apartments",
+		  text: "Efficiency can go too far. The apartments your architects make are terrible but so efficient the " +
+		  "owners can charge very low rent so they remain popular nonetheless.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSix'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSixBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSixBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSixBonusTwo',
+		  id: 'upgradeMadnessMinionsSixBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsSixBonusTwoCost',
+		  minion: 'madnessMinionsSix',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsSixBonusTwoButton', 
+		  'upgradeMadnessMinionsSixBonusFourButton', 1000, 5000, 2, 10, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 50000, current: 50000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSixBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSixBonusTwoButton',
+		  title: "Efficient Layout",
+		  text: "Their minds expanded to work in more dimensions your architects layouts are unconventional " +
+		  "yet efficient allowing them to charge more for their work.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSix'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsSixBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsSixBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsSixBonusOne',
+		  id: 'upgradeMadnessMinionsSixBonusOneButton',
+		  costid: 'upgradeMadnessMinionsSixBonusOneCost',
+		  minion: 'madnessMinionsSix',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsSixBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 30000, current: 30000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsSixBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsSixBonusOneButton',
+		  title: "Uncomfortable Condo",
+		  text: "The small homes in Carcosa are far from comfortable but they look fascinating to people " +
+		  "and they are cheap to build making them extremely popular.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsSix'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	    // ------------------- MADNESS MINIONS 5 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsFiveConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsFiveConvertButton',
+		  costid: 'madnessMinionsFiveConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsFiveConvertButton');
+			madnessMinions['madnessMinionsFive'].current++;
+			madnessMinions['madnessMinionsFive'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 5000, current: 5000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsFiveConvert'] = 
+	    (madnessDiv({
+          id: 'madnessMinionsFiveConvert',
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: 'madnessMinionsFiveConvertButton',
+		  title: "Avant-Garde Artist",
+		  text: "Visions of a play that should never be read dance through the minds of the mad and creative. Their " +
+			"work becomes even more confusing but somehow more popular as well.",
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsSixButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsSix',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsSix',
+		  id: 'upgradeMadnessUnlockMinionsSixButton',
+		  costid: 'upgradeMadnessUnlockMinionsSixCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsFive'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsSixConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			addNotifyTab('madnessMadnessTab');
+			
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+			updateMadWorldDiv("Hastur is transporting people to Carcosa");
+		  },
+		  costs: [(madnessCost({type: "madness", base: 50000, current: 50000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsFive", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsSix'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsSix',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsSixButton',
+		  title: "Summon Hastur to Earth",
+		  text: "Hastur alone possesses to power to transport people to and from Carcosa. Much sacrifice " +
+			"will be needed to convince him the trip is worthwhile.",
+		  unlock: function () {
+		    if (currMadness >= 25000 && madnessMinions['madnessMinionsFive'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFiveBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFiveBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFiveBonusFive',
+		  id: 'upgradeMadnessMinionsFiveBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsFiveBonusFiveCost',
+		  minion: 'madnessMinionsFive',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsFiveBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 50000000, current: 50000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFiveBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFiveBonusFiveButton',
+		  title: "Art Jaune Movement",
+		  text: "Your artists have started a movement. Maddening and impossible artwork becomes very popular " +
+          "and your minions are at the front of it.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFive'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFiveBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFiveBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFiveBonusFour',
+		  id: 'upgradeMadnessMinionsFiveBonusFourButton',
+		  costid: 'upgradeMadnessMinionsFiveBonusFourCost',
+		  minion: 'madnessMinionsFive',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsFiveBonusFourButton', 
+		  'upgradeMadnessMinionsFiveBonusTwoButton', 200, 1000, .5, 2, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 500000, current: 500000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFiveBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFiveBonusFourButton',
+		  title: "Gallery Showing",
+		  text: "An art gallery features the work of your artists. People are horrified but entranced " +
+		  "allowing your artists to charge more for their work.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFive'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFiveBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFiveBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFiveBonusThree',
+		  id: 'upgradeMadnessMinionsFiveBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsFiveBonusThreeCost',
+		  minion: 'madnessMinionsFive',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsFiveBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 50000, current: 50000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFiveBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFiveBonusThreeButton',
+		  title: "N-Dimensional Golden Ratio",
+		  text: "Your artists minds have expanded to the point where they can see in dimensions others can " +
+		  "not. They expand the golden ratio into these dimensions to great acclaim.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFive'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFiveBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFiveBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFiveBonusTwo',
+		  id: 'upgradeMadnessMinionsFiveBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsFiveBonusTwoCost',
+		  minion: 'madnessMinionsFive',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsFiveBonusTwoButton', 
+		  'upgradeMadnessMinionsFiveBonusFourButton', 200, 1000, .5, 2, 0, 0, 0, 0);},
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+			if (madnessMinions['madnessMinionsFive'].madnessPerSecond == 50) {
+			  madnessMinions['madnessMinionsFive'].madnessPerSecond = 200;
+			  madnessMinions['madnessMinionsFive'].moneyPerSecond = .5;
+			}
+			else {
+			  madnessMinions['madnessMinionsFive'].madnessPerSecond = 1000;
+			  madnessMinions['madnessMinionsFive'].moneyPerSecond = 2;
+			}
+			
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 15000, current: 15000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFiveBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFiveBonusTwoButton',
+		  title: "Favorable Review",
+		  text: "Your artists are featured in a popular art review magazine. The favorable reviews will " +
+		  "them to charge more for their art.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFive'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFiveBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFiveBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFiveBonusOne',
+		  id: 'upgradeMadnessMinionsFiveBonusOneButton',
+		  costid: 'upgradeMadnessMinionsFiveBonusOneCost',
+		  minion: 'madnessMinionsFive',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsFiveBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 10000, current: 10000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFiveBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFiveBonusOneButton',
+		  title: "Mixed Media",
+		  text: "Your artists start to mix oils with video, light with hanging shards of glass, and other " +
+		  "experimental medium mixtures. They become even more popular.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFive'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	    // ------------------- MADNESS MINIONS 4 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsFourConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsFourConvertButton',
+		  costid: 'madnessMinionsFourConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsFourConvertButton');
+			madnessMinions['madnessMinionsFour'].current++;
+			madnessMinions['madnessMinionsFour'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsFourConvert'] = 
+	    (madnessDiv({
+          id: 'madnessMinionsFourConvert',
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: 'madnessMinionsFourConvertButton',
+		  title: "Conspiracy Theorist",
+		  text: "Sightings of strange creatures lead to wild speculation. No matter how horrifying " +
+		    "their theories are they fall short. However, they do show things are not as they seem.",
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsFive',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsFive',
+		  id: 'upgradeMadnessUnlockMinionsFiveButton',
+		  costid: 'upgradeMadnessUnlockMinionsFiveCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsFour'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsFiveConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			addNotifyTab('madnessMadnessTab');
+			
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+			updateMadWorldDiv("Contact has been made with the King in Yellow");
+		  },
+		  costs: [(madnessCost({type: "madness", base: 10000, current: 10000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsFour", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsFiveButton',
+		  title: "Contact the King in Yellow",
+		  text: "As madness increases the yellow sign becomes clearer. A dangerous invocation " +
+		    "will reveal a gateway in the mind to Carcosa where the King in Yellow resides.",
+		  unlock: function () {
+		    if (currMadness >= 5000 && madnessMinions['madnessMinionsFour'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFourBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFourBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFourBonusFive',
+		  id: 'upgradeMadnessMinionsFourBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsFourBonusFiveCost',
+		  minion: 'madnessMinionsFour',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsFourBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 20000000, current: 20000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFourBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFourBonusFiveButton',
+		  title: "Cell Phone Video",
+		  text: "Someone captured a video of the creatures in the wild. All analysis reveals it to be real but no one knows " +
+		  "what it actually is, just that it scares them.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFour'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFourBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFourBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFourBonusFour',
+		  id: 'upgradeMadnessMinionsFourBonusFourButton',
+		  costid: 'upgradeMadnessMinionsFourBonusFourCost',
+		  minion: 'madnessMinionsFour',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsFourBonusFourButton', 
+		  'upgradeMadnessMinionsFourBonusTwoButton', 50, 200, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 150000, current: 150000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFourBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFourBonusFourButton',
+		  title: "Local News Story",
+		  text: "&quot;Area Man Sees Alien Entity&quot; is the headline on the local news. Reports pop up all over the " +
+		  "world of people claiming to have seen them, their obvious insanity aside.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFour'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFourBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFourBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFourBonusThree',
+		  id: 'upgradeMadnessMinionsFourBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsFourBonusThreeCost',
+		  minion: 'madnessMinionsFour',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsFourBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 10000, current: 10000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFourBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFourBonusThreeButton',
+		  title: "Blurry Photos",
+		  text: "Its impossible to tell whether the blurry photographs really are of an alien species but your conspiracy " +
+		  "theorists are convinced and they convince many others.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFour'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFourBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFourBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFourBonusTwo',
+		  id: 'upgradeMadnessMinionsFourBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsFourBonusTwoCost',
+		  minion: 'madnessMinionsFour',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsFourBonusTwoButton', 
+		  'upgradeMadnessMinionsFourBonusFourButton', 50, 200, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 2500, current: 2500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFourBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFourBonusTwoButton',
+		  title: "Tabloid Magazines",
+		  text: "Tabloid magazines begin running stories about the strange creatures. They might not be the most " +
+		  "reliable of sources but newstands everywhere help the madness spread.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFour'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsFourBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsFourBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsFourBonusOne',
+		  id: 'upgradeMadnessMinionsFourBonusOneButton',
+		  costid: 'upgradeMadnessMinionsFourBonusOneCost',
+		  minion: 'madnessMinionsFour',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsFourBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 1500, current: 1500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsFourBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsFourBonusOneButton',
+		  title: "Crude Drawings",
+		  text: "Your conspiracy theorists get ahold of crude drawings of the creatures which only fuels their " +
+		  "theories and constant chatter.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsFour'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+	    // ------------------- MADNESS MINIONS 3 ------------------------------
+	  
+	    visibleMadnessButtons['madnessMinionsThreeConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsThreeConvertButton',
+		  costid: 'madnessMinionsThreeConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsThreeConvertButton');
+			madnessMinions['madnessMinionsThree'].current++;
+			madnessMinions['madnessMinionsThree'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsThreeConvert'] = 
+	    (madnessDiv({
+          id: 'madnessMinionsThreeConvert',
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: 'madnessMinionsThreeConvertButton',
+		  title: "CDC Investigator",
+		  text: "Strange spores and fungi are mutating across the world and bringing incurable diseases with them. The " +
+			"CDC is learning vanishingly little but spreading great fear and hysteria.",
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsFour',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsFour',
+		  id: 'upgradeMadnessUnlockMinionsFourButton',
+		  costid: 'upgradeMadnessUnlockMinionsFourCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsThree'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsFourConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			addNotifyTab('madnessMadnessTab');
+
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+			updateMadWorldDiv("Shub-Niggurath's Thousand Young are spreading throughout the world");
+		  },
+		  costs: [(madnessCost({type: "madness", base: 2500, current: 2500}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsThree", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsFourButton',  
+		  title: "Awaken Shub-Niggurath",
+		  text: "After a sufficient sacrifice the Black Goat of the woods with a Thousand Young will awaken and her " +
+		    "young will begin to spread around the world.",
+		  unlock: function () {
+		    if (currMadness >= 1250 && madnessMinions['madnessMinionsThree'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsThreeBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsThreeBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsThreeBonusFive',
+		  id: 'upgradeMadnessMinionsThreeBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsThreeBonusFiveCost',
+		  minion: 'madnessMinionsThree',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsThreeBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 4000000, current: 4000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsThreeBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsThreeBonusFiveButton',
+		  title: "Elevated Threat Level",
+		  text: "The CDC is out of ideas. They can't explain what the fungus is, only that its dangerous. An elevated threat " +
+		  "warns people, but of what, no one knows.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsThree'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsThreeBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsThreeBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsThreeBonusFour',
+		  id: 'upgradeMadnessMinionsThreeBonusFourButton',
+		  costid: 'upgradeMadnessMinionsThreeBonusFourCost',
+		  minion: 'madnessMinionsThree',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsThreeBonusFourButton', 
+		  'upgradeMadnessMinionsThreeBonusTwoButton', 10, 50, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 35000, current: 35000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsThreeBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsThreeBonusFourButton',
+		  title: "Spore Infection",
+		  text: "CDC investigators begin to fall prey to infection from the spores. Their minds no longer their own, their " +
+		  "reports become nigh indecipherable tributes to fear.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsThree'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsThreeBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsThreeBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsThreeBonusThree',
+		  id: 'upgradeMadnessMinionsThreeBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsThreeBonusThreeCost',
+		  minion: 'madnessMinionsThree',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsThreeBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 3000, current: 3000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsThreeBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsThreeBonusThreeButton',
+		  title: "Published Report",
+		  text: "The first published report of the CDC findings sends shock waves through the scientific community. The fungi " +
+		  "might not be a fungus at all, or even terrestrial in origin.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsThree'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsThreeBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsThreeBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsThreeBonusTwo',
+		  id: 'upgradeMadnessMinionsThreeBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsThreeBonusTwoCost',
+		  minion: 'madnessMinionsThree',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsThreeBonusTwoButton', 
+		  'upgradeMadnessMinionsThreeBonusFourButton', 10, 50, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsThreeBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsThreeBonusTwoButton',
+		  title: "Quarantined Lab",
+		  text: "The first lab to contain the fungi is locked down under quarantine in suspicious conditions. Everyone who " +
+		  "studies the fungi is set on edge and paranoia sets in.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsThree'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsThreeBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsThreeBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsThreeBonusOne',
+		  id: 'upgradeMadnessMinionsThreeBonusOneButton',
+		  costid: 'upgradeMadnessMinionsThreeBonusOneCost',
+		  minion: 'madnessMinionsThree',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsThreeBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 500, current: 500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsThreeBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsThreeBonusOneButton',
+		  title: "Impossible Math",
+		  text: "Tracking the growth of the fungi leads the CDC to use formulas beyond the minds of mortals. " +
+		  "They show it to colleagues and stretch their minds in unfortunate ways.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsThree'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  
+		// ------------------- MADNESS MINIONS 2 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsTwoConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsTwoConvertButton',
+		  costid: 'madnessMinionsTwoConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsTwoConvertButton');
+			madnessMinions['madnessMinionsTwo'].current++;
+			madnessMinions['madnessMinionsTwo'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 50, current: 50}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsTwoConvert'] = 
+	    (madnessDiv({
+          id: 'madnessMinionsTwoConvert',
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: 'madnessMinionsTwoConvertButton',
+		  title: "Suspicious Sailor",
+		  text: "Seeing the deep ones in the sea has frayed their minds. No one believes their tales of froglike " +
+		  "fishmen but it unsettles them nonetheless.",
+		  unlock: function () {
+		    return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsThree',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsThree',
+		  id: 'upgradeMadnessUnlockMinionsThreeButton',
+		  costid: 'upgradeMadnessUnlockMinionsThreeCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsTwo'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsThreeConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			addNotifyTab('madnessMadnessTab');
+
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+			updateMadWorldDiv("Mi-Go from Yuggoth are infesting our world as fungus");
+		  },
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsTwo", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsThreeButton', 
+		  title: "Take a Trip to Yuggoth",
+		  text: "Pluto may not be a planet anymore but known by its ancient name of Yuggoth it is home to terrifying " +
+			"fungi known as Mi-Go. They can transport people there and back at great danger.",
+		  unlock: function () {
+		    if (currMadness >= 500 && madnessMinions['madnessMinionsTwo'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsTwoBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsTwoBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsTwoBonusFive',
+		  id: 'upgradeMadnessMinionsTwoBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsTwoBonusFiveCost',
+		  minion: 'madnessMinionsTwo',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsTwoBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 1000000, current: 1000000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsTwoBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsTwoBonusFiveButton',
+		  title: "Local Legend",
+		  text: "People come from out of town to buy your sailors a drink and hear their strange tales. They try not to " +
+		    "believe it but the chill in their spine is here to stay.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsTwo'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsTwoBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsTwoBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsTwoBonusFour',
+		  id: 'upgradeMadnessMinionsTwoBonusFourButton',
+		  costid: 'upgradeMadnessMinionsTwoBonusFourCost',
+		  minion: 'madnessMinionsTwo',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsTwoBonusFourButton', 
+		  'upgradeMadnessMinionsTwoBonusTwoButton', 2, 10, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 5000, current: 5000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsTwoBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsTwoBonusFourButton',
+		  title: "Naming the Unnameable",
+		  text: "Names and images, too foreign to comprehend rationally enter your sailors minds. Their stories work in " +
+		    "these elements drawing a horrified and entranced crowd.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsTwo'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsTwoBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsTwoBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsTwoBonusThree',
+		  id: 'upgradeMadnessMinionsTwoBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsTwoBonusThreeCost',
+		  minion: 'madnessMinionsTwo',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsTwoBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsTwoBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsTwoBonusThreeButton',
+		  title: "Bar Regular",
+		  text: "Your sailors become regulars at their local bar. Telling every patron, whether they want to hear or not, " +
+		  "about the horrors that lurk below the waves.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsTwo'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsTwoBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsTwoBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsTwoBonusTwo',
+		  id: 'upgradeMadnessMinionsTwoBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsTwoBonusTwoCost',
+		  minion: 'madnessMinionsTwo',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsTwoBonusTwoButton', 
+		  'upgradeMadnessMinionsTwoBonusFourButton', 2, 10, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsTwoBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsTwoBonusTwoButton',
+		  title: "Clearer Descriptions",
+		  text: "Your sailors remember more about the creatures they saw. Clearer and more " +
+		  "elaborate descriptions become part of the story they tell to anyone who will listen.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsTwo'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsTwoBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsTwoBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsTwoBonusOne',
+		  id: 'upgradeMadnessMinionsTwoBonusOneButton',
+		  costid: 'upgradeMadnessMinionsTwoBonusOneCost',
+		  minion: 'madnessMinionsTwo',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsTwoBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 100, current: 100}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsTwoBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsTwoBonusOneButton',
+		  title: "Stronger Drink",
+		  text: "The madness has taken its toll and your sailors are drinking and consequently telling their story more.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsTwo'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// ------------------- MADNESS MINIONS 1 ------------------------------
+		
+		visibleMadnessButtons['madnessMinionsOneConvertButton'] = 
+	    (madnessButton({
+		  id: 'madnessMinionsOneConvertButton',
+		  costid: 'madnessMinionsOneConvertCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('madnessMinionsOneConvertButton');
+			madnessMinions['madnessMinionsOne'].current++;
+			madnessMinions['madnessMinionsOne'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(madnessCost({type: "madness", base: 10, current: 10}))],
+		  minionCosts: [],
+		}));
+		
+		unlockableMadnessDivs['madnessMinionsOneConvert'] = 
+	    (madnessDiv({
+          id: "madnessMinionsOneConvert",
+		  tab: "madnessMadnessTab",
+		  type: "building",
+		  button: "madnessMinionsOneConvertButton",
+		  title: "Crazy Homeless Person",
+		  text: "The mad men with signs screaming about the end of the world won't do much to spread madness. " +
+		  "But it will do some.",
+          
+		  unlock: function () {
+		    if (currMadness >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// unlock
+		
+		visibleMadnessButtons['upgradeMadnessUnlockMinionsTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessUnlockMinionsTwo',
+		  boughtdivid: 'boughtUpgradeMadnessUnlockMinionsTwo',
+		  id: 'upgradeMadnessUnlockMinionsTwoButton',
+		  costid: 'upgradeMadnessUnlockMinionsTwoCost',
+		  click: function () {
+		    currMadness -= this.costs[0].current;
+			madnessMinions['madnessMinionsOne'].current -= this.minionCosts[0].current;
+		    this.timesClicked++;
+		    this.costCount++;
+		    totalUpgrades++;
+
+			var key = 'madnessMinionsTwoConvert';
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+		    document.getElementById(key).hidden = false;
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+			addNotifyTab('madnessMadnessTab');
+
+			visibleMadnessDivs[this.divid].type = "boughtupgrade";
+			document.getElementById(this.divid).hidden = true;		
+			document.getElementById(this.boughtdivid).hidden = false;
+			updateMadWorldDiv("Mother Hydra and her Deep Ones are awake");
+		  },
+		  costs: [(madnessCost({type: "madness", base: 250, current: 250}))],
+		  minionCosts: [(madnessMinionCost({type: "madnessMinionsOne", base: 2, current: 2}))],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessUnlockMinionsTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessUnlockMinionsTwoButton',
+		  title: "Awaken Mother Hydra",
+		  text: "This dangerous ritual will awaken Mother Hydra and her brood of Deep Ones.",
+		  unlock: function () {
+		    if (currMadness >= 125 && madnessMinions['madnessMinionsOne'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// bonus upgrades
+		
+		visibleMadnessButtons['upgradeMadnessMinionsOneBonusFiveButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsOneBonusFive',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsOneBonusFive',
+		  id: 'upgradeMadnessMinionsOneBonusFiveButton',
+		  costid: 'upgradeMadnessMinionsOneBonusFiveCost',
+		  minion: 'madnessMinionsOne',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsOneBonusFiveButton')},
+		  costs: [(madnessCost({type: "madness", base: 150000, current: 150000}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusFive'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsOneBonusFive',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsOneBonusFiveButton',
+		  title: "Impossible Angles",
+		  text: "The edges of the signs your homeless minions carry now exist in unknown dimensions. No one can tell " +
+		    "what exactly is wrong with them and it weighs heavily on their minds.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsOne'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsOneBonusFourButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsOneBonusFour',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsOneBonusFour',
+		  id: 'upgradeMadnessMinionsOneBonusFourButton',
+		  costid: 'upgradeMadnessMinionsOneBonusFourCost',
+		  minion: 'madnessMinionsOne',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsOneBonusFourButton', 
+		  'upgradeMadnessMinionsOneBonusTwoButton', .5, 2, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 1500, current: 1500}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusFour'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsOneBonusFour',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsOneBonusFourButton',
+		  title: "Speaking in Tongues",
+		  text: "The language your homeless minions speak is no longer human in origin. No one can understand what they " +
+		    "are saying but the dread and despair translates just fine.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsOne'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsOneBonusThreeButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsOneBonusThree',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsOneBonusThree',
+		  id: 'upgradeMadnessMinionsOneBonusThreeButton',
+		  costid: 'upgradeMadnessMinionsOneBonusThreeCost',
+		  minion: 'madnessMinionsOne',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsOneBonusThreeButton')},
+		  costs: [(madnessCost({type: "madness", base: 150, current: 150}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusThree'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsOneBonusThree',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsOneBonusThreeButton',
+		  title: "Eldritch Symbols",
+		  text: "Your homeless minions have learned eldritch symbols. Adding them to their sign makes them twice as unnerving",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsOne'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsOneBonusTwoButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsOneBonusTwo',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsOneBonusTwo',
+		  id: 'upgradeMadnessMinionsOneBonusTwoButton',
+		  costid: 'upgradeMadnessMinionsOneBonusTwoCost',
+		  minion: 'madnessMinionsOne',
+		  click: function () {upgradeIncreaseBase('upgradeMadnessMinionsOneBonusTwoButton', 
+		  'upgradeMadnessMinionsOneBonusFourButton', .5, 2, 0, 0, 0, 0, 0, 0);},
+		  costs: [(madnessCost({type: "madness", base: 50, current: 50}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusTwo'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsOneBonusTwo',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsOneBonusTwoButton',
+		  title: "Louder Yelling",
+		  text: "Your homeless minions are empowered by their madness to yell louder than ever before. Their madness " +
+		    "will spread much more effectively.",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsOne'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		visibleMadnessButtons['upgradeMadnessMinionsOneBonusOneButton'] = 
+	    (madnessButton({
+		  divid: 'upgradeMadnessMinionsOneBonusOne',
+		  boughtdivid: 'boughtUpgradeMadnessMinionsOneBonusOne',
+		  id: 'upgradeMadnessMinionsOneBonusOneButton',
+		  costid: 'upgradeMadnessMinionsOneBonusOneCost',
+		  minion: 'madnessMinionsOne',
+		  click: function() {upgradeDoubleBonus('upgradeMadnessMinionsOneBonusOneButton')},
+		  costs: [(madnessCost({type: "madness", base: 25, current: 25}))],
+		  minionCosts: [],
+		}));
+	  
+	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusOne'] = 
+	    (madnessDiv({
+          id: 'upgradeMadnessMinionsOneBonusOne',
+		  tab: "madnessMadnessTab",
+		  type: "upgrade",
+		  button: 'upgradeMadnessMinionsOneBonusOneButton',
+		  title: "Cryptic Scrawl",
+		  text: "You homeless minions start writing their signs in a mad cryptic scrawling style. Still legible but " +
+		    "much more unsettling",
+		  unlock: function () {
+		    if (madnessMinions['madnessMinionsOne'].current >= 5)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	    
+		// ------------------ POPULATE DIVS --------------------
+		
+		for (var key in unlockableMadnessDivs) {
+		  var addDiv = document.createElement("div"); 
+		  if (unlockableMadnessDivs[key].tab == "madnessMadnessTab") {
+			if (unlockableMadnessDivs[key].type == "building") {
+			  addDiv.innerHTML = "<div id='" + key + "' hidden=true class='convertdiv'>" +
+				"<div id='" + key + "Title' class='itemtitle'>" + unlockableMadnessDivs[key].title + "</div>" +
+				"<div id='" + key + "Total' class='itemtotal'>0</div>" +
+				"<div id='" + key + "Text' class='itemtext'>" + unlockableMadnessDivs[key].text + "</div>" +
+				"<div id='" + key + "Cost' class='itemcost'>0</div>" +
+				"<button id='" + key + "Button' class='itembutton' onclick='madnessClick(&quot;" + key + "Button&quot;)' disabled=true>Convert</button>" +
+                "</div>";
+		      document.getElementById('madnessSpreadConvert').appendChild(addDiv);
+		    }
+			else if (unlockableMadnessDivs[key].type == "upgrade") {
+			  addDiv.innerHTML = "<div id='" + key + "' hidden=true class='upgradediv'>" +
+				"<div id='" + key + "Title' class='itemtitle'>" + unlockableMadnessDivs[key].title + "</div>" +
+				"<div id='" + key + "Total' class='itemtotal'>Unbought</div>" +
+				"<div id='" + key + "Text' class='itemtext'>" + unlockableMadnessDivs[key].text + "</div>" +
+				"<div id='" + key + "Cost' class='itemcost'>0</div>" +
+				"<button id='" + key + "Button' class='itembutton' onclick='madnessClick(&quot;" + key + "Button&quot;)' disabled=true>Buy</button>" +
+                "</div>";
+		      document.getElementById('madnessSpreadUpgrades').appendChild(addDiv);
+			  
+			  var addDiv2 = document.createElement("div");
+			  var boughtID = visibleMadnessButtons[unlockableMadnessDivs[key].button].boughtdivid;
+			  addDiv2.innerHTML = "<div id='" + boughtID + "' hidden=true class='boughtupgradediv'>" +
+				"<div id='" + boughtID + "Title' class='itemtitle'>" + unlockableMadnessDivs[key].title + "</div>" +
+				"<div id='" + boughtID + "Total' class='itemtotal'>Bought</div>" +
+				"<div id='" + boughtID + "Text' class='itemtext'>" + unlockableMadnessDivs[key].text + "</div>" +
+				"</div>";
+		      document.getElementById('madnessSpreadBoughtUpgrades').appendChild(addDiv2);
+			}
+		  }
+		  
+		  else if (unlockableMadnessDivs[key].tab == "madnessMoneyTab") {
+			if (unlockableMadnessDivs[key].type == "building") {
+			  addDiv.innerHTML = "<div id='" + key + "' hidden=true class='convertdiv'>" +
+				"<div id='" + key + "Title' class='itemtitle'>" + unlockableMadnessDivs[key].title + "</div>" +
+				"<div id='" + key + "Total' class='itemtotal'>0</div>" +
+				"<div id='" + key + "Text' class='itemtext'>" + unlockableMadnessDivs[key].text + "</div>" +
+				"<div id='" + key + "Cost' class='itemcost'>0</div>" +
+				"<button id='" + key + "Button' class='itembutton' onclick='madnessClick(&quot;" + key + "Button&quot;)' disabled=true>Buy</button>" +
+                "</div>";
+		      document.getElementById('madnessInvestBuildings').appendChild(addDiv);
+		    }
+			else if (unlockableMadnessDivs[key].type == "upgrade") {
+			  addDiv.innerHTML = "<div id='" + key + "' hidden=true class='upgradediv'>" +
+				"<div id='" + key + "Title' class='itemtitle'>" + unlockableMadnessDivs[key].title + "</div>" +
+				"<div id='" + key + "Total' class='itemtotal'>Unbought</div>" +
+				"<div id='" + key + "Text' class='itemtext'>" + unlockableMadnessDivs[key].text + "</div>" +
+				"<div id='" + key + "Cost' class='itemcost'>0</div>" +
+				"<button id='" + key + "Button' class='itembutton' onclick='madnessClick(&quot;" + key + "Button&quot;)' disabled=true>Buy</button>" +
+                "</div>";
+		      document.getElementById('madnessInvestUpgrades').appendChild(addDiv);
+			  
+			  var addDiv2 = document.createElement("div");
+			  var boughtID = visibleMadnessButtons[unlockableMadnessDivs[key].button].boughtdivid;
+			  addDiv2.innerHTML = "<div id='" + boughtID + "' hidden=true class='boughtupgradediv'>" +
+				"<div id='" + boughtID + "Title' class='itemtitle'>" + unlockableMadnessDivs[key].title + "</div>" +
+				"<div id='" + boughtID + "Total' class='itemtotal'>Bought</div>" +
+				"<div id='" + boughtID + "Text' class='itemtext'>" + unlockableMadnessDivs[key].text + "</div>" +
+				"</div>";
+		      document.getElementById('madnessInvestBoughtUpgrades').appendChild(addDiv2);
+			}
+		  }
+		}
+		
+		
+	  Game();
+	}
+	
+	loadImages(sources, Init); 
+	
+	</script>
+
+</body>
+</html>

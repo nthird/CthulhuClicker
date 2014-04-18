@@ -1,0 +1,136 @@
+Skill tree for vampire. Unlock parallel dimension. Start as vampire or werewolf etc keeping a skill.
+
+Rare spawns unlock after adventure there x times. Tag zones hunt learn etc. Check all tagged. 
+Array of buttons as objects toggle visibility disabled etc. Skill to force rare spawns increase 
+odds unlock sooner.
+
+Warp fate activate to guarantee random spawn also have skills give new button on lock hours
+
+Consider blood needed to stay OK. You only get extra blood when sated.
+
+All homeless people, different text. Drink off wine in box etc.
+
+Sleazy alley - incompetent pickpocket, strung out drug dealer, aged prostitute, insane beggar. Rare 
+converts make them give money in one shot or become money minions.
+
+Flavor this as an empowered conversion. Drunk hobo gets you more minions at AA
+
+Living in box get some blood back because fat and sedentary. Crazy hobo gives a buff for extra 
+blood generation. Smelly hobo gets you extra minions for next few conveys since less smell. Crazy 
+comes with and grabs extra blood.
+
+First crazy hobo as end of world sign guy.
+
+Mall parking structure - 3 low wage 1 lower middle rares all up one. Fast food, movie theater, 
+game store, restaurant. Rest is the better one. Cash on server, games on rate game store.
+
+Buy ledgers to track populations of locations for passive rare unlocking. Buy homeless 
+shelter for passive minions. Plasma donation for passive blood. Blood drive van cheaper option 
+there. Soup kitchen cheaper minion.
+
+Camp site and abandoned rest stop as other locations. Rest stop horny teens rare has drugs 
+user needles for extra blood, drunk driver sleeping it off rare so drunk is easier to get
+his thin blood. Partying teens, rare gives extra convert of their friends. Horror nuts, 
+rare kills friends for blood buff.
+
+Camp site, hippy rare you get high on acid see a purple hippo and drain it's blood.
+
+Family camping trip triple convert, rare is extended family for like 7, romantic getaway two 
+convert rare their blood is flowing fast extra blood buff. Boy scouts, lose blood but get 4, 
+rare lose more blood get more convert.
+
+10 first convert, 15, 20, 30 for next levels. Increase at 1.1 per time spent there? Sacrifice 
+minions gets some from random parts of that? No. It just gets harder.  More likely to get caught.
+
+It makes for an even more interesting trade off. Means we want first upgrade new area second 
+better minions. Then new area again then less increase. Maybe the less increase can flavor as 
+sneaky. Want it to be retroactive. Start at 1.5 move down to 1.1 over time.
+
+Have a reduce suspicion skill in tree to make it easier once a day.
+
+Like burn a building or crash a plane to explain away deaths reducing suspicion amount in
+some areas. Less missing persons etc.
+
+Oooh and get an airport eventually that makes money which unlocks a plane crash big suspicion
+reduction option.
+
+Softer feet for less suspicion per convert. Use achievements to track time spent in a area.
+
+Make each class have different focus. Vampires get more rares by glamoring. Werewolves something
+with moon cycles.
+
+Werewolves get different minions and can make different Lycanthropes were Tiger etc. Eventually 
+power self up similarly. What you can do depends on moon cycle. Can always create a minion only 
+sometimes a werewolf. Skills involve getting more from the moon and activate moon phases. So you 
+can create a waning and there is stuff you can only do then. Money minions are cats and dogs, 
+knowledge are sea, attack are land and air.
+
+Ghosts start in a hotel and unlock different parts of it rooms lobby ballroom little bit shining.
+Way harder to get minions but costs a lot less to get upgrades. Eventually you take over the hotel.
+
+Zombies make minions really easily but upgrades are really hard. Knowledge is slow to get and
+accumulate.
+
+Witches will also have a time component but less solid than Werewolves. Bonus but not limiting.
+Has a familiar you can choose one active. Skills give New familiars and eventually more slots.
+Familiars have skills like bonus convert or money.
+
+Ghosts eventually get a on timer free minion where they raise a ghost, scar rooms for passive
+ghost generation.
+
+Idle like a monster
+
+Have researchers dissect minions to learn more. Have fighters use minions as training dummies.
+
+Have a gain a money minion skill. Gain one now and each hour. Let's on ascension people start
+how they like.
+
+Each path has a win. Each win opens ascend. Gives diamonds. More for each.
+
+Buy company with portal. Find location of portal. Take over base where humans had portal.
+
+Maybe like more alley locations. Move from dark to dim or well lit or dirty or trash filled.
+i think vampires should stay city mostly.
+
+One could be a red light district.
+
+Hearing for alley upgrades.
+
+No, brute strength. Strong enough to take out bigger
+
+Jogging path fit minion. Drug deal corner for strung out.
+
+Crack head minions are strong get you more blood. After alley a mall for job minions. Get better 
+listening or hiding skills here. Then school. Seduction skills.
+
+Give each zone one final upgrade for getting each rare.
+
+Make it a big bonus to their types of minions.
+
+Money. Do a four set that just benefits itself. So more money . Then start on getting more blood,
+then passive minions. Consider a drive out competitor's option. Maybe not reusable or at the cost
+of buildings. Or every so often you can burn one down for insurance money.
+
+Money will include a work button clicked for money. What sets money apart? You could invest a 
+chunk to earn interest. So have a set of upgrades to increase amount you can invest. 
+Interest rate, etc.
+
+Yeah interest is the thing I will use to set money apart. Interest will be off money on bank so 
+that for idle buying less business is better. Let's start worth a lemonade Stand, cookie bakery, 
+candy shop, I've cream truck. Nice nods to other games.
+
+Knowledge mostly self feeding. Write books to help other scientists. Want more here. Battle you 
+train on your own or better in combat but is risky.
+
+What if knowledge only goes up and you just have to have certain amounts. Maybe more items not 
+repeatable. Basically all upgrades.
+
+Have a skill for intelligent vampires that convert for you in an area you know 100 explored know.
+
+Fleet footed gives mall increased stamina gives school. Sneak around mall. Charm school.
+
+For Frankenstein you assemble the pieces without knowing if it will work.
+
+And you unlock more slots as you go. So just two to start
+
+I could do an extra effect function for each of the cases. Let's do that for now.

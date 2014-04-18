@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Idle Like A Monster</title>
+	
+	<script>
+	
+
+	
+	</script>
+
+	<body>
+	<div id="blooddisplay" style="width:25%;float:left">
+	  <div id="blood">Blood: 0</div>
+	  <div id="bloodpersecond">Blood Per Second: 0</div>
+	  <div id="bloodspent">Total Blood Spent: 0</div>
+	  <div id="bloodunhealthyminions" hidden=true>Unhealthy Minions: 0</div>
+	  <div id="bloodexhaustedminions" hidden=true>Exhausted Minions: 0</div>
+	  <div id="bloodfitminions" hidden=true>Fit Minions: 0</div>
+	  <div id="bloodhypedupminions" hidden=true>Hyped Up Minions: 0</div>
+	  <button id="bloodFeed" onclick="bloodClick('bloodFeed')">Feed</button>
+	  <div id="currentmessage"></div>
+	  <div id="recentmessagestitle"></br>Recent Messages<button id="recentmessagesbutton" onclick="toggleMessages('recentmessages', 'recentmessagesbutton')">-</button></div>
+	  <div id="recentmessages"></div>
+	  <script>document.getElementById('recentmessages').hidden = false;</script>
+	  <div id="uniquemessagestitle"></br>Unique Messages<button id="uniquemessagesbutton" onclick="toggleMessages('uniquemessages', 'uniquemessagesbutton')">+</button></div>
+	  <div id="uniquemessages"></div>
+	  <script>document.getElementById('uniquemessages').hidden = true;</script>
+	</div>
+	<div id="bloodTabs" style="width:75%;float:left">
+	<button id="bloodHuntTab" onclick="changeBloodTab('bloodHuntTab')" style="width:10%" hidden=true>Hunt</button>
+	<button id="bloodRitualTab" onclick="changeBloodTab('bloodRitualTab')" style="width:10%" hidden=true>Blood Ritual</button>
+	<button id="bloodMoneyTab" onclick="changeBloodTab('bloodMoneyTab')" style="width:10%" hidden=true>Invest</button>
+	<button id="bloodResearchTab" onclick="changeBloodTab('bloodResearchTab')" style="width:10%" hidden=true>Research</button>
+	<button id="bloodFightTab" onclick="changeBloodTab('bloodFightTab')" style="width:10%" hidden=true>Fight</button>
+	</div>
+	<div id="bloodHunt" style="width:50%;float:left">
+	  <div id="darkAlley">
+	    <div id="darkAlleyConvert"  style="width:50%;float:left">
+		  <button id="convertDarkAlley" onclick="bloodClick('convertDarkAlley')" hidden=true disabled=true>Convert: Dark Alley</button>
+		  <div id="convertDarkAlleyCost" hidden=true>10 Blood</div>
+		</div>
+		<div id="darkAlleySuspicion"  style="width:50%;float:left">
+		  <button id="suspicionDarkAlley" onclick="bloodClick('suspicionDarkAlley')" hidden=true disabled=true>Cover Up: Dark Alley</button>
+		  <div id="suspicionDarkAlleyCost" hidden=true>50 Blood 1 Unhealthy Minions</div>
+		</div>
+	  </div>
+	  <div id="redLightDistrict">
+	    <div id="redLightDitrictConvert"  style="width:50%;float:left">
+		  <button id="convertRedLightDistrict" onclick="bloodClick('convertRedLightDistrict')" hidden=true disabled=true>Convert: Red Light District</button>
+		  <div id="convertRedLightDistrictCost" hidden=true>25 Blood</div>
+		</div>
+		<div id="redLightDistrictSuspicion"  style="width:50%;float:left">
+		  <button id="suspicionRedLightDistrict" onclick="bloodClick('suspicionRedLightDistrict')" hidden=true disabled=true>Cover Up: Red Light District</button>
+		  <div id="suspicionRedLightDistrictCost" hidden=true>150 Blood 2 Exhausted Minions</div>
+		</div>
+	  </div>
+	  <div id="joggingPath">
+	    <div id="joggingPathConvert"  style="width:50%;float:left">
+		  <button id="convertJoggingPath" onclick="bloodClick('convertJoggingPath')" hidden=true disabled=true>Convert: Jogging Path</button>
+		  <div id="convertJoggingPathCost" hidden=true>100 Blood</div>
+		</div>
+		<div id="joggingPathSuspicion"  style="width:50%;float:left">
+		  <button id="suspicionJoggingPath" onclick="bloodClick('suspicionJoggingPath')" hidden=true disabled=true>Cover Up: Jogging Path</button>
+		  <div id="suspicionJoggingPathCost" hidden=true>500 Blood 5 Fit Minions</div>
+		</div>
+	  </div>
+	  <div id="drugDealCorner">
+	    <div id="drugDealCornerConvert"  style="width:50%;float:left">
+		  <button id="convertDrugDealCorner" onclick="bloodClick('convertDrugDealCorner')" hidden=true disabled=true>Convert: Drug Deal Corner</button>
+		  <div id="convertDrugDealCornerCost" hidden=true>250 Blood</div>
+		</div>
+		<div id="drugDealCornerConvert"  style="width:50%;float:left">
+		  <button id="suspicionDrugDealCorner" onclick="bloodClick('suspicionDrugDealCorner')" hidden=true disabled=true>Cover Up: Drug Deal Corner</button>
+		  <div id="suspicionDrugDealCornerCost" hidden=true>1500 Blood 10 Hyped Up Minions</div>
+		</div>
+	  </div>
+	</div>
+	<div id="bloodRitual" style="width:75%;float:left" hidden=true>
+	  <button id="upgradeVirileBloodOne" title="More blood from minions" onclick="bloodClick('upgradeVirileBloodOne')" hidden=true disabled=true>Upgrade: Virile Blood 1</button>
+	  <div id="upgradeVirileBloodOneCost" hidden=true>25 Blood 2 Unhealthy Minions</div>
+	  <button id="upgradeVirileBloodTwo" title="More blood from minions" onclick="bloodClick('upgradeVirileBloodTwo')" hidden=true disabled=true>Upgrade: Virile Blood 2</button>
+	  <div id="upgradeVirileBloodTwoCost" hidden=true>100 Blood 5 Exhausted Minions</div>
+	  <button id="upgradeVirileBloodThree" title="More blood from minions" onclick="bloodClick('upgradeVirileBloodThree')" hidden=true disabled=true>Upgrade: Virile Blood 3</button>
+	  <div id="upgradeVirileBloodThreeCost" hidden=true>250 Blood 10 Fit Minions</div>
+	  <button id="upgradeVirileBloodFour" title="More blood from minions" onclick="bloodClick('upgradeVirileBloodFour')" hidden=true disabled=true>Upgrade: Virile Blood 4</button>
+	  <div id="upgradeVirileBloodFourCost" hidden=true>1000 Blood 25 Hyped Up Minions</div>
+	  
+	  <button id="upgradeBestialStrength" title="Convert tougher humans" onclick="bloodClick('upgradeBestialStrength')" hidden=true disabled=true>Upgrade: Bestial Strength</button>
+	  <div id="upgradeBestialStrengthCost" hidden=true>250 Blood 10 Unhealthy Minions</div>
+	  <button id="upgradeBruteStrength" title="Convert tougher humans" onclick="bloodClick('upgradeBruteStrength')" hidden=true disabled=true>Upgrade: Brute Strength</button>
+	  <div id="upgradeBruteStrengthCost" hidden=true>1000 Blood 25 Exhausted Minions</div>
+	  <button id="upgradeSupernaturalStrength" title="Convert tougher humans" onclick="bloodClick('upgradeSupernaturalStrength')" hidden=true disabled=true>Upgrade: Supernatural Strength</button>
+	  <div id="upgradeSupernaturalStrengthCost" hidden=true>2500 Blood 50 Fit Minions</div>
+	  <button id="upgradeFleetFooted" title="Access new areas" onclick="bloodClick('upgradeFleetFooted')" hidden=true disabled=true>Upgrade: Fleet Footed</button>
+	  <div id="upgradeFleetFootedCost" hidden=true>10000 Blood 100 Hyped Up Minions</div>
+	  
+	  <button id="upgradeBloodHungerOne" title="More blood from feeding" onclick="bloodClick('upgradeBloodHungerOne')" hidden=true disabled=true>Upgrade: Blood Hunger 1</button>
+	  <div id="upgradeBloodHungerOneCost" hidden=true>100 Blood</div>
+	  <button id="strengthInNumbersOne" title="More blood from feeding" onclick="bloodClick('strengthInNumbersOne')" hidden=true disabled=true>Upgrade: Strength in Numbers 1</button>
+	  <div id="strengthInNumbersOneCost" hidden=true>1000 Blood</div>
+	  <button id="upgradeCleanConversionsOne" title="Less suspicion when converting" onclick="bloodClick('upgradeCleanConversionsOne')" hidden=true disabled=true>Upgrade: Clean Conversions 1</button>
+	  <div id="upgradeCleanConversionsOneCost" hidden=true>5000 Blood</div>
+	</div>
+
+  <script>
+    var GameOn = true;
+	var frameCounter = 1;
+    var currBlood = 0;
+	var currMoney = 0;
+	var currKnow = 0;
+	var currMight = 0;
+	
+	var bloodPerClick = 1;
+	var bloodPerClickBonus = 1; // FIXME: use this later to get extra blood from money or something
+	var moneyPerClick = 1;
+	var knowPerClick = 1;
+	var mightPerClick = 1;
+	
+	var totalClicks = 0;
+	var totalBloodFromClicking = 0;
+	var bloodSpent = 0; // FIXME: I'm not currently calling this at all
+	var totalConvertClicks = 0;
+	var convertCostReduction = 0;
+	var totalMinionsConverted = 0;
+	var totalUpgrades = 0;
+	
+	var bloodMinions = [];
+	var currBloodPerSecond = 0;
+	var bloodPerSecondBonus = 1;
+	var triggeredBloodButtons = []; // this is the array for buttons which get unlocked by a direct action (new areas)
+	var unlockableBloodButtons = []; // these unlock whenever the right conditions are met
+	var visibleBloodButtons = [];
+	var removedBloodButtons = [];
+	
+	var hiddenBloodTabs = [];
+	var visibleBloodTabs = [];
+	
+	var recentMessages = [];
+	var uniqueMessages = [];
+	
+	function bloodCost(aBloodCost) {
+	  return aBloodCost;
+	}
+	
+	function bloodMinion(aBloodMinion) {
+	  return aBloodMinion;
+	}
+	
+	function bloodMinionCost(aBloodMinionCost) {
+	  return aBloodMinionCost;
+	}
+	
+	function bloodButton(aBloodButton) {
+	  return aBloodButton;
+	}
+	
+	function bloodTab(aBloodTab) {
+	  return aBloodTab;
+	}
+	
+	function toggleMessages(id, buttonid) {
+	  if (document.getElementById(id).hidden == true) {
+	    document.getElementById(id).hidden = false;
+		document.getElementById(buttonid).innerHTML = "-";
+	  }
+	  else {
+	    document.getElementById(id).hidden = true;
+		document.getElementById(buttonid).innerHTML = "+";
+	  }
+	}
+	
+	function bloodClick(id) {
+	  visibleBloodButtons[id].click();
+	}
+	
+	function changeBloodTab(id) {
+	  for (var key in visibleBloodTabs) {
+	    visibleBloodTabs[key].contains.hidden = true;
+		visibleBloodTabs[key].active = false;
+	  }
+	  visibleBloodTabs[id].contains.hidden = false;
+	  visibleBloodTabs[id].active = true;
+	  visibleBloodTabs[id].notifications = 0;
+	  visibleBloodTabs[id].id.innerHTML = visibleBloodTabs[id].title;
+	}
+	
+	function addNotifyTab(id) {
+	  if (typeof(visibleBloodTabs[id]) == "object") {
+	    if (!visibleBloodTabs[id].active)
+		  visibleBloodTabs[id].notifications++;
+	  }
+	  else {
+	    if (!hiddenBloodTabs[id].active)
+		  hiddenBloodTabs[id].notifications++;
+	  }
+	}
+	
+	function displayMessages(text) {
+	  document.getElementById('currentmessage').innerHTML = text;
+	  if (recentMessages.length > 9)
+	    recentMessages.pop();
+	  recentMessages.unshift(text);
+	  var messagesString = "";
+	  for (var i=0; i<recentMessages.length; i++) {
+	    messagesString = messagesString + recentMessages[i] + "</br>";
+	  }
+	  document.getElementById('recentmessages').innerHTML = messagesString;
+	  if (uniqueMessages.indexOf(text) == -1) { // its not already in the array
+	    uniqueMessages.push(text);
+	  }
+	  var uniqueMessagesString = "";
+	  for (var j=uniqueMessages.length-1; j>-1; j--) {
+	    uniqueMessagesString = uniqueMessagesString + uniqueMessages[j] + "</br>";
+	  }
+	  document.getElementById('uniquemessages').innerHTML = uniqueMessagesString;
+	}
+	
+	function calculateBloodPerSecond() {
+	
+	  currBloodPerSecond = 0; // set it to 0
+	  
+	  for (var key in bloodMinions) { // increase it for each minion type
+	    currBloodPerSecond += bloodPerSecondBonus * bloodMinions[key].current * bloodMinions[key].bloodPerSecond; 
+		// increase by minions times per minion times bonus
+	  }
+	}
+	
+	function updateBlood() {
+	  currBlood += currBloodPerSecond;
+	}
+	
+	function checkUnlockBloodTabs() {
+	  for (var key in hiddenBloodTabs) {
+	    if (hiddenBloodTabs[key].unlock()) {
+		  visibleBloodTabs[key] = bloodTab(hiddenBloodTabs[key]);
+		  delete hiddenBloodTabs[key];
+		  document.getElementById(key).hidden = false;
+		}
+	  }
+	}
+	
+	function checkUnlockableBloodButtons() {
+	  for (var key in unlockableBloodButtons) {
+	    if (unlockableBloodButtons[key].unlock()) {
+		  visibleBloodButtons[key] = bloodButton(unlockableBloodButtons[key]);
+		  delete unlockableBloodButtons[key];
+		  document.getElementById(key).hidden = false;
+		  visibleBloodButtons[key].costid.hidden=false;
+		  if (typeof(visibleBloodTabs[visibleBloodButtons[key].tab]) == "object") {
+		    if (!visibleBloodTabs[visibleBloodButtons[key].tab].active)
+		      visibleBloodTabs[visibleBloodButtons[key].tab].notifications++;
+		  }
+		  else {
+		    if (!hiddenBloodTabs[visibleBloodButtons[key].tab].active)
+		      hiddenBloodTabs[visibleBloodButtons[key].tab].notifications++;
+		  }
+		}
+	  }
+	}
+	
+	function checkBloodDisabledButtons() {
+	  for (var key in visibleBloodButtons) {
+	  
+	    var enabled = true; // start at true make false if it fails any check
+		
+		for (var i=0; i<visibleBloodButtons[key].costs.length; i++) {
+		  if (visibleBloodButtons[key].costs[i].type == "blood") {
+		    if (currBlood < visibleBloodButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleBloodButtons[key].costs[i].type == "money") {
+		    if (currMoney < visibleBloodButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleBloodButtons[key].costs[i].type == "know") {
+		    if (currKnow < visibleBloodButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		  else if (visibleBloodButtons[key].costs[i].type == "might") {
+		    if (currMight < visibleBloodButtons[key].costs[i].current)
+			  enabled = false;
+		  }
+		}
+		
+		for (var j=0; j<visibleBloodButtons[key].minionCosts.length; j++) {
+		  var bloodMinType = visibleBloodButtons[key].minionCosts[j].type;
+		  if (bloodMinions[bloodMinType].current < visibleBloodButtons[key].minionCosts[j].current)
+		    enabled = false;
+		}
+
+	    if (enabled) { // then it should be enabled
+		  document.getElementById(key).disabled = false;
+		}
+		else { // it should be disabled
+		  document.getElementById(key).disabled = true;
+		}
+	  }
+	}
+	
+	function checkBloodMinionDisplay() {
+	  for (var key in bloodMinions) {
+	    if (bloodMinions[key].allTime > 0) {
+		  document.getElementById(key).hidden = false;
+		}
+		else {
+		  document.getElementById(key).hidden = true;
+		}
+	  } 
+	}
+	
+	function bloodTabNotificationsDisplay() {
+	  for (var key in visibleBloodTabs) {
+	    if (visibleBloodTabs[key].notifications > 0 && !visibleBloodTabs[key].active) {
+		   visibleBloodTabs[key].id.innerHTML = visibleBloodTabs[key].title + " (" + visibleBloodTabs[key].notifications + ")";
+		}
+	  }
+	}
+	
+	function bloodMinionDisplay() {
+	  for (var key in bloodMinions) {
+	    document.getElementById(key).innerHTML = bloodMinions[key].text + ": " + bloodMinions[key].current;
+	  }
+	}
+	
+	function bloodDisplay() {
+	  document.getElementById("blood").innerHTML = "Blood: " + Math.floor(currBlood);
+	  document.getElementById("bloodpersecond").innerHTML = "Blood Per Second: " + currBloodPerSecond.toFixed(1);
+	  document.getElementById("bloodspent").innerHTML = "Total Blood Spent: " + bloodSpent;
+	}
+	
+	function Game(){  // every frame this happens
+	  if (GameOn) {
+	    frameCounter++;
+		calculateBloodPerSecond();
+		if (frameCounter >= 60) { // do once per second stuff
+		  frameCounter = 1;
+		  updateBlood();
+		}
+		checkUnlockBloodTabs();
+		checkUnlockableBloodButtons();
+		checkBloodDisabledButtons();
+		checkBloodMinionDisplay();
+		bloodTabNotificationsDisplay();
+		bloodMinionDisplay();
+		bloodDisplay();
+        loop = setTimeout(Game, 1000 / 60); // 60 FPS
+	  }
+    }  
+	
+	  // --------------------- API ----------------------------
+	  
+	function calculateAndDisplayCost(key) {
+	  
+	  var costDisplayString = "";
+	  
+	  for (var costKey in visibleBloodButtons[key].costs) {
+	    var currMult = visibleBloodButtons[key].costMultiplier - convertCostReduction;
+		if (currMult < 1.05)
+		  currMult = 1.05;
+		visibleBloodButtons[key].costs[costKey].current = Math.floor(visibleBloodButtons[key].costs[costKey].base
+			* Math.pow(currMult, visibleBloodButtons[key].costCount));
+	    if (visibleBloodButtons[key].costs[costKey].type == "blood") {
+		  costDisplayString = costDisplayString + visibleBloodButtons[key].costs[costKey].current + " Blood ";
+		}
+	  }
+	  
+	  for (var minCostKey in visibleBloodButtons[key].minionCosts) {
+	    var currMult = visibleBloodButtons[key].costMultiplier - convertCostReduction;
+		if (currMult < 1.05)
+		  currMult = 1.05;
+		visibleBloodButtons[key].minionCosts[minCostKey].current = Math.floor(visibleBloodButtons[key].minionCosts[minCostKey].base
+			* Math.pow(currMult, visibleBloodButtons[key].costCount));
+	    costDisplayString = costDisplayString + visibleBloodButtons[key].minionCosts[minCostKey].current + " " + 
+			bloodMinions[visibleBloodButtons[key].minionCosts[minCostKey].type].text + " ";
+	  }
+	  
+	  if (costDisplayString != "")
+	    visibleBloodButtons[key].costid.innerHTML = costDisplayString.slice(0, costDisplayString.length-1);
+	}
+	
+	function chooseResult(key) {
+	  // FIXME: add the rare indiciator before each of them here (in a color)
+	  var count = visibleBloodButtons[key].timesClicked;
+	  var dice = Math.floor((Math.random()*100)+1); // between 1 and 100
+	  if (count > 1000  && dice >= 91) { // then uberrare is unlocked
+	    if (dice == 100) {
+		  displayMessages("<font color='forestgreen'>UBER RARE! </font>" + visibleBloodButtons[key].uberrare);
+		  visibleBloodButtons[key].uberrareExtra();
+		}
+	    else if (dice >= 98) {
+		  displayMessages("<font color='goldenrod'>SUPER RARE! </font>" + visibleBloodButtons[key].superrare);
+		  visibleBloodButtons[key].superrareExtra();
+		}
+		else if (dice >= 95) {
+		  displayMessages("<font color='red'>VERY RARE! </font>" + visibleBloodButtons[key].veryrare);
+		  visibleBloodButtons[key].veryrareExtra();
+		}
+		else {
+		  displayMessages("<font color='blue'>RARE! </font>" + visibleBloodButtons[key].rare);
+		  visibleBloodButtons[key].rareExtra();
+		}
+	  }
+	  else if (count > 500  && dice >= 95) { // then superrare is unlocked
+	    if (dice == 100) {
+		  displayMessages("<font color='goldenrod'>SUPER RARE! </font>" + visibleBloodButtons[key].superrare);
+		  visibleBloodButtons[key].superrareExtra();
+		}
+	    else if (dice >= 98) {
+		  displayMessages("<font color='red'>VERY RARE! </font>" + visibleBloodButtons[key].veryrare);
+		  visibleBloodButtons[key].veryrareExtra();
+		}
+		else {
+		  displayMessages("<font color='blue'>RARE! </font>" + visibleBloodButtons[key].rare);
+		  visibleBloodButtons[key].rareExtra();
+		}
+	  }
+	  else if (count > 200  && dice >= 98) { // then veryrare is unlocked
+	    if (dice == 100) {
+		  displayMessages("<font color='red'>VERY RARE! </font>" + visibleBloodButtons[key].veryrare);
+		  visibleBloodButtons[key].veryrareExtra();
+		}
+		else {
+		  displayMessages("<font color='blue'>RARE! </font>" + visibleBloodButtons[key].rare);
+		  visibleBloodButtons[key].rareExtra();
+		}
+	  }
+	  else if (count > 50  && dice >= 100) { // then rare is unlocked
+		displayMessages("<font color='blue'>RARE! </font>" + visibleBloodButtons[key].rare);
+		visibleBloodButtons[key].rareExtra();
+	  }
+	  else if (dice >= 76) {
+		displayMessages(visibleBloodButtons[key].bad);
+		visibleBloodButtons[key].badExtra();
+      }
+	  else if (dice >= 51) {
+		displayMessages(visibleBloodButtons[key].ok);
+		visibleBloodButtons[key].okExtra();
+      }
+	  else if (dice >= 26) {
+		displayMessages(visibleBloodButtons[key].good);
+		visibleBloodButtons[key].goodExtra();
+	  }
+	  else {
+		displayMessages(visibleBloodButtons[key].great);
+		visibleBloodButtons[key].greatExtra();
+	  }
+	}
+	
+	function Init() {
+	  // --------------------- MINIONS ----------------------------
+	  bloodMinions['bloodunhealthyminions'] = 
+	    (bloodMinion({
+          id: bloodunhealthyminions,
+          current: 0,
+		  allTime: 0,
+		  bloodPerSecond: 0.1,
+		  text: 'Unhealthy Minions'
+        }));
+	  bloodMinions['bloodexhaustedminions'] = 
+	    (bloodMinion({
+          id: bloodexhaustedminions,
+          current: 0,
+		  allTime: 0,
+		  bloodPerSecond: 0.2,
+		  text: 'Exhausted Minions'
+        }));
+	  bloodMinions['bloodfitminions'] = 
+	    (bloodMinion({
+          id: bloodfitminions,
+          current: 0,
+		  allTime: 0,
+		  bloodPerSecond: 0.5,
+		  text: 'Fit Minions'
+        }));
+	  bloodMinions['bloodhypedupminions'] = 
+	    (bloodMinion({
+          id: bloodhypedupminions,
+          current: 0,
+		  allTime: 0,
+		  bloodPerSecond: 1,
+		  text: 'Hyped Up Minions'
+        }));
+		
+		// --------------------- TABS ----------------------------
+		
+		hiddenBloodTabs['bloodHuntTab'] = 
+	    (bloodTab({
+          id: bloodHuntTab,
+		  title: "Hunt",
+		  contains: bloodHunt,
+		  active: true,
+		  notifications: 0,
+		  unlock: function () {
+		    // this unlocks at 10 blood, same as the first blood button
+		    if (currBlood >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		hiddenBloodTabs['bloodRitualTab'] = 
+	    (bloodTab({
+          id: bloodRitualTab,
+		  title: "Ritual",
+		  contains: bloodRitual,
+		  active: false,
+		  notifications: 0,
+		  unlock: function () {
+		    // this unlocks as soon as you get any upgrade
+		    var anyUpgrades = 0;
+			for (var key in visibleBloodButtons) {
+			  if (visibleBloodButtons[key].tab == "bloodRitualTab")
+			    anyUpgrades++;
+			}
+			
+			if (anyUpgrades > 0)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// FIXME: add in other tabs, bloodRitualTab, bloodMoneyTab, bloodResearchTab, bloodFightTab
+		// FIXME: also clarify the active tab and make it clearer its a tab when its new by theming
+		
+		// --------------------- FEEDING ----------------------------
+		
+	  visibleBloodButtons['bloodFeed'] = 
+	    (bloodButton({
+          id: bloodFeed,
+		  tab: "bloodClickTab",
+		  type: "click",
+          click: function () {
+			  displayMessages("You feed gaining " + (bloodPerClick * bloodPerClickBonus) + " blood.");
+		  	  totalClicks++;
+			  currBlood += bloodPerClick * bloodPerClickBonus;
+			  totalBloodFromClicking += bloodPerClick * bloodPerClickBonus;
+		  },
+		  costs: [],
+		  minionCosts: [],
+        }));
+		
+		// --------------------- ACHIEVEMENT BASED UPGRADES ----------------------------
+		
+	  unlockableBloodButtons['upgradeBloodHungerOne'] = 
+	    (bloodButton({
+          id: upgradeBloodHungerOne,
+		  costid: upgradeBloodHungerOneCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You are even hungrier for blood than before.  Feeding will give more blood.");
+			currBlood -= this.costs[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			bloodPerClick *= 2;
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 100, current: 100}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    // 50 clicks or 100 blood from clicks so on ascension they could conceivably get this sooner
+		    if (totalClicks >= 50 || totalBloodFromClicking >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		unlockableBloodButtons['strengthInNumbersOne'] = 
+	    (bloodButton({
+          id: strengthInNumbersOne,
+		  costid: strengthInNumbersOneCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("Your minions empower you to feed more aggressively.  Feeding will give more blood.");
+			currBlood -= this.costs[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			bloodPerClick *= 2;
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 1000, current: 1000}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    // 100 minions converted overall
+		    if (totalMinionsConverted >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		unlockableBloodButtons['upgradeCleanConversionsOne'] = 
+	    (bloodButton({
+          id: upgradeCleanConversionsOne,
+		  costid: upgradeCleanConversionsOneCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+		    displayMessages("You've converted so many minions that you're better at it.  Conversions will cause less suspicion.");
+		    currBlood -= this.costs[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			
+			convertCostReduction += .05;
+			for (var key in visibleBloodButtons) {
+			  if (visibleBloodButtons[key].costs.length > 0 || visibleBloodButtons[key].minionCosts.length > 0) {
+			    calculateAndDisplayCost(key);
+			  }
+			}
+			
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 5000, current: 5000}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    // 100 conversion clicks
+		    if (totalConvertClicks >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// --------------------- DARK ALLEY ----------------------------
+		
+	  unlockableBloodButtons['convertDarkAlley'] = 
+	    (bloodButton({
+          id: convertDarkAlley,
+		  costid: convertDarkAlleyCost,
+		  tab: "bloodHuntTab",
+		  type: "convert",
+		  bad: "You approach a smelly hobo. The stench is almost too much to bear but you go for the neck anyways. A minute "
+		  + "later the smell remains but the man is something different. You gain 1 unhealthy minion.",
+		  ok: "You approach an unshaved hobo. You move his beard out of the way to bit his neck. When he awakens "
+		  + "his beard is the same but he feels completely different. You gain 1 unhealthy minion.",
+		  good: "As you stalk through the alley you encounter a hobo. From his breath and gait you can tell he is tipsy. "
+		  + "With ease you sink your teeth into his neck and when we awakes his thirst for alcohol is replaced with a different " 
+		  + "more primal thirst.  You gain 1 unhealthy minion.",
+		  great: "In the alley you see a cardboard box tucked into a dark corner. You nudge it and a hobo stumbles out into your "
+		  + "eternal embrace. When he wakes he will never feel the sting of cold again, or the heat of the sun. You gain 1 unhealthy "
+		  + "minion.",
+		  rare: "You stumble upon a hobo passed out in a pile of his own filth. You conver him with no effort and he will not "
+		  + "be missed. You gain 1 unhealthy minion.",
+		  veryrare: "You convert an extremely drunk hobo. So drunk that he is still sobering up when he wakes up as a vampire. "
+		  + "He walks without thinking to his morning AA meeting where you convert even more. You gain 5 unhealthy minions.",
+		  superrare: "You encounter a hobo ranting and raving while holding a sign which reads 'THE END IS NIGH'. Even after you "
+		  + "convert him his words echo in your head. You become paranoid for a while. You gain 1 unhealthy minion. You gain Paranoia.",
+		  uberrare: "You come across the thinnest hobo you have ever seen. He is starving for food so you convert him and replace his "
+		  + "hunger with another. Some of his starvation transfers to you though. You gain 1 unhealthy minion. You gain Feeding Frenzy.",
+		  badExtra: function () {},
+		  okExtra: function () {},
+		  goodExtra: function () {},
+		  greatExtra: function () {},
+		  rareExtra: function () {
+		    currBlood += this.costs[0].current;
+			bloodSpent -= this.costs[0].current;
+			this.costCount--;
+          },
+		  veryrareExtra: function () {
+		    bloodMinions['bloodunhealthyminions'].current+=4;
+			bloodMinions['bloodunhealthyminions'].allTime+=4;
+			totalMinionsConverted+=4;
+		  },
+		  superrareExtra: function () {
+		    // FIXME: add buff Paranoia for say a minute
+			// FIXME: this buff makes converts cost more blood but not raise suspicion
+		  },
+		  uberrareExtra: function () {
+		    // FIXME: add buff Feeding Frenzy for a minute
+			// FIXME: this buff gives 10 times the results from clicks
+		  },
+          click: function () {
+			chooseResult('convertDarkAlley');
+		    currBlood -= this.costs[0].current;
+			bloodSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('convertDarkAlley');
+			bloodMinions['bloodunhealthyminions'].current++;
+			bloodMinions['bloodunhealthyminions'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 10, current: 10}))],
+		  minionCosts: [],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (currBlood >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	  unlockableBloodButtons['suspicionDarkAlley'] = 
+	    (bloodButton({
+          id: suspicionDarkAlley,
+		  costid: suspicionDarkAlleyCost,
+		  tab: "bloodHuntTab",
+		  type: "suspicion",
+		  affects: 'convertDarkAlley',
+		  affectsCost: 'convertDarkAlleyCost',
+          click: function () {
+			displayMessages("The people are beginning to get suspicious so you set up a murder scene. " + this.minionCosts[0].current
+			+ " minion(s) are sacrificed and blood is splattered everywhere. The police will be sated... for now.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodunhealthyminions'].current -= this.minionCosts[0].current;
+			visibleBloodButtons[this.affects].costCount = Math.floor(visibleBloodButtons[this.affects].costCount / 2);
+			calculateAndDisplayCost(this.affects);
+			this.timesClicked++;
+			this.costCount++;
+			calculateAndDisplayCost('suspicionDarkAlley');
+		  },
+		  costs: [(bloodCost({type: "blood", base: 50, current: 50}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodunhealthyminions", base: 1, current: 1}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodunhealthyminions'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeVirileBloodOne'] = 
+	    (bloodButton({
+          id: upgradeVirileBloodOne,
+		  costid: upgradeVirileBloodOneCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. The potency of your blood is stronger than before. Minions"
+			+ " will give more blood every second.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodunhealthyminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			bloodPerSecondBonus *= 2;
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 25, current: 25}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodunhealthyminions", base: 2, current: 2}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodunhealthyminions'].current >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeBestialStrength'] = 
+	    (bloodButton({
+          id: upgradeBestialStrength,
+		  costid: upgradeBestialStrengthCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. Your strength grows.  You will now be able to overpower and "
+			+ "convert stronger people.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodunhealthyminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			
+			var key = 'convertRedLightDistrict';
+			visibleBloodButtons[key] = bloodButton(triggeredBloodButtons[key]);
+		    delete triggeredBloodButtons[key];
+		    document.getElementById(key).hidden = false;
+		    visibleBloodButtons[key].costid.hidden=false;
+			addNotifyTab('bloodHuntTab');
+			
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 250, current: 250}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodunhealthyminions", base: 10, current: 10}))],
+		  costMultiplier: 1.1,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (currBlood > 250 && bloodMinions['bloodunhealthyminions'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// --------------------- RED LIGHT DISTRICT ----------------------------
+		
+		triggeredBloodButtons['convertRedLightDistrict'] = 
+	    (bloodButton({
+          id: convertRedLightDistrict,
+		  costid: convertRedLightDistrictCost,
+		  tab: "bloodHuntTab",
+		  type: "convert",
+		  bad: "You approach an older woman. You follow her down a side street to settle the transaction. You have no money "
+		  + "to pay with but you do have the gift of eternal life. You again 1 exhausted minion.",
+		  ok: "As you approach a lady of the night you are accosted by her employer. He suspects your lack of money but not your "
+		  + "superior strength. You overpower both of them. You gain 2 exhausted minions.",
+		  good: "Two women offer you a package deal. You accept and move in to the shadows to negotiate. Negotiations are short "
+		  + "and brutal and you walk away with exactly what you wanted. You gain 2 exhausted minions.",
+		  great: "You approach a man who is looking to exchange services for money. A couple watches with interest from their car. "
+		  + "you and the man head into a side alley and they get out and follow to watch what will happen next. Instead you make them "
+		  + "a part of it as well. You gain 3 exhausted minions.",
+		  rare: "The woman you approach escorts you to an exclusive, private club. The membership is small and with so many willing "
+		  + "bound you have quite a time of it. You gain 6 exhausted minions.",
+		  veryrare: "You make some big talk about a large party that needs pleasing. The woman takes you back to the house with her "
+		  + "sisters. You decide to start the party right away, all by yourself. You gain 12 exhausted minions.",
+		  superrare: "You are approached by the most beautiful woman you have ever seen. You take her to a dark corner and convert her "
+		  + "at once. After you are done you positively glow with desirability. You again 1 exhausted minion. You gain seductiveness.",
+		  uberrare: "The woman you approach looks and smells wrong. You trick her easily and the taste of her blood is foul and wrong. "
+		  + "You realize she carries a disease. You bottle some of her blood and use it to make your other minions spread some infection "
+		  + "of their own. You again 1 exhausted minion. You gain 1 minion of each known type.",
+		  badExtra: function () {
+		    bloodMinions['bloodexhaustedminions'].current--;
+			bloodMinions['bloodexhaustedminions'].allTime--;
+			totalMinionsConverted--;
+		  },
+		  okExtra: function () {},
+		  goodExtra: function () {},
+		  greatExtra: function () {
+		    bloodMinions['bloodexhaustedminions'].current++;
+			bloodMinions['bloodexhaustedminions'].allTime++;
+			totalMinionsConverted++;
+		  },
+		  rareExtra: function () {
+		    bloodMinions['bloodexhaustedminions'].current+=4;
+			bloodMinions['bloodexhaustedminions'].allTime+=4;
+			totalMinionsConverted+=4;
+		  },
+		  veryrareExtra: function () {
+		    bloodMinions['bloodexhaustedminions'].current+=10;
+			bloodMinions['bloodexhaustedminions'].allTime+=10;
+			totalMinionsConverted+=10;
+		  },
+		  superrareExtra: function () {
+		    // FIXME: add buff Seductiveness for say a minute
+			// FIXME: this buff makes conversions cost less blood
+			bloodMinions['bloodexhaustedminions'].current--;
+			bloodMinions['bloodexhaustedminions'].allTime--;
+			totalMinionsConverted--;
+		  },
+		  uberrareExtra: function () {
+		    for (var key in bloodMinions) {
+			  if (bloodMinions[key].current > 0) {
+			    bloodMinions[key].current++;
+			    bloodMinions[key].allTime++;
+				totalMinionsConverted++;
+			  }
+			}
+		  },
+          click: function () {
+			chooseResult('convertRedLightDistrict');
+		    currBlood -= this.costs[0].current;
+			bloodSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('convertRedLightDistrict');
+			bloodMinions['bloodexhaustedminions'].current+=2;
+			bloodMinions['bloodexhaustedminions'].allTime+=2;
+			totalMinionsConverted+=2;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 25, current: 25}))],
+		  minionCosts: [],
+		  costMultiplier: 1.15,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+			return false;
+		  }
+        }));
+		unlockableBloodButtons['suspicionRedLightDistrict'] = 
+	    (bloodButton({
+          id: suspicionRedLightDistrict,
+		  costid: suspicionRedLightDistrictCost,
+		  tab: "bloodHuntTab",
+		  type: "suspicion",
+		  affects: 'convertRedLightDistrict',
+		  affectsCost: 'convertRedLightDistrictCost',
+          click: function () {
+			displayMessages("You make it look like a pimp had a falling out with his girls that ended in violence. " + this.minionCosts[0].current
+			+ " minion(s) are sacrificed and blood is splattered everywhere. The police will be sated... for now.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodexhaustedminions'].current -= this.minionCosts[0].current;
+			visibleBloodButtons[this.affects].costCount = Math.floor(visibleBloodButtons[this.affects].costCount / 2);
+			calculateAndDisplayCost(this.affects);
+			this.timesClicked++;
+			this.costCount++;
+			calculateAndDisplayCost('suspicionRedLightDistrict');
+		  },
+		  costs: [(bloodCost({type: "blood", base: 125, current: 125}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodexhaustedminions", base: 2, current: 2}))],
+		  costMultiplier: 1.15,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodexhaustedminions'].current >= 20)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeVirileBloodTwo'] = 
+	    (bloodButton({
+          id: upgradeVirileBloodTwo,
+		  costid: upgradeVirileBloodTwoCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. The potency of your blood is stronger than before. Minions"
+			+ " will give more blood every second.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodexhaustedminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			bloodPerSecondBonus *= 2;
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 100, current: 100}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodexhaustedminions", base: 5, current: 5}))],
+		  costMultiplier: 1.15,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodexhaustedminions'].current >= 25)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeBruteStrength'] = 
+	    (bloodButton({
+          id: upgradeBruteStrength,
+		  costid: upgradeBruteStrengthCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. Your strength grows.  You will now be able to overpower and "
+			+ "convert stronger people.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodexhaustedminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			
+			var key = 'convertJoggingPath';
+			visibleBloodButtons[key] = bloodButton(triggeredBloodButtons[key]);
+		    delete triggeredBloodButtons[key];
+		    document.getElementById(key).hidden = false;
+		    visibleBloodButtons[key].costid.hidden=false;
+			addNotifyTab('bloodHuntTab');
+			
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 1000, current: 1000}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodexhaustedminions", base: 25, current: 25}))],
+		  costMultiplier: 1.15,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (currBlood > 1000 && bloodMinions['bloodexhaustedminions'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// --------------------- JOGGING PATH ----------------------------
+		
+		triggeredBloodButtons['convertJoggingPath'] = 
+	    (bloodButton({
+          id: convertJoggingPath,
+		  costid: convertJoggingPathCost,
+		  tab: "bloodHuntTab",
+		  type: "convert",
+		  bad: "You see a single jogger by himself. He stops to catch his breath and doesn't realize it will be his last. "
+		  + "You gain 1 fit minion.",
+		  ok: "A couple is out for a jog. Their self improvement gets a huge leap ahead when you convert them both. "
+		  + "You gain 2 fit minions.",
+		  good: "A group of cheerleaders is out for a late run. Their cheers are so practiced they even manage to scream "
+		  + "in unison. You gain 6 fit minions.",
+		  great: "A whole football team is out getting in a midnight job for team building. Their opponent tomorrow will "
+		  + "get a free pass. You convert them all. You gain 11 fit minions",
+		  rare: "You find yourself at a track team practice. You pick them off one by one until the very last. You gain "
+		  + "20 fit minions.",
+		  veryrare: "You convert an extremely fit jogger. His increased heart rate benefits you for some time. You gain 1 "
+		  + "fit minion. You gain elevated heart rate.",
+		  superrare: "You stumble into a marathon moving through. You open a vein and pour some blood into the water. Before "
+		  + "its over you make many converts. You gain 40 fit minions.",
+		  uberrare: "You track a muscle bound jogger. When you corner him and convert him you taste something new, bovine growth "
+		  + "hormone in his blood. It boosts your blood in unforeseen ways. You gain 1 fit minion. You doubled your current blood.",
+		  badExtra: function () {
+		    bloodMinions['bloodfitminions'].current-=4;
+			bloodMinions['bloodfitminions'].allTime-=4;
+			totalMinionsConverted-=4;
+		  },
+		  okExtra: function () {
+		    bloodMinions['bloodfitminions'].current-=3;
+			bloodMinions['bloodfitminions'].allTime-=3;
+			totalMinionsConverted-=3;
+		  },
+		  goodExtra: function () {
+		    bloodMinions['bloodfitminions'].current+=1;
+			bloodMinions['bloodfitminions'].allTime+=1;
+			totalMinionsConverted+=1;
+		  },
+		  greatExtra: function () {
+		    bloodMinions['bloodfitminions'].current+=6;
+			bloodMinions['bloodfitminions'].allTime+=6;
+			totalMinionsConverted+=6;
+	      },
+		  rareExtra: function () {
+		    bloodMinions['bloodfitminions'].current+=15;
+			bloodMinions['bloodfitminions'].allTime+=15;
+			totalMinionsConverted+=15;
+		  },
+		  veryrareExtra: function () {
+		    bloodMinions['bloodfitminions'].current-=4;
+			bloodMinions['bloodfitminions'].allTime-=4;
+			totalMinionsConverted-=4;
+			// FIXME: add buff elevated heart rate
+		  },
+		  superrareExtra: function () {
+		    bloodMinions['bloodfitminions'].current+=35;
+			bloodMinions['bloodfitminions'].allTime+=35;
+			totalMinionsConverted+=35;
+		  },
+		  uberrareExtra: function () {
+		    bloodMinions['bloodfitminions'].current-=4;
+			bloodMinions['bloodfitminions'].allTime-=4;
+			totalMinionsConverted-=4;
+			currBlood *= 2;
+		  },
+          click: function () {
+			chooseResult('convertJoggingPath');
+		    currBlood -= this.costs[0].current;
+			bloodSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('convertJoggingPath');
+			this.costid.innerHTML = this.costs[0].current + " Blood";
+			bloodMinions['bloodfitminions'].current+=5; // FIXME: this will average to 5
+			bloodMinions['bloodfitminions'].allTime+=5;
+			totalMinionsConverted+=5;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 100, current: 100}))],
+		  minionCosts: [],
+		  costMultiplier: 1.2,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+			return false;
+		  }
+        }));
+		unlockableBloodButtons['suspicionJoggingPath'] = 
+	    (bloodButton({
+          id: suspicionJoggingPath,
+		  costid: suspicionJoggingPathCost,
+		  tab: "bloodHuntTab",
+		  type: "suspicion",
+		  affects: 'convertJoggingPath',
+		  affectsCost: 'convertJoggingPathCost',
+          click: function () {
+			displayMessages("Poisoning a health food store is the easiest way to throw suspicion awsay from yourself. "
+			+ "How else could you explain this many dead healthy people? " + this.minionCosts[0].current
+			+ " minion(s) are sacrificed and you expend some blood to find the poison. The police will be sated... for now.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodfitminions'].current -= this.minionCosts[0].current;
+			visibleBloodButtons[this.affects].costCount = Math.floor(visibleBloodButtons[this.affects].costCount / 2);
+			calculateAndDisplayCost(this.affects);
+			this.timesClicked++;
+			this.costCount++;
+			calculateAndDisplayCost('suspicionJoggingPath');
+		  },
+		  costs: [(bloodCost({type: "blood", base: 500, current: 500}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodfitminions", base: 5, current: 5}))],
+		  costMultiplier: 1.2,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodfitminions'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeVirileBloodThree'] = 
+	    (bloodButton({
+          id: upgradeVirileBloodThree,
+		  costid: upgradeVirileBloodThreeCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. The potency of your blood is stronger than before. Minions"
+			+ " will give more blood every second.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodfitminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			bloodPerSecondBonus *= 2;
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 250, current: 250}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodfitminions", base: 10, current: 10}))],
+		  costMultiplier: 1.2,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodfitminions'].current >= 50)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeSupernaturalStrength'] = 
+	    (bloodButton({
+          id: upgradeSupernaturalStrength,
+		  costid: upgradeSupernaturalStrengthCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. Your strength grows.  You will now be able to overpower and "
+			+ "convert stronger people.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodfitminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			
+			var key = 'convertDrugDealCorner';
+			visibleBloodButtons[key] = bloodButton(triggeredBloodButtons[key]);
+		    delete triggeredBloodButtons[key];
+		    document.getElementById(key).hidden = false;
+		    visibleBloodButtons[key].costid.hidden=false;
+			addNotifyTab('bloodHuntTab');
+			
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 2500, current: 2500}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodfitminions", base: 50, current: 50}))],
+		  costMultiplier: 1.2,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (currBlood > 2500 && bloodMinions['bloodfitminions'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// --------------------- DRUG DEAL CORNER ----------------------------
+		
+		triggeredBloodButtons['convertDrugDealCorner'] = 
+	    (bloodButton({
+          id: convertDrugDealCorner,
+		  costid: convertDrugDealCornerCost,
+		  tab: "bloodHuntTab",
+		  type: "convert",
+		  bad: "bad drug result",
+		  ok: "ok drug results",
+		  good: "good drug result",
+		  great: "great drug results",
+		  rare: "rare drug results",
+		  veryrare: "very rare drug results",
+		  superrare: "super rare drug results",
+		  uberrare: "uber rare drug results",
+		  badExtra: function () {},
+		  okExtra: function () {},
+		  goodExtra: function () {},
+		  greatExtra: function () {},
+		  rareExtra: function () {},
+		  veryrareExtra: function () {},
+		  superrareExtra: function () {},
+		  uberrareExtra: function () {},
+          click: function () {
+			chooseResult('convertDrugDealCorner');
+		    currBlood -= this.costs[0].current;
+			bloodSpent += this.costs[0].current;
+			this.timesClicked++;
+			totalConvertClicks++;
+			this.costCount++;
+			calculateAndDisplayCost('convertDrugDealCorner');
+			this.costid.innerHTML = this.costs[0].current + " Blood";
+			bloodMinions['bloodhypedupminions'].current+=10; // FIXME: this will average to 10
+			bloodMinions['bloodhypedupminions'].allTime+=10;
+			totalMinionsConverted+=10;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 250, current: 250}))],
+		  minionCosts: [],
+		  costMultiplier: 1.25,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+			return false;
+		  }
+        }));
+		unlockableBloodButtons['suspicionDrugDealCorner'] = 
+	    (bloodButton({
+          id: suspicionDrugDealCorner,
+		  costid: suspicionDrugDealCornerCost,
+		  tab: "bloodHuntTab",
+		  type: "suspicion",
+		  affects: 'convertDrugDealCorner',
+		  affectsCost: 'convertDrugDealCornerCost',
+          click: function () {
+			displayMessages("A drug deal gone wrong or gang violence?  The police don't know but you know its neither. " + this.minionCosts[0].current
+			+ " minion(s) are sacrificed and blood is splattered everywhere. The police will be sated... for now.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodhypedupminions'].current -= this.minionCosts[0].current;
+			visibleBloodButtons[this.affects].costCount = Math.floor(visibleBloodButtons[this.affects].costCount / 2);
+			calculateAndDisplayCost(this.affects);
+			this.timesClicked++;
+			this.costCount++;
+			calculateAndDisplayCost('suspicionDrugDealCorner');
+		  },
+		  costs: [(bloodCost({type: "blood", base: 1500, current: 1500}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodhypedupminions", base: 10, current: 10}))],
+		  costMultiplier: 1.25,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodhypedupminions'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeVirileBloodFour'] = 
+	    (bloodButton({
+          id: upgradeVirileBloodFour,
+		  costid: upgradeVirileBloodFourCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. The potency of your blood is stronger than before. Minions"
+			+ " will give more blood every second.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodhypedupminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			bloodPerSecondBonus *= 2;
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;
+		  },
+		  costs: [(bloodCost({type: "blood", base: 1000, current: 1000}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodhypedupminions", base: 25, current: 25}))],
+		  costMultiplier: 1.25,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (bloodMinions['bloodhypedupminions'].current >= 100)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		unlockableBloodButtons['upgradeFleetFooted'] = 
+	    (bloodButton({
+          id: upgradeFleetFooted,
+		  costid: upgradeFleetFootedCost,
+		  tab: "bloodRitualTab",
+		  type: "upgrade",
+          click: function () {
+			displayMessages("You perform an unholy ritual. You can run faster now.  You will now be able to reach areas "
+			+ "that are further away and still get back to your coffin before sunrise.");
+		    currBlood -= this.costs[0].current;
+			bloodMinions['bloodhypedupminions'].current -= this.minionCosts[0].current;
+			this.timesClicked++;
+			this.costCount++;
+			totalUpgrades++;
+			
+			/*var key = 'convertDrugDealCorner';
+			visibleBloodButtons[key] = bloodButton(triggeredBloodButtons[key]);
+		    delete triggeredBloodButtons[key];
+		    document.getElementById(key).hidden = false;
+		    visibleBloodButtons[key].costid.hidden=false;
+			addNotifyTab('bloodHuntTab');
+			
+			removedBloodButtons[this.id] = bloodButton(visibleBloodButtons[this.id]);
+		    delete visibleBloodButtons[this.id];
+		    this.id.hidden = true;
+		    this.costid.hidden=true;*/
+			
+			// FIXME: this is where we start unlocking money minions
+			
+			alert("You win for now");
+		  },
+		  costs: [(bloodCost({type: "blood", base: 10000, current: 10000}))],
+		  minionCosts: [(bloodMinionCost({type: "bloodhypedupminions", base: 100, current: 100}))],
+		  costMultiplier: 1.25,
+		  costCount: 0,
+		  timesClicked: 0,
+		  unlock: function () {
+		    if (currBlood > 2500 && bloodMinions['bloodhypedupminions'].current >= 1)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+	
+	  Game();
+	}
+
+	Init();
+	
+  </script>
+</body>
+</html>

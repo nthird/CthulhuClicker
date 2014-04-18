@@ -1,0 +1,1188 @@
+A cookie clicker type game with vampires
+starts out simple, harvest blood, sell it buy upgrades
+You get more upgrades you can unlock new buildings
+Library - research other upgrades
+Travel Agency - explore the world to find other beasts and items
+Sacrificial Altar - scarifice to gain powers
+Eventually you fight like werewolves, zombies etc
+You can unlock new skills to get by killing enough
+Hire werewolf hunters to take some out for you
+You get experience for making kills you can level up a talent tree
+Multiple training options
+
+I want skill trees for vampires
+3 categories
+then when you "beat" the game you can start over keeping a skill
+but you can be a werewolf, zombie, witch, ghost, etc
+each of which will have its own skill tree
+probably start just werewolf and zombie
+so make sure the skill trees are interesting for other classes
+and figure out a way to make the options makes sense from each class
+
+generally speaking I want multiple categories
+I want stuff you can spend blood on, money on, knowledge
+I want converting into vampires, powering up yourself, buildings, 
+upgrades, research, combat, skill tree
+
+Convert Consume Consider Construct Conflict 
+don't have a good one for upgrades or skill tree
+generally speaking I want converting to cost blood
+powering up to cost blood
+buildings to cost money
+research to cost knowledge
+combat to cost some combination
+upgrades to cost any combination
+skill tree to come from achievements probably
+
+so I think I want the first thing to be convert
+then powering up
+power up enough to get bigger guys
+until you convert a money guy
+then keep going and you get a professor
+all of them give blood, some give extra
+when you hit enough total blood the stronger thing unlocks
+
+lets make it a sacrifice of minions
+shows things are different almost right off the bat
+and I think I want to make it convert in dark alley
+and you get minions mostly but sometimes other stuff
+so better areas have a better chance for money earners etc
+and only schools give you knowledge people
+so generic minions are the basic
+working minions earn you money
+learning minions earn you knowledge
+so I'm thinking that for each earning category we have like low wage etc
+then we can have flavor text for getting them like you convert a prostitue
+which gives you a low earning minion
+
+does it really make sense for converting a human to cost more as you go?
+probably not
+so I want to start actually setting this up a bit
+I think I want an info screen on the left
+Then tabs for the other stuff with semi random results
+lets plot out the first two tabs give or take and work on setting them up
+with new buttons appearing as they are unlocked
+I think for the first level of minion gathering we want to only give basic ones
+
+I want each section to contain descriptions once they unlock
+First section will be hunt
+Feed generates blood
+Convert Human: Dark Alley
+Convert Human: Unlit Street
+Quiet Park
+
+Dark Alley only gives minions
+implement the tabs using class ids and then toggle the showing
+set this up with stats on left
+hunt/feed giving minions
+and then sacrifice killing 10 minions for better minion blood gen
+then sac 25 minions for next level of consume
+
+blood diamonds are what you use to get talent points
+get them by buying them (buy what purports to buy a diamond but might be fake)
+on a research mission
+in combat as a drop
+
+Investment banker for the convert option that gives money
+when you restart you can only choose a class you have unlocked
+you unlock classes by becoming a bit werewolf etc
+defeat 10 werewolf lords and do a ritual with their blood
+unlocks the werewolf stuff at the beginning
+when you start as a werewolf though keeping a vampire talent makes you a bit of each
+so lets say you are maybe 5% werewolf
+yeah I think that's how I want it really serious downside
+being a werewolf too lets you unlock cross upgrades
+like lycanthrompire or something that let them feed into each other
+
+so I want to tag each button with a div class
+then I can enable whole sets of them wholesale
+and only check for the ones I need
+tag them with single use or multiple
+current price, current upgrades etc
+then I want to have counts of times explored for hunting etc
+have threshholds unlock rare spawns so you can get better stuff lower sometimes
+so like after 100 conversions in dark alley you can get money guys tehre rarely
+eventually rarer spawns and better odds of rare spawns
+have skills that unlock a say hourly button to give you a rare spawn
+like next adventure is a rare
+
+I want like rare, very rare, super rare, uber rare
+with increasingly large gaps
+and I want the rare buttons to upgrade as well
+and I want them to be doubled at some point (next two encounters)
+trim the time frame
+
+skills that put some of your money towards your attack etc
+so you get passive 10% of your blood gen as money gen
+mostly I want the skills to all be game changers
+and the raer spawns can be by category so the money one is part of hte money tree
+so no worries about duplicates
+
+lets do this raw HTML JS to start
+then get some feedback and port it to flash
+this conversion is going to come up a lot, time to get used to it
+put a polished(ish) flash version on kongregate with just vampires
+update it consistently
+sell autoclickers for kreds
+make monies
+
+make items that are available for diamonds
+sell diamonds
+use diamonds for skills too
+figure out a rate to sell them at
+make diamonds really rare drops, maybe time limited (only 1 an hour)
+
+add hunters and pvp eventually
+flavor this as starting in a reality that has hunters
+so you have to start again with pvp open
+give really high rewards
+allow previous incarnations to help though
+
+so if upgrades cost minions we can hit some weird points
+I think we just want some of the upgrades to cost minions
+
+ok so feed, feed, feed
+convert minion
+minion cost goes up
+unhealthy minion by the way
+gets you .1 blood per second
+at a certain amount of blood give a reduce suspicion skill
+costs one minion and a chunk of blood
+lets make it 50 blood (or less, twiceish the cost of minion 11)
+reduces suspcion by like half
+maybe a flat half so its always good but sometimes really good
+not worth it at lower levels
+find a good mid point here
+then at 20 minions unlock the sacrifice button to give better area
+the "power up"
+so each area requires you sacrifice some of its minions to get hte next one
+basic loop is then convert and get minions, sacrifice to throw off suspicion
+what do I do to encourage people to stay in an area?
+maybe have other skills that require certain minions too
+like the less suspicion ones
+or unhealthy minions produce more blood
+so lets have the skill half suspicion
+and go up in cost each time
+how about 100 blood initially
+and goes up by the same 1.5 scaling down with upgrades
+
+ok what are all the variables I need initially
+I need current blood, blood per second, minion counts (sickly, thin, healthy, fit,
+ athletic), dark alley suspicion, suspicion factor, 
+
+lets make a button object
+
+id: convertDarkAlley
+title: Convert: Dark Alley
+location: darkalley
+type: blood
+screen: hunt
+hidden: true
+disabled? - probably can skip this
+unhide: function () {
+  if blood > 10 true
+  else false
+}
+bloodCost: 10
+minionCost: 0
+moneyCost: 0
+knowCost: 0
+mightCost: 0
+costMultiplier: 1.1
+costCount: 0 // this is the one that can get reduced by reducing suspicion
+timesClicked: 0
+clickFunc: the function to attach to the button for clicking
+
+I want base and current costs for each possible type as arrays
+I think I'll do arrays and expand as I go
+I might be able to skip curr costs but it also makes sense to use
+put it there and print from there instead of generating it each time
+
+so I want to add all these to the hidden array on init
+then generate the screen based on them
+so I need a generate screen loop or func after I make them all
+I think I'll set up the divs themselves in the HTML
+and just add the handlers
+can I use an associative array here?
+array[divid].disabled or whatever?
+
+I mean I kind of want the button itself to have all these attributes
+but thats not really a good way to do it
+unless... can I attach the element itself to the object
+so have an element field that is doc.getbyid('id') and actually change it there?
+I think that might work
+going to try this
+
+
+loop through all visible
+vis[i].getelementbyid(id).disabled if < cost
+make that a function
+pass it both parts
+
+when do I want to change visibility?
+loss of resource, gain of resource
+if I keep bps to every second I can just have a check vis and check disable func
+that fires once a second, and every time resources are spent or gained
+in fact I could write a gain resource, lose resource function
+call them in my button callbacks
+
+so far so good
+I think I can add an affects field too
+so that suspicion can be reduced
+
+I'm unhiding and disabling/enabling
+now I need to make the rest of the convert button work as intended
+and display its cost properly
+then I'll create the suspicion button
+**that is the test for if this method works**
+
+sort out how I want to handle minion costs
+I think I do want them to require certain minions
+I don't really want to check every single type each time
+maybe an array of costs and I check each part of the array?
+yeah one array of cost types, one of those amounts
+iterate over it
+maybe make an array of minions and just keep the same order
+that might be a lot easier
+so its just like unhealthy etc
+no then its still like array of 0, 0, 0, 1, 0 ...
+hmm
+yeah I think just checking each will be better
+or maybe it could be minion5 and I could check the 5th element of the array
+yeah I like that
+consider a separate minion costs array too
+non minion and minion, check each
+
+
+
+I probably want feed as a button like this too
+since I want work to be one eventually
+and learn
+and train
+
+push all the currently hidden ones into an array
+all the currently visible ones into another
+only check to unhide the ones in the hidden array
+only check disable status on the visible
+use a function to check to unhide
+
+ok so I refactored things to use an array of costs
+this is overall a lot more efficient for now
+I'll be constantly expanding a minion array but that's a bit off at least
+now I need to hook the actual correct function into the button
+and upgrade costs
+and print text based on it
+
+the text is right and upgrades properly
+now I just need to add minions based on it
+and dump text based on which minion
+
+hmm ok so do I want to have it be hidden and not arrays for minions?  nah seems weird
+I'll just unhide everything with all Time >0
+
+ok so that is done, I have minions
+
+now I need to set up a button for sacrificing a minion to reduce suspicion
+implement that
+and then a button for upgrading self to be stronger
+and then that will lead into the next area
+
+50 blood cost for this, or maybe 25?  25 blood and 1 minion would work ok
+156 blood to get 10 minions, 181 for 11
+60 blood for 5 minions
+311 for 15 minions - 155 blood for minions 10 - 15 vs just under 90 for 5-10
+making 25 blood quite reasonable to set that back a bit
+
+ok yes for now, 25 blood and at least 1 unhealthy minion is the unlock for suspicion 1
+10 minions is the unlock for next level
+
+1/12/14 - set up the suspicion button
+starts at 25 and 1 unhealthy and goes up by the 1.1
+
+next up I want to separate out the cost text and print it programatically
+
+separate cost - done
+
+TODO: add virile blood upgrades, +bps, costs 25 blood, 1 minions - one shot - done
+TODO: move suspicion up to probably 50 blood (should be fine) - done
+
+TODO: add upgrade that unlocks next level set - done
+
+sac 10 minions and how much blood, 250?
+increased strength, bestial strength, brute strength, supernatural strength
+then savagery for against the soldiers maybe?
+
+ok I want the unlocks to be different
+unhiding when they just can first buy it seems silly
+I want the unlocks to be more specific than that, gives me more control
+then I can force the next level upgrade to come first
+or force it to come second or give it multiple ways
+either way I can do it
+I'll give it a function that returns true or false if it is ready to unlock
+two arrays for locked ones
+autounlocks and manual unlocks, better to trigger those from the button
+I want the checks to be >= not just > in case of decimals
+
+TODO: add in achievement for clicking, track it and add in upgrade - 100 blood 2x from clicks
+- done
+TODO: implement sub level 2 - including upgrade that unlocks it - done
+
+needs some serious rebalancing of the unlocks but that can come later
+rebalanced the blood per second to be less and it gives more minions
+
+TODO: implement sub level 3 - jogging path - fit minions - done
+
+100 blood convert - 500 blood 5 fit suspicion - poison organic food
+vb3 - 250 b 10 m
+str - 2500 b 50 m
+
+TODO: implement sub level 4 - drug deal corner - hyped up minions
+
+250 blood convert - 1500 blood 10 hyped minions suspicion - drug deal gone bad - done
+vb4 - 1000 b 25 m
+str - 10000 b 100 m
+
+TODO: come up with interesting stats to track
+
+blood spent makes upgrades cheaper?
+minions sacrificed - chance for minions to live
+total conversion clicks - makes conversion cheaper by reducing scaling factor
+total conversions - makes cheaper by a flat amount
+total suspicion clicks - makes suspicion cheaper by reducing scaling
+total suspicion reductions - flat amount
+sac'ed to suspicion, reduced amounts - so like you frame 2 and reduce suspicion by 10
+max minions had of X counts, or just unlock when you hit the amount
+total minions converted - gain 1% of minions extra rounded up - daily
+gets replaced when you get the next one making conversion spree stronger but stays daily
+blood generated passively - unlocks a part of bps to clicking
+total minions - unlocks a plus to clicking based on curr minions
+
+lets track total conversion clicks for now and implement this reduced scaling - done
+also total minions for plus to clicking on current minions - done
+
+ok yeah I outright need a calculate costs and display them function
+that processes all the costs and constructs the html based on it
+can I pass the string of a minion for a minion cost?
+
+so the code for the calculate and display cost is working except that the clicks don't call it
+plugged it into the clicks
+
+TODO: implement achievements based on those stats - done
+TODO: add in theming to some degree - tab and arrange a bit - done
+
+wait lets hide and unhide the whole tab... maybe?
+yeah this should work
+just need to figure out how I am handling those on clicks
+I could have them unlock just like regular blood buttons
+then I could tag them as tabs in some way
+might be worth having a type for other things anyways
+just for like knowing which is which
+and then I'll write a function to hide them all
+and then each button will hide them all then unhide itself
+
+ok so that works but what is the unlock for the upgrades tab?
+we could track total upgrades, want to anyways
+and trigger on that
+
+that won't work, I can't get an upgrade until I click on one
+and I'm making that tab invisible until I do
+
+ended up also tagging them all with what they are
+this is overall cleaner I think
+that's good info to have anyways
+and this way when I unlock an upgrade it goes into visible
+the tabs check finds that at least one upgrade is visible and makes the tab visible
+
+bloodXTab - Hunt, Ritual, Money, Research, Fight
+func on 138
+
+no going with hidden and visible blood tabs instead
+with their own bloodTab object
+
+TODO: make notifactions on the tabs when new stuff appears in them - done
+
+lets add in a few variables to track if there is new content there
+and I'll add in a loop that changes the text for tab to be the title + (X)
+no put the notifications in each tab
+
+something is not hitting right, its not seeing that notifications is defined
+it might be a visibility order, race condition kind of thing
+probably best to put some more safeguards into play here then just oh do this first
+maybe make one call the other just to be sure
+have a console log in right now starting the process of findign out whats throwing an error
+
+The core of this works, still need to trigger notifications on the manual unlocks
+so when a upgrade unlocks a new hunt zone I need to add a notification to it
+probably make an add notify function and send it the id
+
+TODO: add in text for clicks (just placeholder having it do it) - done
+TODO: add in logging of that text - done
+
+oops need the logging first before I increment costs if I reference them
+fixed it, still need to correct numbers in converts
+
+TODO: add in hovers for buttons or maybe just text for upgrades - done
+
+let's do text for upgrades and have it in a div next to it
+let's split the convert and cover ups like this too
+for now lets just have a hover by using title="text I want"
+
+TODO: add in chance to the converts
+
+so I think 4 that even out to the number sounds good
+so that starts at 25% each so we roll a d100 and assign
+then we add the rares in
+1% rare -> 1% very rare 2% rare -> 1% super rare 2 % very rare 3% rare
+finally 1% uber rare 2% super rare 3% very rare 4% rare
+100 uber 98-99 super 95-97 very 91-94 rare
+for a total of 10%
+so yeah I'm comfortable trimming 10% off of the "worst" drop
+so it gets slightly better no matter what
+
+so first we check if the uber rare is unlocked and if so assign based on it
+then so on, not that bad
+lets right a function to return the result
+for the first area there is little swing
+lets classify the 4 options though as bad, ok, good, great
+
+so I wrote the function for this, just need to write out the content for rares
+going to take a bit
+
+TODO: add in rares - done
+
+lets do them at 50, 200, 500, 1000
+and we'll make an intelligent vampire in the skills that autoconverts for you later
+
+TODO: rename the last strength skill and bump increased away - done
+
+TODO: make the message log shrinkable - done
+
+add a + which becomes a - for toggling if you see it
+
+TODO: add unique message log - done
+
+TODO: write actual normal text and make the messages have the right numbers
+
+IMPT: these are my alley rares - done
+
+passed out hobo converts for free, no blood no suspicion
+drunk hobo gets you more minions at AA
+end of world gives paranoid buff, costs more blood, less suspicion - in your favor though
+starving homeless person gives feeding frenzy buff, lots more from manual feeds
+
+for now lets add a badExtra() and so on for each of them
+and it will use the average as baseline and make or kill a minion
+maybe?  yeah it will reduce the current and all time or increase it
+and I will add a FIXME for a buff if there would be one
+
+crazy gives extra blood for time
+living in box costs less because so sedentary
+smelly gives you more minions from converts
+crazy comes with and grabs blood while you convert
+crazy hobo as end of world sign guy
+
+red light
+
+solo
+girl and pimp
+three way
+solo watched by a couple convert them too
+
+rares
+
+kink club, bound people easy targets
+to the brothel, huge convert
+seductive, less blood to convert buff
+infection ideas, +1 of each type you have
+
+need to do joggers next - done
+
+bad solo jogger 1
+ok couple jogging together 2
+good group of cheerleaders 6
+great whole football team 11
+
+rare track team, pick off one at a time for bonus
+very rare heart rate boost, you gain passive bps
+super rare you put some of your blood into the water for a marathon
+uber rare you find bovine growth hormone in the blood, doubles all current blood
+
+TODO: add colors to the rare text messages - done
+
+// HERE
+
+do drug deal corner, just push ahead with numbers and dummy text
+move into finances screen
+
+
+
+TODO: add in temporary buffs
+TODO: write rare texts
+TODO: copy all notes into one place and split them into files
+
+TODO: once I get into multiple costs I'll probably want to write a pay cost function
+
+convert pimp and ho
+group of joggers taking a break
+dealer and all customers
+
+money people - mall
+
+dumpster - minimum wage
+parking garage - normal employee
+restaurant - server, extra wages
+cash drop - manager
+
+money upgrades
+
+lemonade stand
+cookie store
+candy shop
+ice cream stand
+
+give them upgrades that boost their own sales
+so like lemon farm means you are growing your own lemons so it boosts their profit
+then gives an upgrade to bank stuff for each
+
+I want the upgrades for in the barracks to be intimidating strength, overpowering, omnipotent
+
+I want to create a drop down select for which monster you currently are once that is an option
+and it changes all of the visibility but you still get the other bonuses
+
+at some point I want a fitness center that gives fit minions and money minions
+
+and an upgrade to give professors tenure since they're immortal and give them free income
+
+soup kitchen gets free hobos
+STD clinic gets free hookers
+fitness store gets free joggers
+methadone clinic gets free drug dealers
+
+could consider the upgrade for between zones to be flavored like running
+you can run further so you can get to other areas before night
+
+IMPT
+
+consider making a one hour day night cycle.
+starts at nightfall when they being playing
+so part of hte challenge is to get through a good chunk before 30 mins is up
+maybe
+I think this fits werewolves well too
+the first 30 mins is the most common play time anyways
+
+
+then I want a virile blood upgrade, spend some blood to increase bps from minions
+I'll have one of these for each of the 4 subzones
+each of which will stack
+I'll have them each double because why not
+
+maybe we can make the first blood upgrade 25 and the suspicion 50
+that will make it harder to be an issue
+
+so I'll set up the suspicions management and stength unlocks for the whole first area
+by whole first area I mean all the blood minions
+once that is all set up I have sort of almost a game
+then I'll give the last upgrade as you win for now alert
+
+work out a better system for individual click handlers etc
+there should be a ton of overlap in the what these functions are doing
+can create one to update the display, one to charge the costs, one to recalc the costs etc
+this should streamline the whole thing
+the whole first zone worth should give me a solid idea of where that overlap lies
+
+then I'll start working the text into those areas and make them more complicated
+work the text in first then the rares
+
+then the logging of the text
+then the logging of the unique text
+
+have an unlockable array that I can throw the buttons for the next area into
+when the upgrade gets bought I'll toss them from that array into either hidden or vis
+
+also attach a costid field and a cost div for each button, will look better for crazy
+long costs
+
+IMPT: consider time based reduction in suspicion and cost of allaying suspicion
+consider making suspicion a visible stat for the zone
+I think this is really interesting, it adds to the idle nature of the game a lot
+you can come back and get a bunch of cheap vamps and burn through a lot of blood like that
+
+also really consider having a upgrade that increases stuff based on achieves
+
+consider not having the cover ups appear until I unlock them in general in some way
+that would allow me a bit more control over the narrative there
+
+for money mininons make the blood scaling a lot less harsh and the blood generation less great
+basically start them all at 1 bps and just give more minions
+and only scale to getting more
+
+werwolves howl to build rage
+lets rescale the converts so they all only grant one minion
+and scale back some minion costs, not all the way but a chunk
+maybe not honestly, lets play with it more first do some maths
+
+frankenstein's monster (or golem of some sort)
+will charge to build his energy, then expend some of that charge to animate limbs
+will have to build new monsters from multiple limbs but individual limbs can do stuff
+so you can have hands operating lab equipment and feet running on a treadmill to provide power
+heads will research for you on their own
+I'll come up with interesting amalgams that have their own roles and that will be what you build
+so kind of similar to how werewolves operate with all the minion types but they'll be constructed
+and you'll expend some arms and legs to make a thing
+ooh or maybe you are the doctor himself, that would be cool too
+
+cthulu
+
+************IMPT*******************
+
+so basically just a wait option (or sleep)
+build madness
+infect people with madness
+then they record their madness as art to spread it
+wait to produce money (Cthulu is patient and can wait forever for his investments to take hold)
+dream to produce knowledge (when Cthulu dreams forbidden knowledge seeps into the mortal realm)
+roar (when Cthulu roars madness turns to anger and anger to war or whatever I am calling the fight screen resource)
+I can strip out most of the advanced stuff
+just 4 infections that build madness
+4 for money, 4 for knowledge, 4 for war
+no suspicion reduction
+occult ritual for the upgrades
+sacrifice might make sense for some of them
+I could make the scaling a little more friendly to start
+I can make changes to make it better fit more overall structure eventually
+win condition is awakening cthulu
+consider upgrades of waking other elder gods
+need to research options here
+king in yellow gives bonuses to all war victories (maybe you get some troops back when the enemy dies)
+Dagon could give bonuses to certain money people who work on shipping lanes
+make a list of all the ones I want to include for sure
+I could flavor most of the boosts as raising an elder god
+then just general dark rituals for some of the other boosts
+maybe elder gods as an unlock for the next?
+That would make sense too
+I'll look through the book and find some pairings
+But first I can just lay out the structure with dummy names
+get my spacing and everything laid out
+gotta find a way to get a good pic for this
+or skip the pic entirely for now and just go with a simplified button click like clicking bad
+start with homeless people ranting
+worship elder gods to unlock next level
+then specific worship of a certain elder god to unlock a new level (worship dagon unlocks shipping crews for money ie)
+then awaken the elder god for a significant bonus to that type, will require sacrifice of minions
+definitely want it to pop up saying what I got
+have an upgrade for cthulu that lets clicks earn you an amount of interest
+I think there is a falling star that plays into cthulu lore, that could be my clickable golden cookie
+
+went with madnessSpread as the equiv for bloodHunt
+need to reformat my first madness minion button but it exists
+I should really consider programatically generating these divs
+make sure I am putting them into the right place with the sub tabs kind of stuff
+maybe think about jquery pages
+ok major restructure incoming
+I need to change the unlockables to unlock the whole div
+only make it hidden, unhide it and the rest will show
+then I need to change my checks to check the div
+buttons can all go into disabled maybe?  and never check them for showing
+that should work
+
+// ---------- HERE ----------
+
+sort out how buttons are stored and handled
+button is not unlocking because that loop is wrong now for triggered divs
+more work to do here - done
+
+CSS I need to fix the containing div and such but for now its working.  Just gotta choose some real values.
+I also have a bug when I click on the madness tab.  Too many arrays of stuff gotta look at the right ones. - done
+
+I want to have an unbought and bought div for the upgrades, place the bought ones under the "buildings"
+when you buy an upgrade it switches from one to the other - done
+add categories that are visible once stuff is there
+eventually this will make more sense to generate the divs programatically but this works for now
+
+*************TODO**************
+
+display current minions in the div - done
+put in placeholder description text for spacing - done
+display basic header for upgrades and minions and bought upgrades - done
+implement all the minions and upgrades up through where blood was - done
+implement other upgrades (click ones) - done
+set background color for whole thing - done
+set divs to be white background to stand out - done
+add css classes - done
+change color of background over time - done
+show text when clicking - done
+make divs programatic - done
+make image for sleeping - done
+implement it - done
+write actual text - done
+separate out madness bonuses to be per minion - done
+implement madness bonuses for existing minions - done
+add commas to large numbers - done
+implement money madness minions - done
+add everything that is standard to the constructors - done
+implement first 4 money buildings - done
+implement interest - done (as moneyDailyInterest)
+set up upgrades to unlock interest based on total money - done
+implement money minion upgrades - done
+fix bug, money interest not looking for the right div - done
+implement money building upgrades - done
+add interest information - done
+add bar showing next interest - done
+add bar for madness if that is the case - done
+implement second 4 money buildings - done
+track mad world status - done as events
+set up functions for minions upgrades - done
+clarify money upgrades to reference their store - done
+investigate plus madness from clicks (just clicks) - done
+clarify secret gatherings upgrade - done
+implement money building 2 upgrades - done
+find actual images - better temp
+implement money from buildings click bonus (promotion and cross promotion) - done
+implement money click bonus (investment types) - done
+
+
+put on github
+
+figure out the money first bug
+make tab bar 
+consolidate once per second stuff into one loop before adding knowledge
+add div generation for knowledge
+same for knowledge
+for knowledge I want a research capability bar
+same for fight
+for might I want a combined might bar
+and fights will be decided by might vs might with losses
+twice as many troops on your or their side will be a devastating loss or win with low casualties for winner
+and complete for loser
+three times will be overwhelming with nothing vs all
+in between I'll sort out
+even if you lose their force will go down
+if you make kills the reanimator skill for might can raise them as zombies (or whatever)
+
+set up falling star
+
+when finished post it to reddit for feedback
+while integrating feedback set up mobile versions
+release to app store
+release skills later work on them while sorting out app store
+
+for next minion copy over all five then find replace MinionsOne with MinionsTwo
+.1: .5: 2: 10: 50: 250: 1,000: 5,000: 20,000: 100,000: 500,000: 2,000,00: 10,000,000: 50,000,000: 200,000,000: 1,000,000,000
+
+elder gods to include
+
+Dagon - sea, also some money connections, probably sailors that make money
+Yig / Quetzalcoatl - inventor of books, harvset significance, probably a good call for knowledge
+Nyarlathotep - messenger so maybe good for knowledge, also revels in madness though
+Shub-Niggurath - all mother
+Azathoth - most powerful, might maybe? or maybe knowledge as the old rule, or money as corrupting greed of CEOs
+Yog-Sothoth - is all knowing, definitely a knowledge one, final knowledge probably
+Hastur - could be the king in yellow, going with no, make Hastur its own, brings parts of Earth into Carcosa
+Cthugha - fire aligned, might be good for might
+King in Yellow - with feverish dreams of a play that should never be read artistic people are more susceptible to madness.
+Star spawn? - could be the last madness one overall and give abyssal warriors
+Hounds of Tindalos - hungry beasts, probably good for might
+Rhan-Tegoth - some mad wax artist worshipped him, might be a good non-eucledian artist thing
+Magnum Innominandum - possibly the nameless mist
+Ubbo-Sathla - maybe stole knowledge from its creators and brought it to our universe
+Mother Hydra - superstitious sailors see unknowable things.  The tales of which chill others to their core.
+mi-go and gugs and fungi?, blind albino penguins, zoog, dhole, star spawn -  could use these as warrior types
+maybe each class having it own warriors and then converting others would be interesting
+or that could be a cthulhu thing
+with 4 warrior types they could each have their own bonuses
+then might would mostly be converting human warriors to work alongside you
+this would make a skill granting these warriors pretty valuable in other classes
+could flavor the madness from more minions as chants like iya iya cthulhu ftagha
+from my shirt - mi-go, star spawn, moon beast, gug, giant penguin
+
+madness minions 1 - Crazy homeless person - The mad men with signs screaming about the end of the world won't do much to spread madness.
+But it will do some.
+min 2 unlock - awaken mother hydra - This dangerous ritual will awaken Mother Hydra and her brood of Deep Ones.
+min 2 - Suspicious sailor - Seeing the deep ones at the sea has frayed their minds.  No one believes their tales of froglike fishmen but
+it unsettles them nonetheless.
+min 3 unlock  - open portal to Yuggoth - Pluto may not be a planet anymore but known by its ancient name of Yuggoth it is home to 
+terrifying fungi that some text refer to as Mi-Go.  A sufficient sacrifice will draw their attention and open the portal again.
+maybe flavor this as Mi-Go taking them on a trip and not everyone survives, loko up mi-go again for this.
+min 3 - CDC investigator - Strange spores and fungi are mutating across the world and bringing incurable diseases with them.  The CDC
+is learning vanishingly little but spreading great fear and hysteria.
+min 4 unlock - awaken Shub-Niggurath - After sacrifice the Black Goat of the woods with a Thousand Young will awaken and her young
+will begin to spread around the world.
+min 4 - Conspiracy Theorist - Sightings of strange creatures lead conspiracy theorists to wild speculation.  No matter how horrifying
+and alien their theories are they all fall short but they do show things are not as they seem.
+
+money min 1 unlock - Contact the king in yellow - As madness increases the yellow sign becomes clearer and clearer.  A dangerous invocation
+will reveal a gateway in the mind to Carcosa where the king in Yellow resides.
+money min 1 - Avant Garde Artist - Visions of a play that should never be read dance through the minds of the mad and creative. Their
+work becomes even more confusing but somehow more popular as well.
+money min 2 unlock - Summon Hastur to Earth - Hastur alone possesses to power to transport people to and from Carcosa.  Much sacrifice
+will be needed to convince him the trip is worthwhile.
+money min 2 - Carcosan Architect - After an architect sees the buildings in Carcosa nothing they create will ever be the same.
+money min 3 unlock - Enter the Dagon - The time has come to awake Father Dagon.  The seas roar with madness in anticipation.  The 
+journey will be frought with genuinely unimaginable danger.
+money min 3 - Pirate Captain - It takes a hardened soul to survive the new dangers in the sea.  Those who can keep their sanity (or
+more likely only some of it) will find their pick of weak and profitable prey.
+money min 4 unlock - Awaken Azathoth - From his throne at the center of the unseen universe beyond ours Azathoth once ruled the cosmos.  While
+he slumbered times have changed and Cthulhu is ascendant.  His thirst for power is unquenchable, much blood will be required.
+money min 4 - Greedy CEO - The thirst for power is well known to those at the top of the fortune food chain.  With Azathoth's influence
+their means will feel justified and their ends will be horrifying to anyone not a stockholder.
+
+know min 1 unlock - Awaken antartic city - A bizarre ancient ritual relating to Shoggoths and their home. Survive the cold and read 
+the hieroglyphics and the mountains will echo with madness once again.
+know min 1 - antartic researcher - Analyzing the massive blind penguins found in Antartica and the remnants of an ancient race of beings
+destroys entire branches of theory.  The more they they research the more they know and the more they wish they didn't.
+know min 2 unlock - Find Nyarlathotep - Nyarlathotep has been wandering the Earth for unknown aeons. Track him down and he will share
+his vast knowledge with you.
+know min 2 - fringe scientist - Fueled by the bizarre experiments of Nyarlathotep strange and terrifying experiments are begun and 
+limits that should not be pushed are pushed.
+know min 3 unlock - Revive Yig - Yig the serpent god under his guise as Quetzalcoatl died and was banished to the stars. An arcane
+ritual will bring him forth once more and his knowledge of ancient cultures as well.
+know min 3 - archaelogist adventurer - High spirited archaeologists are making connections they never had before. They are discovering
+evidence of ancient races and it fetches a heavy price in museums.
+know min 4 unlock - Summon Yog-Sothoth - Yog-Sothoth and his twin sons Nug and Yeb together keep the knowledge of past, present, and
+future. Existing in all places and times summoning them to this one will be dangerous.
+know min 4 - Historian Futurist - Through research into patterns of the past some futurists are better able to predict future events.
+Little do they know where their newfound accuracy has come from.
+
+knowledge is penguins, nyarlahotep, Yig / Quetzalcoatl, yog-sothoth
+
+might is gug, moon beast, hound of tindalos, star spawn
+
+knowledge buildings - library, community center, university (miskatonic online can go in here), grade school
+
+I want the final structure to be to awaken cthulhu, to fund an expedition, to research the bloop location, and to lead his army
+Its a four part victory condition each of which individually unlocks skills
+when all 4 are done the earth is destroyed and you can find a new realm
+
+for click bonus upgrades
+
+replace MadnessClicks -> MoneyClicks
+madnessPer -> moneyPer
+currMadness -> currMoney
+type: "madness" -> type: "money"
+madnessMadness -> madnessMoney
+MinionsCon -> MoneyBuildingsCon
+totalMadness -> totalMoney
+
+.1: .5: 2: 10: 50: 250: 1,000: 5,000: 20,000: 100,000: 500,000: 2,000,00: 10,000,000: 50,000,000: 200,000,000: 1,000,000,000
+
+implement money building 2 upgrades
+
+halfway house (cost 5,000 mps .1 $ps 50) - done
+state contract and national contract + base
+strict orderlies, bribed parole officer, security system
+
+asylum (cost 20,000 mps .5 $ps 200) - done
+padded room, cells + base
+experimental treatments, drug testing, organ harvesting
+
+talk radio (cost 100,000 mps 2 $ps 1000) - done
+FM band, satellite + base
+aggressive guests, subliminal messages, political agenda
+
+pharma comp (cost 500,000 mps 10 $ps 5000) - done
+drug patent, designer drug (gray market modifications) + base
+debilitating side effects, psychiatrist recommended, deal with major chain
+
+before next set of upgrades pull out the click functions into their own function to just call it
+will need to check exist with && typeof(visibleMadnessDivs[key]) == "object" 
+function upgradeIncreaseBase(key, otherDiv, madness1, madness2, money1, money2, know1, know2, might1, might2)
+
+check on visibleMadnessDivs[this.divid].type = "boughtupgrade";
+
+change click function, add minion type
+tested up through money 3
+4856 lines to 4287 lines, trimmed almost 600
+
+minion: 'moneyBuildingsOne',
+		  click: function() {upgradeDoubleBonus('upgradeMoneyBuildingsOneBonusOneButton')},
+
+minion: 'moneyBuildingsOne',
+		  click: function () {upgradeIncreaseBase('upgradeMoneyBuildingsOneBonusTwoButton', 
+		  'upgradeMoneyBuildingsOneBonusFourButton', 0, 0, .5, 2, 0, 0, 0, 0);},
+
+
+maybe find some non-euclidean ones for money, some outside the box art and architecture summoned up
+I think generically I want the last of each to be a big deal named one that people might know
+or maybe the first of each category
+
+for the madness from buildings make them tie to a minion type
+require one a certain minion in addition to total minions
+make the chants knowledge related, flavor the madness ones as a growing church/cult
+maybe the money ones can be setting up websites, bookstores, churches etc
+might I can get to
+
+half way house
+asylum
+talk radio station
+pharmaceutical company
+
+have some buildings for money which add madness (probably at level of 1 - 4 mad mins)
+could just roll straight into knowledge from there and make that the pattern
+for everything but might I think, might is self feeding
+
+lemonade stand (cost 10) - done
+better signs, pushy children, weather channel *= 2
+mint leaves, organic lemons + base
+
+cookie store (cost 50) - done
+grandmas, factories, shipments *= 2
+halloween cookies, christmas cookie + base
+
+candy store (cost 250) (change ascii to retro feel) - done
+arcade cabinet, frog mascot, witch *= 2
+lollipops, chocolate bars + base
+
+rock candy store (cost 1000)
+free candy van, sleazy lawyer, mules
+stainless steel, platinum cooking purity + base
+
+.1, .5, 2, 10, 50, 250, 1000
+
+avant garde artist - better reach *= 2, famous + base (costs 5000 base, 50 mps, .1$ps )
+N-Dimensional Golden Ratio - more popular
+Favorable Review - charge more
+Mixed Media - more popular
+Gallery Showing - charge more
+Art Jaune Movement - much more popular
+architect (cost: 20k, mps 200, $ps .5) - done
+captain (costs 100k, mps 1000, $ps 2) - done
+CEO (costs 500k, mps 5000, $ps 10)
+1000, 5000, 25,000: 100,000: 500,000: 2,500,000
+.5, 2, 10, 50, 250, 1,000: 5,000: 25,000
+only replace MinionsNum not just num
+
+implement money buildings
+lemonade stand - 10
+cookie store - 50
+candy store - 250
+rock candy store - they only sell blue and operate out of basements but for some reason they are extremely popular.
+1000
+
+mad min 1 upgrade - louder yelling, speaking in tongues (+ base, go up a base level) cryptic scrawl, eldritch symbols, impossible angles
+
+order of base mps is right now .1, .5, 2, 10, 50, 200, 1000, 5000, 20,000: 100,000
+factor is 1.05
+min 1 - 10
+min 2 - 50
+min 3 - 250
+min 4 - 1000
+
+at 5, 10, 25, 50, 100
+25, 50, 150, 1500, 150000
+
+eventually want total clicks upgrades too
+make sure unlock for money happens any time you have some money
+
+This is the point where madness only cthulhu clicker is kind of complete
+
+implement money unlock minions
+implement money buildings
+lemonade stand
+cookie store
+candy store
+rock candy store - they only sell blue and operate out of basements but for some reason they are extremely popular.
+implement interest
+make tab bar 
+same for knowledge
+same for fight
+set up falling star
+
+
+probably need to tone down some of my unlocks
+no suspicion reduction makes some of the minion losses pretty brutal
+consider bringing them down to like 5 or so maybe even less
+or have killing them bring the cost back down...
+toned them down quite a bit and its a tad smoother, still balancing to do
+
+really consider an unlock intro
+dark room style leading up to a person is interacting with cthulhu
+Ryan thinks events are a better idea than upgrades
+stuff that happens could be a pop up of some sort maybe even with images
+
+With Strange Aeons even Death may die - madness minions are immortal, final tier might upgrade
+
+
+IMPT
+
+have money interest be an upgrade
+then I specifically spell out how it will work there
+and it ramps the complexity up a bit slower
+
+warriors train but they can only leve up in combat
+surviving a combat makes you a tougher warrior
+you can only train new levels of warriors after you get one from combat
+combat will kill some amount but those that survive go up in level
+
+********NEW GAME PLUS********
+
+have the top menu bar have a switch class option
+so you can work through the other class upgrades while waiting on your current class
+then I can keep the menus all separated
+
+********MOBILE*********
+
+for mobile I want the top of my screen to be the buttons you press
+then I can have maybe totals for each above or below them
+then I'll have the bottom of the screen be a drop down where you can select an upgrade set
+drop an exclamation point at the end of the current if others have unlocks
+put the numbers into the drop down
+then I'll dump all the upgrades into that bottom half of the screen
+maybe start here and scale up
+have a stats screen for different things
+in fact start over as mobile
+and reverse the cost order so more expensive newer stuff on top
+consider tabs along the top instead and have some grayed out
+actually teases better too
+lets start a whole new file and just copy paste over the relavant chunks
+I think I want to split screen so you can see what you are saving up for
+so that way you can have your next upgrade info in front of you while clicking
+
+look at having a clickable image (cthulu head) and have the buttons beneath
+and you choose your current resource
+I should actually mock this up
+have like the menu underneath it for buyable stuff, tabs for now
+and a tabbed set along the top for what you are making or maybe right underneath
+they pop up at two tabs
+and I can only show data for the current resource freeing up screen space
+consider if I could make it switch both, not sure this is a good idea but consider it
+ok lets try it like this, going to be a tab of madness, money, knowledge, might
+when you switch the tabs you get the same (or slightly different) cthulu image to click
+but the resource changes and the displayed stats changes
+and the "buildings" you can buy and upgrades change
+new upgrades that are unbought appear on top
+bought upgrades appear on bottom
+lets start with 16 madness "buildings" and 12 each for the other
+lets get the buildings and tabs as visible and then look at spacing
+see how much room I have to work with the weirdness of money and such
+I'd like symbols for the tabs with small captions, brain for madness, $ for money, book for knowledge, fist for might
+
+**** DEMONS ****
+
+their resource is corruption
+they convert souls
+crossroads to get free souls
+maybe even each conversion requires building the corruption up
+
+***background color change notes****
+
+ok so lets give even space to day and night
+we have 60 increments to work with
+i'm thinking 1/4 pure dark 1/4 pure light
+lets do black fasing to purple and then into red
+then red to orange into yellow into blue
+lets' work on a fade from black to blue and back and then I can work others in later
+ok going to use this thing from wikipedia
+I also want a sunrise yellow and a sunset orange for one minute each
+one minute each for these other three colors as well
+so lets start at sunrise and then adjust it back to midnight
+1 - sunrise
+2 - 30 - day
+31 - sunset
+32 - civil twilight
+33 - nautical twilight
+34 - astro twilight
+35 - 57 night
+46 - midnight
+58 - astro twilight
+59 - nautical twilight
+60 - civil twilight
+
+46 is midnight
+
+so if we make midnight 1
+
+1 - midnight - black
+2 - 12 night - black
+13 - astro 
+14 - nautical
+15 - civil
+16 - sunrise - Gold
+17 - 45 - day - SkyBlue (87CEEB)
+46 - sunset - OrangeRed
+47 - civil - DeepSkyBlue
+48 - nautical - DodgerBlue
+49 - astro - MidnightBlue
+50 - 60 - night
+
+**** canvas for clicking madness text display notes ****
+
+so I think I have a canvas overlayed now
+get mouse position when the madness button is clicked
+draw onto canvas the amount of plus madness as a draw text
+I probably need to draw this in its own loop so it ends up on top
+and find a way to center the text over it
+maybe have an object so it contains the coords, the number and a display countdown
+
+I might be looking at the wrong canvas in cookie clicker
+keep looking at this and figure out how to do this
+I might need to draw the image over the button maybe
+or detect clicks on it as not a button
+like maybe create a canvas for that top part and draw onto it in the order I want
+detect where clicks happen and react to that instead of having it be a button
+I could also make the whole thing a canvas maybe and just detect where clicks are happening with no buttons
+I think top canvas is better though
+see what orteil is doing here
+
+so I should set the canvas and draw on the whole thing so I can see what its overlapping
+then I can figure out how far I want it to go down
+and only use the wrappers around the title, the current mad, the mad per second, and the button
+make the button just on image
+then set up click detection and check if its in the canvas
+I can make the falling stars only appear there
+
+make the button just an image
+detect clicks on the image
+create a click numbers object (amount, type, mousex, mousey, duration)
+create a numbers array
+create a function to display the numbers
+loop through it decrementing and deleting them as needed
+
+lets look at 77 pixels down image is 324 by 324
+
+looking like 8, 127 to 332, 451
+
+amount: moreMadness,
+                type: "Madness",
+		        xpos: mouseX,
+		        ypos: mouseY,
+		        timer: 10
+
+ok gotta make a new 500x500 canvas and try to write on it see if it matches up
+
+
+button id="madnessButton" onclick="madnessClick('madnessButton')"
+right a function to display numbers 
+
+alien class that tries to blend in, lots of different alien types slowly taking over
+
+
+feedback for nanobot - caches are odd, wish they came back
+nothing to do during first chunk of queen grow, let gen bots earlier
+  probably would have been ok if I waited longer to evolve, that tip should appen before maybe
+why don't upgrades activate when complete? I figured this out but it was unclear
+  kind of buggy clicking on it
+i like that it went back to resting when it fully grew
+game advised me that queen getting too large is risky but also advised 200% as a good size
+curve seemed good, so far
+can we get commas on the research screen
+
+rscharts - minecraft incremental
+
+the situation seems to be that by rejecting the chicken as my business partner he now fights me
+not super often but he has won every time so far since I had no army
+losing money while trying to save up for something is annoying
+more so for not knowing it was coming
+I could have got the axe and gone to bed twice now if not for that
+is he going to attack me a ton all night>?
+I have 40k KPE from skilled and 200 from heavenly prior to sleep
+
+conspiracy clicker
+will should be with in opener
+controll on page 2
+seems like way too much going on to start, we'll see if the interface clarifies
+
+
+var autoClicker = setInterval(Game.ClickCookie, 10);
+
+
+s
