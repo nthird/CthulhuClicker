@@ -76,10 +76,16 @@
   bottom:10px;
 }
 </style>
-<div id="outerWrapper" style="position:relative; width:500px; height:500px">
-  <div id="innerWrapper" style="position:absolute; top:0px; left:0px; width:500px; height:500px;">
-    <h1 style="color:white">Cthulhu Clicker</h1>
 
+<div id="madnessTabs" style="position: relative; width:800px; height:80px;">
+  <button id="madnessMadnessTab" onclick="changeMadnessTab('madnessMadnessTab')" hidden=true><img src="images/tempmadness.png"></button>
+  <button id="madnessMoneyTab" onclick="changeMadnessTab('madnessMoneyTab')" hidden=true><img src="images/tempmoney.png"></button>
+  <button id="madnessKnowTab" onclick="changeMadnessTab('madnessKnowTab')" hidden=true><img src="images/tempknow.png"></button>
+  <button id="madnessMightTab" onclick="changeMadnessTab('madnessMightTab')" hidden=true><img src="images/tempmight.png"></button>
+</div>
+	
+<div id="outerWrapper" style="position:relative; width:500px; height:400px">
+  <div id="innerWrapper" style="position:absolute; top:0px; left:0px; width:500px; height:400px;">
     <div id="madnessDisplay" style="color:white">
       <div id="madness">Madness: 0</div>
       <div id="madnessPerSecond">Madness Per Second: 0</div>
@@ -92,15 +98,20 @@
       <div id="moneyButtonDiv"><img src="images/CthulhuShawnDrawing.png" id="moneyClickButton"></div>
 	  <div id="moneyStatusDiv">No account earning you no interest in </div>
     </div>
+	<div id="knowDisplay" style="color:white" hidden=true>
+      <div id="know">Knowledge: 0</div>
+      <div id="knowPerSecond">Knowledge Per Second: 0</div>
+      <div id="knowButtonDiv"><img src="images/CthulhuShawnDrawing.png" id="knowClickButton"></div>
+	  <div id="knowStatusDiv">Research strength </div>
+    </div>
+	<div id="mightDisplay" style="color:white" hidden=true>
+      <div id="might">Might: 0</div>
+      <div id="mightPerSecond">Might Per Second: 0</div>
+      <div id="mightButtonDiv"><img src="images/CthulhuShawnDrawing.png" id="mightClickButton"></div>
+	  <div id="mightStatusDiv">Army strength </div>
+    </div>
   </div>
-  <canvas id="wholeScreenCanvas" style="position:absolute; top:0px; left:0px;" width="500" height="500"></canvas>
-</div>
-
-<div id="madnessTabs">
-	<button id="madnessMadnessTab" onclick="changeMadnessTab('madnessMadnessTab')" style="width:25%" hidden=true>Madness</button>
-	<button id="madnessMoneyTab" onclick="changeMadnessTab('madnessMoneyTab')" style="width:25%" hidden=true>Money</button>
-	<button id="madnessKnowledgeTab" onclick="changeMadnessTab('madnessKnowledgeTab')" style="width:25%" hidden=true>Knowledge</button>
-	<button id="madnessMightTab" onclick="changeMadnessTab('madnessMightTab')" style="width:25%" hidden=true>Might</button>
+  <canvas id="wholeScreenCanvas" style="position:absolute; top:0px; left:0px;" width="500" height="400"></canvas>
 </div>
 
 <div id="madnessStats">
@@ -115,17 +126,15 @@
 </div>
 
 <div id="madnessSpread">
-  <div id="madnessSpreadUpgrades">
-    <div id="madnessMadnessUpgrades" hidden=true class="divheader">UPGRADES</div>
+  <div id="madnessMadnessTabs" style="position: relative; width:800px; height:80px;">
+    <button id="madnessMadnessBuildingsSubTab" onclick="changeMadnessSubTab('madnessMadnessBuildingsSubTab')" hidden=true><img src="images/tempminions.png"></button>
+    <button id="madnessMadnessUpgradesSubTab" onclick="changeMadnessSubTab('madnessMadnessUpgradesSubTab')" hidden=true><img src="images/tempupgrade.png"></button>
+    <button id="madnessMadnessBoughtUpgradesSubTab" onclick="changeMadnessSubTab('madnessMadnessBoughtUpgradesSubTab')" hidden=true><img src="images/tempbought.png"></button>
+    <button id="madnessMadnessSkillsSubTab" onclick="changeMadnessSubTab('madnessMadnessSkillsSubTab')" hidden=true><img src="images/tempskills.png"></button>
   </div>
-
-  <div id="madnessSpreadConvert">
-    <div id="madnessMadnessBuildings" hidden=true class="divheader">CONVERT</div>
-  </div>
-  
-  <div id="madnessSpreadBoughtUpgrades">
-    <div id="madnessMadnessBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
-  </div>
+  <div id="madnessSpreadUpgrades" hidden=true></div>
+  <div id="madnessSpreadConvert" hidden=true></div>
+  <div id="madnessSpreadBoughtUpgrades" hidden=true></div>
   
 </div>
 
@@ -141,16 +150,64 @@
 </div>
 
 <div id="madnessInvest" hidden=true>
-  <div id="madnessInvestUpgrades">
-    <div id="madnessMoneyUpgrades" hidden=true class="divheader">UPGRADES</div>
+  <div id="madnessMoneyTabs" style="position: relative; width:800px; height:80px;">
+    <button id="madnessMoneyBuildingsSubTab" onclick="changeMadnessSubTab('madnessMoneyBuildingsSubTab')" hidden=true><img src="images/tempminions.png"></button>
+    <button id="madnessMoneyUpgradesSubTab" onclick="changeMadnessSubTab('madnessMoneyUpgradesSubTab')" hidden=true><img src="images/tempupgrade.png"></button>
+    <button id="madnessMoneyBoughtUpgradesSubTab" onclick="changeMadnessSubTab('madnessMoneyBoughtUpgradesSubTab')" hidden=true><img src="images/tempbought.png"></button>
+    <button id="madnessMoneySkillsSubTab" onclick="changeMadnessSubTab('madnessMoneySkillsSubTab')" hidden=true><img src="images/tempskills.png"></button>
+  </div>
+  <div id="madnessInvestUpgrades" hidden=true></div>  
+  <div id="madnessInvestBuildings" hidden=true></div>
+  <div id="madnessInvestBoughtUpgrades" hidden=true></div>
+</div>
+
+<div id="knowStats">
+  <div id="knowMinionsOne" hidden=true>Knowledge Minions 1: 0</div>
+  <div id="knowMinionsTwo" hidden=true>Knowledge Minions 2: 0</div>
+  <div id="knowMinionsThree" hidden=true>Knowledge Minions 3: 0</div>
+  <div id="knowMinionsFour" hidden=true>Knowledge Minions 4: 0</div>
+  <div id="knowMinionsFive" hidden=true>Knowledge Minions 5: 0</div>
+  <div id="knowMinionsSix" hidden=true>Knowledge Minions 6: 0</div>
+  <div id="knowMinionsSeven" hidden=true>Knowledge Minions 7: 0</div>
+  <div id="knowMinionsEight" hidden=true>Knowledge Minions 8: 0</div>
+</div>
+
+<div id="madnessResearch" hidden=true>
+  <div id="madnessResearchUpgrades">
+    <div id="madnessKnowUpgrades" hidden=true class="divheader">UPGRADES</div>
   </div>
   
-  <div id="madnessInvestBuildings">
-    <div id="madnessMoneyBuildings" hidden=true class="divheader">BUILDINGS</div>
+  <div id="madnessResearchBuildings">
+    <div id="madnessKnowBuildings" hidden=true class="divheader">MINIONS</div>
   </div>
 
-  <div id="madnessInvestBoughtUpgrades">
-    <div id="madnessMoneyBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
+  <div id="madnessResearchBoughtUpgrades">
+    <div id="madnessKnowBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
+  </div>
+</div>
+
+<div id="fightStats">
+  <div id="fightMinionsOne" hidden=true>Might Minions 1: 0</div>
+  <div id="fightMinionsTwo" hidden=true>Might Minions 2: 0</div>
+  <div id="fightMinionsThree" hidden=true>Might Minions 3: 0</div>
+  <div id="fightMinionsFour" hidden=true>Might Minions 4: 0</div>
+  <div id="fightMinionsFive" hidden=true>Might Minions 5: 0</div>
+  <div id="fightMinionsSix" hidden=true>Might Minions 6: 0</div>
+  <div id="fightMinionsSeven" hidden=true>Might Minions 7: 0</div>
+  <div id="fightMinionsEight" hidden=true>Might Minions 8: 0</div>
+</div>
+
+<div id="madnessFight" hidden=true>
+  <div id="madnessFightUpgrades">
+    <div id="madnessMightUpgrades" hidden=true class="divheader">UPGRADES</div>
+  </div>
+  
+  <div id="madnessFightBuildings">
+    <div id="madnessMightBuildings" hidden=true class="divheader">MINIONS</div>
+  </div>
+
+  <div id="madnessFightBoughtUpgrades">
+    <div id="madnessMightBoughtUpgrades" hidden=true class="divheader">BOUGHT UPGRADES</div>
   </div>
 </div>
 
@@ -232,12 +289,17 @@
 	var hiddenMadnessTabs = [];
 	var visibleMadnessTabs = [];
 	var tabsUnlocked = 0;
+	var subTabsUnlocked = 0;
+	
+	var hiddenMadnessSubTabs = [];
+	var visibleMadnessSubTabs = [];
 	
 	var popUpNumbers = [];
 	var showClickImage = false;
 	var clickImage;
 	
 	var currTab = "madnessMadnessTab";
+	var currSubTab = "madnessMadnessBuildingsSubTab";
 	
 	function madnessCost(aMadnessCost) {
 	  return aMadnessCost;
@@ -270,6 +332,10 @@
 	  return aMadnessTab;
 	}
 	
+	function madnessSubTab(aMadnessSubTab) {
+	  return aMadnessSubTab;
+	}
+	
 	function popUpNumber(aPopUpNumber) {
 	  return aPopUpNumber;
 	}
@@ -297,8 +363,28 @@
 	  visibleMadnessClickButtons[id].click();
 	}
 	
-	function madnessClick(id) {
-	  visibleMadnessButtons[id].click();
+	function madnessClick(key) {
+	  var doClick = true;
+	  for (var i=0; i<visibleMadnessButtons[key].costs.length; i++) {
+		if (visibleMadnessButtons[key].costs[i].type == "madness") {
+		  if (currMadness < visibleMadnessButtons[key].costs[i].current)
+		    doClick = false;
+		  }
+		else if (visibleMadnessButtons[key].costs[i].type == "money") {
+		  if (currMoney < visibleMadnessButtons[key].costs[i].current)
+		    doClick = false;
+		}
+		else if (visibleMadnessButtons[key].costs[i].type == "know") {
+		  if (currKnow < visibleMadnessButtons[key].costs[i].current)
+		    doClick = false;
+		}
+		else if (visibleMadnessButtons[key].costs[i].type == "might") {
+		  if (currMight < visibleMadnessButtons[key].costs[i].current)
+		    doClick = false;
+		}
+	  }
+	  if (doClick)
+	    visibleMadnessButtons[key].click();
 	}
 	
 	function doMouseDown(event) {
@@ -331,11 +417,35 @@
 		visibleMadnessTabs[key].display.hidden = true;
 		visibleMadnessTabs[key].active = false;
 	  }
+	  for (var key2 in visibleMadnessSubTabs) {
+	    visibleMadnessSubTabs[key2].contains.hidden = true;
+		visibleMadnessSubTabs[key2].active = false;
+	  }
 	  visibleMadnessTabs[id].contains.hidden = false;
 	  visibleMadnessTabs[id].display.hidden = false;
 	  visibleMadnessTabs[id].active = true;
 	  visibleMadnessTabs[id].notifications = 0;
-	  visibleMadnessTabs[id].id.innerHTML = visibleMadnessTabs[id].title;
+	  visibleMadnessTabs[id].id.innerHTML = "<img src='images/" + visibleMadnessTabs[id].image + "'>";
+	  visibleMadnessTabs[id].showingnotify = false;
+	  
+	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].contains.hidden = false;
+	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].active = true;
+	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].notifications = 0;
+	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].id.innerHTML = "<img src='images/" + visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].image + "'>";
+	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].showingnotify = false;
+	}
+	
+	function changeMadnessSubTab(id) {
+	  currSubTab = id;
+	  for (var key in visibleMadnessSubTabs) {
+	    visibleMadnessSubTabs[key].contains.hidden = true;
+		visibleMadnessSubTabs[key].active = false;
+	  }
+	  visibleMadnessSubTabs[id].contains.hidden = false;
+	  visibleMadnessSubTabs[id].active = true;
+	  visibleMadnessSubTabs[id].notifications = 0;
+	  visibleMadnessSubTabs[id].id.innerHTML = "<img src='images/" + visibleMadnessSubTabs[id].image + "'>";
+	  visibleMadnessSubTabs[id].showingnotify = false;
 	}
 	
 	function addNotifyTab(id) {
@@ -346,6 +456,17 @@
 	  else {
 	    if (!hiddenMadnessTabs[id].active)
 		  hiddenMadnessTabs[id].notifications++;
+	  }
+	}
+	
+	function addNotifySubTab(id) {
+	  if (typeof(visibleMadnessSubTabs[id]) == "object") {
+	    if (!visibleMadnessSubTabs[id].active)
+		  visibleMadnessSubTabs[id].notifications++;
+	  }
+	  else {
+	    if (!hiddenMadnessSubTabs[id].active)
+		  hiddenMadnessSubTabs[id].notifications++;
 	  }
 	}
 	
@@ -406,7 +527,27 @@
 		  visibleMadnessTabs[key] = madnessTab(hiddenMadnessTabs[key]);
 		  delete hiddenMadnessTabs[key];
 		  document.getElementById(key).hidden = false;
+		  if (tabsUnlocked == 0 && key != "madnessMadnessTab")
+		  {
+		    visibleMadnessTabs["madnessMadnessTab"] = madnessTab(hiddenMadnessTabs["madnessMadnessTab"]);
+		    delete hiddenMadnessTabs["madnessMadnessTab"];
+		    document.getElementById("madnessMadnessTab").hidden = false;
+			changeMadnessTab(key);
+		  }
 		  tabsUnlocked++;
+		}
+	  }
+	}
+	
+	function checkUnlockMadnessSubTabs() {
+	  for (var key in hiddenMadnessSubTabs) {
+	    if (hiddenMadnessSubTabs[key].unlock()) {
+		  visibleMadnessSubTabs[key] = madnessSubTab(hiddenMadnessSubTabs[key]);
+		  delete hiddenMadnessSubTabs[key];
+		  document.getElementById(key).hidden = false;
+		  if (subTabsUnlocked == 0)
+			changeMadnessSubTab(key);
+		  subTabsUnlocked++;
 		}
 	  }
 	}
@@ -425,6 +566,14 @@
 		  else {
 		    if (!hiddenMadnessTabs[visibleMadnessDivs[key].tab].active)
 		      hiddenMadnessTabs[visibleMadnessDivs[key].tab].notifications++;
+		  }
+		  if (typeof(visibleMadnessSubTabs[visibleMadnessDivs[key].subtab]) == "object") {
+		    if (!visibleMadnessSubTabs[visibleMadnessDivs[key].subtab].active)
+		      visibleMadnessSubTabs[visibleMadnessDivs[key].subtab].notifications++;
+		  }
+		  else {
+		    if (!hiddenMadnessSubTabs[visibleMadnessDivs[key].subtab].active)
+		      hiddenMadnessSubTabs[visibleMadnessDivs[key].subtab].notifications++;
 		  }
 		}
 	  }
@@ -500,8 +649,19 @@
 	// FIXME: not tabs anymore
 	function madnessTabNotificationsDisplay() {
 	  for (var key in visibleMadnessTabs) {
-	    if (visibleMadnessTabs[key].notifications > 0 && !visibleMadnessTabs[key].active) {
-		   visibleMadnessTabs[key].id.innerHTML = visibleMadnessTabs[key].title + " (" + visibleMadnessTabs[key].notifications + ")";
+	    if (visibleMadnessTabs[key].notifications > 0 && !visibleMadnessTabs[key].active && !visibleMadnessTabs[key].showingnotify) {
+		  visibleMadnessTabs[key].id.innerHTML = "<img src='images/" + visibleMadnessTabs[key].notifyimage + "'>";
+		  visibleMadnessTabs[key].showingnotify = true;;
+		}
+	  }
+	}
+	
+	// FIXME: not tabs anymore
+	function madnessSubTabNotificationsDisplay() {
+	  for (var key in visibleMadnessSubTabs) {
+	    if (visibleMadnessSubTabs[key].notifications > 0 && !visibleMadnessSubTabs[key].active && !visibleMadnessSubTabs[key].showingnotify) {
+		  visibleMadnessSubTabs[key].id.innerHTML = "<img src='images/" + visibleMadnessSubTabs[key].notifyimage + "'>";
+		  visibleMadnessSubTabs[key].showingnotify = true;;
 		}
 	  }
 	}
@@ -539,6 +699,8 @@
 		  moneyBankTitle = visibleMadnessDivs[moneyBankAccountKey].title;
 		var minString = (60 - minuteCounter).toString();
 		var secString = (60 - secondCounter).toString();
+		if (secString.length == 1)
+		  secString = "0" + secString;
 	    var moneyStatusString = moneyBankTitle + " earning " + moneyDailyInterest*100 + "% interest in " + 
 		minString + ":" + secString;
 	    document.getElementById("moneyStatusDiv").innerHTML = moneyStatusString;
@@ -546,7 +708,7 @@
 	}
 	
 	function clearDisplay() {
-	  context.clearRect(0,0,500,500);
+	  context.clearRect(0,0,500,400);
 	}
 	
 	function madnessClickImageDisplay() {
@@ -566,7 +728,7 @@
 		  context.font = '16px Arial bold';
           context.fillStyle = "rgba(255, 0, 0, " + alpha + ")";
 		  context.textAlign = 'center';
-          context.fillText("+" + commafy(popUpNumbers[i].amount) + " " + popUpNumbers[i].type, popUpNumbers[i].xpos, (popUpNumbers[i].ypos - 70 + popUpNumbers[i].timer));
+          context.fillText("+" + commafy(popUpNumbers[i].amount) + " " + popUpNumbers[i].type, popUpNumbers[i].xpos, (popUpNumbers[i].ypos - 140 + popUpNumbers[i].timer));
 		  popUpNumbers[i].timer--;
 		}
 	  }	
@@ -581,30 +743,34 @@
 	    frameCounter++;
 		calculateMadnessPerSecond();
 		calculateMoneyPerSecond();
-		if (frameCounter >= 60) { // do once per second stuff
+		if (frameCounter > 60) { // do once per second stuff
 		  frameCounter = 1;
 		  secondCounter++;
 		  updateMadness();
 		  updateMoney();
 		  //setDayNightCycle(secondCounter); // day cycles once per second with this on
 		}
-		if (secondCounter >= 60) { // do once per minute stuff
+		if (secondCounter > 60) { // do once per minute stuff
 		  secondCounter = 1;
 		  minuteCounter++;
-		  setDayNightCycle(minuteCounter);
+		  // FIXME: don't add day night back in until it looks good and is meaningful
+		  //setDayNightCycle(minuteCounter);
 		  //dailyInterest(); // interest every minute here
 		}
-		if (minuteCounter >= 60) { // do once per hour stuff
+		if (minuteCounter > 60) { // do once per hour stuff
 		  minuteCounter = 1;
 		  dailyInterest();
 		  // FIXME: new day stuff here
 		}
 		checkUnlockMadnessTabs();
+		checkUnlockMadnessSubTabs();
 		checkUnlockableMadnessDivs();
 		checkMadnessDisabledButtons();
-		if (tabsUnlocked > 0)
-		  checkShowMadnessDivDividers();
+		// FIXME: eliminating this
+		//if (tabsUnlocked > 0)
+		  //checkShowMadnessDivDividers();
 		madnessTabNotificationsDisplay();
+		madnessSubTabNotificationsDisplay();
 		madnessMinionDisplay();
 		madnessResourceDisplay();
 		madnessStatusDisplay();
@@ -725,15 +891,24 @@
 	  visibleMadnessDivs[upgradeButton.divid].type = "boughtupgrade";
 	  document.getElementById(upgradeButton.divid).hidden = true;		
 	  document.getElementById(upgradeButton.boughtdivid).hidden = false;
+	}
 	
-	
+	function unlockSubTabs(unlockTab, unlockType) {
+	  var doUnlock = false;
+	  for (var key in visibleMadnessDivs) {
+	    if (visibleMadnessDivs[key].tab == unlockTab) {
+		  if (visibleMadnessDivs[key].type == unlockType)
+		    doUnlock = true;
+		}
+	  }
+	  return doUnlock;
 	}
 	
 	function Init() {
 	  // --------------------- SETUP ------------------------------
 	  
 	  canvas.addEventListener("mousedown", doMouseDown, false);
-	  canvas.addEventListener("mouseup", doMouseUp, false);
+	  document.addEventListener("mouseup", doMouseUp, false);
 	
 	  // --------------------- MONEY BUILDINGS ----------------------------
 	  
@@ -972,11 +1147,12 @@
 		  title: "Madness",
 		  contains: madnessSpread,
 		  display: madnessDisplay,
-		  upgradesdiv: madnessMadnessUpgrades,
-		  buildingsdiv: madnessMadnessBuildings,
-		  boughtupgradesdiv: madnessMadnessBoughtUpgrades,
+		  buildingssubtab: "madnessMadnessBuildingsSubTab",
 		  active: true,
 		  notifications: 0,
+		  image: "tempmadness.png",
+		  notifyimage: "tempmadnessnotify.png",
+		  showingnotify: false,
 		  unlock: function () {
 		    // this unlocks at 10 madness, same as the first madness button
 		    if (currMadness >= 10)
@@ -986,17 +1162,64 @@
 		  }
         }));
 		
+		hiddenMadnessSubTabs['madnessMadnessBuildingsSubTab'] = 
+	    (madnessSubTab({
+          id: madnessMadnessBuildingsSubTab,
+		  contains: madnessSpreadConvert,
+		  active: false,
+		  notifications: 0,
+		  image: "tempminions.png",
+		  notifyimage: "tempminionsnotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    // this unlocks at 10 madness, same as the first madness button
+		    if (currMadness >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		hiddenMadnessSubTabs['madnessMadnessUpgradesSubTab'] = 
+	    (madnessSubTab({
+          id: madnessMadnessUpgradesSubTab,
+		  contains: madnessSpreadUpgrades,
+		  active: false,
+		  notifications: 0,
+		  image: "tempupgrade.png",
+		  notifyimage: "tempupgradenotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    return unlockSubTabs("madnessMadnessTab", "upgrade");
+		  }
+        }));
+		
+		hiddenMadnessSubTabs['madnessMadnessBoughtUpgradesSubTab'] = 
+	    (madnessSubTab({
+          id: madnessMadnessBoughtUpgradesSubTab,
+		  contains: madnessSpreadBoughtUpgrades,
+		  active: false,
+		  notifications: 0,
+		  image: "tempbought.png",
+		  notifyimage: "tempboughtnotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    return unlockSubTabs("madnessMadnessTab", "boughtupgrade");
+		  }
+        }));
+		
 		hiddenMadnessTabs['madnessMoneyTab'] = 
 	    (madnessTab({
           id: madnessMoneyTab,
 		  title: "Money",
 		  contains: madnessInvest,
 		  display: moneyDisplay,
-		  upgradesdiv: madnessMoneyUpgrades,
-		  buildingsdiv: madnessMoneyBuildings,
-		  boughtupgradesdiv: madnessMoneyBoughtUpgrades,
+		  buildingssubtab: "madnessMoneyBuildingsSubTab",
 		  active: false,
 		  notifications: 0,
+		  image: "tempmoney.png",
+		  notifyimage: "tempmoneynotify.png",
+		  showingnotify: false,
 		  unlock: function () {
 		    // this unlocks as soon as you get money
 			if (currMoney > 0)
@@ -1006,8 +1229,100 @@
 		  }
         }));
 		
-		// FIXME: add in other tabs, bloodRitualTab, bloodMoneyTab, bloodResearchTab, bloodFightTab
-		// FIXME: also clarify the active tab and make it clearer its a tab when its new by theming
+		hiddenMadnessSubTabs['madnessMoneyBuildingsSubTab'] = 
+	    (madnessSubTab({
+          id: madnessMoneyBuildingsSubTab,
+		  contains: madnessInvestBuildings,
+		  active: false,
+		  notifications: 0,
+		  image: "tempminions.png",
+		  notifyimage: "tempminionsnotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    // this unlocks at 10 money, same as the first money button
+		    if (currMoney >= 10)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		hiddenMadnessSubTabs['madnessMoneyUpgradesSubTab'] = 
+	    (madnessSubTab({
+          id: madnessMoneyUpgradesSubTab,
+		  contains: madnessInvestUpgrades,
+		  active: false,
+		  notifications: 0,
+		  image: "tempupgrade.png",
+		  notifyimage: "tempupgradenotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    return unlockSubTabs("madnessMoneyTab", "upgrade");
+		  }
+        }));
+		
+		hiddenMadnessSubTabs['madnessMoneyBoughtUpgradesSubTab'] = 
+	    (madnessSubTab({
+          id: madnessMoneyBoughtUpgradesSubTab,
+		  contains: madnessInvestBoughtUpgrades,
+		  active: false,
+		  notifications: 0,
+		  image: "tempbought.png",
+		  notifyimage: "tempboughtnotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    return unlockSubTabs("madnessMoneyTab", "boughtupgrade");
+		  }
+        }));
+		
+		// FIXME: need to fix this here
+		hiddenMadnessTabs['madnessKnowTab'] = 
+	    (madnessTab({
+          id: madnessKnowTab,
+		  title: "Knowledge",
+		  contains: madnessResearch,
+		  display: knowDisplay,
+		  upgradesdiv: madnessKnowUpgrades,
+		  buildingsdiv: madnessKnowBuildings,
+		  boughtupgradesdiv: madnessKnowBoughtUpgrades,
+		  active: false,
+		  notifications: 0,
+		  image: "tempknow.png",
+		  notifyimage: "tempknownotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    // this unlocks as soon as you get knowledge
+			if (currKnow > 0)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		hiddenMadnessTabs['madnessMightTab'] = 
+	    (madnessTab({
+          id: madnessMightTab,
+		  title: "Might",
+		  contains: madnessFight,
+		  display: mightDisplay,
+		  upgradesdiv: madnessMightUpgrades,
+		  buildingsdiv: madnessMightBuildings,
+		  boughtupgradesdiv: madnessMightBoughtUpgrades,
+		  active: false,
+		  notifications: 0,
+		  image: "tempmight.png",
+		  notifyimage: "tempmightnotify.png",
+		  showingnotify: false,
+		  unlock: function () {
+		    // this unlocks as soon as you get might
+			if (currMight > 0)
+			  return true;
+			else
+			  return false;
+		  }
+        }));
+		
+		// FIXME: clarify the active tab and make it clearer its a tab when its new by theming
 		
 	  // --------------------- CLICK BUTTONS ----------------------------
 	  
@@ -1059,6 +1374,54 @@
 		  minionCosts: [],
         }));
 		
+		visibleMadnessClickButtons['knowClickButton'] = 
+	    (madnessButton({
+          id: knowClickButton,
+		  tab: "knowClickTab",
+		  type: "click",
+          click: function (mouseX, mouseY) {
+			  totalClicks++;
+			  totalKnowClicks++;
+			  var moreKnow = (knowPerClick * knowPerClickBonus) * (1 + knowPerBuildingClickMult * totalKnowBuildingsConverted);
+			  currKnow += moreKnow;
+			  totalKnowFromClicking += moreKnow;
+			  
+			  popUpNumbers.push(popUpNumber({
+		        amount: Math.floor(moreKnow),
+                type: "Knowledge",
+		        xpos: mouseX - 8,
+		        ypos: mouseY - 8,
+		        timer: 60
+              }));
+		  },
+		  costs: [],
+		  minionCosts: [],
+        }));
+		
+		visibleMadnessClickButtons['mightClickButton'] = 
+	    (madnessButton({
+          id: mightClickButton,
+		  tab: "mightClickTab",
+		  type: "click",
+          click: function (mouseX, mouseY) {
+			  totalClicks++;
+			  totalMightClicks++;
+			  var moreMight = (mightPerClick * mightPerClickBonus) * (1 + mightPerBuildingClickMult * totalMightBuildingsConverted);
+			  currMight += moreMight;
+			  totalMightFromClicking += moreMight;
+			  
+			  popUpNumbers.push(popUpNumber({
+		        amount: Math.floor(moreMight),
+                type: "Might",
+		        xpos: mouseX - 8,
+		        ypos: mouseY - 8,
+		        timer: 60
+              }));
+		  },
+		  costs: [],
+		  minionCosts: [],
+        }));
+		
 	  // --------------------- ACHIEVEMENT BASED UPGRADES ----------------------------
 	  
 	  // --------------------- MONEY ACHIEVEMENTS ------------------------------------
@@ -1088,6 +1451,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyInterestFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyInterestFourButton', 
 		  title: "Platinum Account",
@@ -1127,6 +1491,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyInterestThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyInterestThreeButton', 
 		  title: "Gold Account",
@@ -1166,6 +1531,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyInterestTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyInterestTwoButton', 
 		  title: "Silver Account",
@@ -1205,6 +1571,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyInterestOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyInterestOneButton', 
 		  title: "Basic Account",
@@ -1241,6 +1608,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyClicksTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyClicksTwoButton', 
 		  title: "Stock Portfolio",
@@ -1279,6 +1647,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyClicksOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyClicksOneButton',  
 		  title: "Mutual Funds",
@@ -1316,6 +1685,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyClicksFromBuildingsFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyClicksFromBuildingsFourButton',   
 		  title: "Exclusive Deals",
@@ -1353,6 +1723,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyClicksFromBuildingsThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyClicksFromBuildingsThreeButton',   
 		  title: "Cross Promotion",
@@ -1390,6 +1761,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyClicksFromBuildingsTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyClicksFromBuildingsTwoButton',   
 		  title: "Targeted Promotion",
@@ -1427,6 +1799,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyClicksFromBuildingsOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyClicksFromBuildingsOneButton',  
 		  title: "Promotion",
@@ -1467,6 +1840,7 @@
 	    (madnessDiv({
           id: 'upgradeMadnessClicksTwo',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessClicksTwoButton', 
 		  title: "Unrelenting Slumber",
@@ -1505,6 +1879,7 @@
 	    (madnessDiv({
           id: 'upgradeMadnessClicksOne',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessClicksOneButton',  
 		  title: "Deep Slumber",
@@ -1542,6 +1917,7 @@
 	    (madnessDiv({
           id: 'upgradeMadnessClicksFromBuildingsFour',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessClicksFromBuildingsFourButton',   
 		  title: "Religion of Cthulhu",
@@ -1579,6 +1955,7 @@
 	    (madnessDiv({
           id: 'upgradeMadnessClicksFromBuildingsThree',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessClicksFromBuildingsThreeButton',   
 		  title: "Church of Cthulhu",
@@ -1616,6 +1993,7 @@
 	    (madnessDiv({
           id: 'upgradeMadnessClicksFromBuildingsTwo',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessClicksFromBuildingsTwoButton',   
 		  title: "Cult of Cthulhu",
@@ -1653,6 +2031,7 @@
 	    (madnessDiv({
           id: 'upgradeMadnessClicksFromBuildingsOne',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessClicksFromBuildingsOneButton',  
 		  title: "Secret Gatherings",
@@ -1692,6 +2071,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsEightBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsEightBuyButton',
 		  title: "Pharmaceutical Company",
@@ -1723,6 +2103,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsEightBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsEightBonusFiveButton',
 		  title: "Major Chain Distribution",
@@ -1753,6 +2134,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsEightBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsEightBonusFourButton',
 		  title: "Designer Drugs",
@@ -1782,6 +2164,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsEightBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsEightBonusThreeButton',
 		  title: "Psychiatrist Recommended",
@@ -1812,6 +2195,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsEightBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsEightBonusTwoButton',
 		  title: "Drug Patent",
@@ -1841,6 +2225,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsEightBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsEightBonusOneButton',
 		  title: "Debilitating Side Effects",
@@ -1879,6 +2264,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsSevenBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsSevenBuyButton',
 		  title: "Talk Radio Station",
@@ -1910,6 +2296,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSevenBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSevenBonusFiveButton',
 		  title: "Political Agenda",
@@ -1940,6 +2327,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSevenBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSevenBonusFourButton',
 		  title: "Satellite Radio",
@@ -1969,6 +2357,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSevenBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSevenBonusThreeButton',
 		  title: "Subliminal Messages",
@@ -1999,6 +2388,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSevenBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSevenBonusTwoButton',
 		  title: "FM Band",
@@ -2028,6 +2418,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSevenBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSevenBonusOneButton',
 		  title: "Aggressive Guests",
@@ -2066,6 +2457,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsSixBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsSixBuyButton',
 		  title: "Asylum",
@@ -2097,6 +2489,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSixBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSixBonusFiveButton',
 		  title: "Organ Harvesting",
@@ -2127,6 +2520,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSixBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSixBonusFourButton',
 		  title: "Secure Cells",
@@ -2156,6 +2550,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSixBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSixBonusThreeButton',
 		  title: "Drug Testing",
@@ -2186,6 +2581,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSixBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSixBonusTwoButton',
 		  title: "Padded Rooms",
@@ -2215,6 +2611,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsSixBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsSixBonusOneButton',
 		  title: "Experimental Treatments",
@@ -2253,6 +2650,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsFiveBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsFiveBuyButton',
 		  title: "Halfway House",
@@ -2284,6 +2682,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFiveBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFiveBonusFiveButton',
 		  title: "Security System",
@@ -2314,6 +2713,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFiveBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFiveBonusFourButton',
 		  title: "National Contract",
@@ -2343,6 +2743,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFiveBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFiveBonusThreeButton',
 		  title: "Bribed Parole Officer",
@@ -2373,6 +2774,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFiveBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFiveBonusTwoButton',
 		  title: "State Contract",
@@ -2402,6 +2804,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFiveBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFiveBonusOneButton',
 		  title: "Strict Orderlies",
@@ -2440,6 +2843,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsFourBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsFourBuyButton',
 		  title: "Rock Candy Store",
@@ -2471,6 +2875,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFourBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFourBonusFiveButton',
 		  title: "Mules",
@@ -2500,6 +2905,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFourBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFourBonusFourButton',
 		  title: "Platinum Boilers",
@@ -2529,6 +2935,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFourBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFourBonusThreeButton',
 		  title: "Sleazy Lawyers",
@@ -2559,6 +2966,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFourBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFourBonusTwoButton',
 		  title: "Stainless Steel Boilers",
@@ -2588,6 +2996,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsFourBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsFourBonusOneButton',
 		  title: "Free Candy Van",
@@ -2626,6 +3035,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsThreeBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsThreeBuyButton',
 		  title: "Candy Store",
@@ -2656,6 +3066,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsThreeBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsThreeBonusFiveButton',
 		  title: "Witch",
@@ -2685,6 +3096,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsThreeBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsThreeBonusFourButton',
 		  title: "Chocolate Bars",
@@ -2714,6 +3126,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsThreeBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsThreeBonusThreeButton',
 		  title: "Frog Mascot",
@@ -2744,6 +3157,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsThreeBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsThreeBonusTwoButton',
 		  title: "Lollipops",
@@ -2772,6 +3186,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsThreeBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsThreeBonusOneButton',
 		  title: "Arcade Cabinet",
@@ -2810,6 +3225,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsTwoBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsTwoBuyButton',
 		  title: "Cookie Store",
@@ -2840,6 +3256,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsTwoBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsTwoBonusFiveButton',
 		  title: "Shipment",
@@ -2870,6 +3287,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsTwoBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsTwoBonusFourButton',
 		  title: "Christmas Cookies",
@@ -2899,6 +3317,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsTwoBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsTwoBonusThreeButton',
 		  title: "Factories",
@@ -2928,6 +3347,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsTwoBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsTwoBonusTwoButton',
 		  title: "Halloween Cookies",
@@ -2956,6 +3376,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsTwoBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsTwoBonusOneButton',
 		  title: "Grandmas",
@@ -2993,6 +3414,7 @@
 	    (madnessDiv({
           id: 'moneyBuildingsOneBuy',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyBuildingsSubTab",
 		  type: "building",
 		  button: 'moneyBuildingsOneBuyButton',
 		  title: "Lemonade Stand",
@@ -3023,6 +3445,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsOneBonusFive',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsOneBonusFiveButton',
 		  title: "Weather Channel",
@@ -3053,6 +3476,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsOneBonusFour',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsOneBonusFourButton',
 		  title: "Organic Lemons",
@@ -3082,6 +3506,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsOneBonusThree',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsOneBonusThreeButton',
 		  title: "Pushy Children",
@@ -3112,6 +3537,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsOneBonusTwo',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsOneBonusTwoButton',
 		  title: "Mint Leaves",
@@ -3140,6 +3566,7 @@
 	    (madnessDiv({
           id: 'upgradeMoneyBuildingsOneBonusOne',
 		  tab: "madnessMoneyTab",
+		  subtab: "madnessMoneyUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMoneyBuildingsOneBonusOneButton',
 		  title: "Better Signs",
@@ -3177,6 +3604,7 @@
 	    (madnessDiv({
           id: 'madnessMinionsEightConvert',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: 'madnessMinionsEightConvertButton',
 		  title: "Greedy CEO",
@@ -3222,7 +3650,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsNine'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsNine',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsNineButton',
 		  title: "Win Game",
@@ -3252,7 +3681,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsEightBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsEightBonusFiveButton',
 		  title: "Unholy Hours",
@@ -3282,7 +3712,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsEightBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsEightBonusFourButton',
 		  title: "Environmental Deregulation",
@@ -3311,7 +3742,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsEightBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsEightBonusThreeButton',
 		  title: "Efficiency Training",
@@ -3341,7 +3773,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsEightBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsEightBonusTwoButton',
 		  title: "Back Door Deals",
@@ -3370,7 +3803,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsEightBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsEightBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsEightBonusOneButton',
 		  title: "Cheap Labor",
@@ -3409,6 +3843,7 @@
 	    (madnessDiv({
           id: 'madnessMinionsSevenConvert',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: 'madnessMinionsSevenConvertButton',
 		  title: "Pirate Captain",
@@ -3453,7 +3888,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsEight'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsEight',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsEightButton',
 		  title: "Awaken Azathoth",
@@ -3484,7 +3920,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSevenBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSevenBonusFiveButton',
 		  title: "Blood for Oil",
@@ -3514,7 +3951,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSevenBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSevenBonusFourButton',
 		  title: "Raiding Parties",
@@ -3543,7 +3981,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSevenBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSevenBonusThreeButton',
 		  title: "Synthetic Drug",
@@ -3573,7 +4012,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSevenBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSevenBonusTwoButton',
 		  title: "Occult Trade",
@@ -3602,7 +4042,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSevenBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSevenBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSevenBonusOneButton',
 		  title: "Terrifying Visage",
@@ -3644,6 +4085,7 @@
 	    (madnessDiv({
           id: 'madnessMinionsSixConvert',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: 'madnessMinionsSixConvertButton',
 		  title: "Carcosan Architect",
@@ -3687,7 +4129,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsSeven'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsSeven',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsSevenButton',
 		  title: "Enter the Dagon",
@@ -3718,7 +4161,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSixBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSixBonusFiveButton',
 		  title: "Imposing Office Building",
@@ -3748,7 +4192,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSixBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSixBonusFourButton',
 		  title: "Maximized Profit",
@@ -3777,7 +4222,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSixBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSixBonusThreeButton',
 		  title: "Horrible Apartments",
@@ -3807,7 +4253,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSixBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSixBonusTwoButton',
 		  title: "Efficient Layout",
@@ -3836,7 +4283,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsSixBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsSixBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsSixBonusOneButton',
 		  title: "Uncomfortable Condo",
@@ -3875,6 +4323,7 @@
 	    (madnessDiv({
           id: 'madnessMinionsFiveConvert',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: 'madnessMinionsFiveConvertButton',
 		  title: "Avant-Garde Artist",
@@ -3919,7 +4368,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsSix'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsSix',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsSixButton',
 		  title: "Summon Hastur to Earth",
@@ -3950,7 +4400,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFiveBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFiveBonusFiveButton',
 		  title: "Art Jaune Movement",
@@ -3980,7 +4431,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFiveBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFiveBonusFourButton',
 		  title: "Gallery Showing",
@@ -4009,7 +4461,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFiveBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFiveBonusThreeButton',
 		  title: "N-Dimensional Golden Ratio",
@@ -4057,7 +4510,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFiveBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFiveBonusTwoButton',
 		  title: "Favorable Review",
@@ -4086,7 +4540,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFiveBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFiveBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFiveBonusOneButton',
 		  title: "Mixed Media",
@@ -4125,6 +4580,7 @@
 	    (madnessDiv({
           id: 'madnessMinionsFourConvert',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: 'madnessMinionsFourConvertButton',
 		  title: "Conspiracy Theorist",
@@ -4169,7 +4625,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsFiveButton',
 		  title: "Contact the King in Yellow",
@@ -4200,7 +4657,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFourBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFourBonusFiveButton',
 		  title: "Cell Phone Video",
@@ -4230,7 +4688,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFourBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFourBonusFourButton',
 		  title: "Local News Story",
@@ -4259,7 +4718,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFourBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFourBonusThreeButton',
 		  title: "Blurry Photos",
@@ -4289,7 +4749,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFourBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFourBonusTwoButton',
 		  title: "Tabloid Magazines",
@@ -4318,7 +4779,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsFourBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsFourBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsFourBonusOneButton',
 		  title: "Crude Drawings",
@@ -4357,6 +4819,7 @@
 	    (madnessDiv({
           id: 'madnessMinionsThreeConvert',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: 'madnessMinionsThreeConvertButton',
 		  title: "CDC Investigator",
@@ -4401,7 +4864,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsFourButton',  
 		  title: "Awaken Shub-Niggurath",
@@ -4432,7 +4896,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsThreeBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsThreeBonusFiveButton',
 		  title: "Elevated Threat Level",
@@ -4462,7 +4927,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsThreeBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsThreeBonusFourButton',
 		  title: "Spore Infection",
@@ -4491,7 +4957,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsThreeBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsThreeBonusThreeButton',
 		  title: "Published Report",
@@ -4521,7 +4988,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsThreeBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsThreeBonusTwoButton',
 		  title: "Quarantined Lab",
@@ -4550,7 +5018,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsThreeBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsThreeBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsThreeBonusOneButton',
 		  title: "Impossible Math",
@@ -4589,6 +5058,7 @@
 	    (madnessDiv({
           id: 'madnessMinionsTwoConvert',
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: 'madnessMinionsTwoConvertButton',
 		  title: "Suspicious Sailor",
@@ -4633,7 +5103,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsThreeButton', 
 		  title: "Take a Trip to Yuggoth",
@@ -4664,7 +5135,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsTwoBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsTwoBonusFiveButton',
 		  title: "Local Legend",
@@ -4694,7 +5166,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsTwoBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsTwoBonusFourButton',
 		  title: "Naming the Unnameable",
@@ -4723,7 +5196,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsTwoBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsTwoBonusThreeButton',
 		  title: "Bar Regular",
@@ -4753,7 +5227,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsTwoBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsTwoBonusTwoButton',
 		  title: "Clearer Descriptions",
@@ -4782,7 +5257,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsTwoBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsTwoBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsTwoBonusOneButton',
 		  title: "Stronger Drink",
@@ -4820,6 +5296,7 @@
 	    (madnessDiv({
           id: "madnessMinionsOneConvert",
 		  tab: "madnessMadnessTab",
+		  subtab: "madnessMadnessBuildingsSubTab",
 		  type: "building",
 		  button: "madnessMinionsOneConvertButton",
 		  title: "Crazy Homeless Person",
@@ -4868,7 +5345,8 @@
 	  unlockableMadnessDivs['upgradeMadnessUnlockMinionsTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessUnlockMinionsTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessUnlockMinionsTwoButton',
 		  title: "Awaken Mother Hydra",
@@ -4898,7 +5376,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusFive'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsOneBonusFive',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsOneBonusFiveButton',
 		  title: "Impossible Angles",
@@ -4928,7 +5407,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusFour'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsOneBonusFour',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsOneBonusFourButton',
 		  title: "Speaking in Tongues",
@@ -4957,7 +5437,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusThree'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsOneBonusThree',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsOneBonusThreeButton',
 		  title: "Eldritch Symbols",
@@ -4986,7 +5467,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusTwo'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsOneBonusTwo',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsOneBonusTwoButton',
 		  title: "Louder Yelling",
@@ -5015,7 +5497,8 @@
 	  unlockableMadnessDivs['upgradeMadnessMinionsOneBonusOne'] = 
 	    (madnessDiv({
           id: 'upgradeMadnessMinionsOneBonusOne',
-		  tab: "madnessMadnessTab",
+		  tab: "madnessMadnessTab",		  
+		  subtab: "madnessMadnessUpgradesSubTab",
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsOneBonusOneButton',
 		  title: "Cryptic Scrawl",
