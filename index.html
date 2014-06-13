@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="us">
 <head>
 	<meta charset="utf-8">
@@ -79,11 +78,42 @@
 }
 </style>
 
+<div id="topBar" style="position: relative; width:600px; height:46px;">
+  <button id="topMenuButton" onclick="showMenu()" style="position: absolute; top:0px; left:0px; width:40px; height:40px; padding:3px;">
+  <img style="position: absolute; top:2px; left:2px; padding:0px; z-index:1" src="images/topmenu.png"></button>
+  
+  <div id="topMenuMessages" style="position: absolute; top:0px; left:43px; width:514px; height:40px; padding:0px; background-color:white"></div>
+
+  <button id="topInfoButton" onclick="showInfo()" style="position: absolute; top:0px; left:560px; width:40px; height:40px; padding:3px;">
+  <img style="position: absolute; top:2px; left:2px; padding:0px; z-index:1" src="images/topinfo.png"></button>
+</div>
+
+
+  <div id="topMenuList" style="color:red;" hidden=true>
+    <table>
+	  <tr><td style="color:blue;background-color:white" onclick="saveGame()">Save</td></tr>
+	  <tr><td style="color:blue;background-color:white" onclick="if(confirm('Reset your game?'))resetGame()">Reset Game</td></tr>
+	</table>
+  </div>
+
+
+
 <div id="madnessTabs" style="position: relative; width:600px; height:80px;">
-  <button id="madnessMadnessTab" onclick="changeMadnessTab('madnessMadnessTab')" hidden=true><img src="images/tempmadness.png"></button>
-  <button id="madnessMoneyTab" onclick="changeMadnessTab('madnessMoneyTab')" hidden=true><img src="images/tempmoney.png"></button>
-  <button id="madnessKnowTab" onclick="changeMadnessTab('madnessKnowTab')" hidden=true><img src="images/tempknow.png"></button>
-  <button id="madnessMightTab" onclick="changeMadnessTab('madnessMightTab')" hidden=true><img src="images/tempmight.png"></button>
+  <button id="madnessMadnessTab" onclick="changeMadnessTab('madnessMadnessTab')" style="position: absolute; top:0px; left:0px; width:80px; height:80px; padding:3px;" hidden=true>
+  <img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempmadness.png">
+  <img id="madnessnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+  
+  <button id="madnessMoneyTab" onclick="changeMadnessTab('madnessMoneyTab')" style="position: absolute; top:0px; left:86px; width:80px; height:80px; padding:3px;" hidden=true>
+  <img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempmoney.png">
+  <img id="moneynotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+  
+  <button id="madnessKnowTab" onclick="changeMadnessTab('madnessKnowTab')" style="position: absolute; top:0px; left:172px; width:80px; height:80px; padding:3px;" hidden=true>
+  <img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempknow.png">
+  <img id="knownotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+  
+  <button id="madnessMightTab" onclick="changeMadnessTab('madnessMightTab')" style="position: absolute; top:0px; left:258px; width:80px; height:80px; padding:3px;" hidden=true>
+  <img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempmight.png">
+  <img id="mightnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
 </div>
 	
 <div id="outerWrapper" style="position:relative; width:500px; height:400px">
@@ -128,11 +158,22 @@
 </div>
 
 <div id="madnessSpread">
-  <div id="madnessMadnessTabs" style="position: relative; width:600px; height:80px;">
-    <button id="madnessMadnessBuildingsSubTab" onclick="changeMadnessSubTab('madnessMadnessBuildingsSubTab')" hidden=true><img src="images/tempminions.png"></button>
-    <button id="madnessMadnessUpgradesSubTab" onclick="changeMadnessSubTab('madnessMadnessUpgradesSubTab')" hidden=true><img src="images/tempupgrade.png"></button>
-    <button id="madnessMadnessBoughtUpgradesSubTab" onclick="changeMadnessSubTab('madnessMadnessBoughtUpgradesSubTab')" hidden=true><img src="images/tempbought.png"></button>
-    <button id="madnessMadnessSkillsSubTab" onclick="changeMadnessSubTab('madnessMadnessSkillsSubTab')" hidden=true><img src="images/tempskills.png"></button>
+  <div id="madnessMadnessTabs" style="position: relative; width:800px; height:80px;">
+    <button id="madnessMadnessBuildingsSubTab" onclick="changeMadnessSubTab('madnessMadnessBuildingsSubTab')" style="position: absolute; top:0px; left:0px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempminions.png">
+    <img id="madnessbuildingsnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+	
+    <button id="madnessMadnessUpgradesSubTab" onclick="changeMadnessSubTab('madnessMadnessUpgradesSubTab')" style="position: absolute; top:0px; left:86px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempupgrade.png">
+    <img id="madnessupgradesnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+	
+    <button id="madnessMadnessBoughtUpgradesSubTab" onclick="changeMadnessSubTab('madnessMadnessBoughtUpgradesSubTab')" style="position: absolute; top:0px; left:172px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempbought.png">
+    <img id="madnessboughtupgradesnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+	
+    <button id="madnessMadnessSkillsSubTab" onclick="changeMadnessSubTab('madnessMadnessSkillsSubTab')" style="position: absolute; top:0px; left:258px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempskills.png">
+    <img id="madnessskillsnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
   </div>
   <div id="madnessSpreadUpgrades" hidden=true></div>
   <div id="madnessSpreadConvert" hidden=true></div>
@@ -152,11 +193,23 @@
 </div>
 
 <div id="madnessInvest" hidden=true>
-  <div id="madnessMoneyTabs" style="position: relative; width:600px; height:80px;">
-    <button id="madnessMoneyBuildingsSubTab" onclick="changeMadnessSubTab('madnessMoneyBuildingsSubTab')" hidden=true><img src="images/tempminions.png"></button>
-    <button id="madnessMoneyUpgradesSubTab" onclick="changeMadnessSubTab('madnessMoneyUpgradesSubTab')" hidden=true><img src="images/tempupgrade.png"></button>
-    <button id="madnessMoneyBoughtUpgradesSubTab" onclick="changeMadnessSubTab('madnessMoneyBoughtUpgradesSubTab')" hidden=true><img src="images/tempbought.png"></button>
-    <button id="madnessMoneySkillsSubTab" onclick="changeMadnessSubTab('madnessMoneySkillsSubTab')" hidden=true><img src="images/tempskills.png"></button>
+  <div id="madnessMoneyTabs" style="position: relative; width:800px; height:80px;">
+    <button id="madnessMoneyBuildingsSubTab" onclick="changeMadnessSubTab('madnessMoneyBuildingsSubTab')" style="position: absolute; top:0px; left:0px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempbuildings.png">
+    <img id="moneybuildingsnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+	
+    <button id="madnessMoneyUpgradesSubTab" onclick="changeMadnessSubTab('madnessMoneyUpgradesSubTab')" style="position: absolute; top:0px; left:86px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempupgrade.png">
+    <img id="moneyupgradesnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+	
+    <button id="madnessMoneyBoughtUpgradesSubTab" onclick="changeMadnessSubTab('madnessMoneyBoughtUpgradesSubTab')" style="position: absolute; top:0px; left:172px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempbought.png">
+    <img id="moneyboughtupgradesnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+	
+    <button id="madnessMoneySkillsSubTab" onclick="changeMadnessSubTab('madnessMoneySkillsSubTab')" style="position: absolute; top:0px; left:258px; width:80px; height:80px; padding:3px;" hidden=true>
+	<img style="position: absolute; top:6px; left:6px; padding:0px; z-index:1" src="images/tempskills.png">
+    <img id="moneyskillssnotify" style="position: absolute; top:6px; left:6px; padding:0px; z-index:-100" src="images/tempnotify.png"></button>
+	
   </div>
   <div id="madnessInvestUpgrades" hidden=true></div>  
   <div id="madnessInvestBuildings" hidden=true></div>
@@ -268,7 +321,7 @@
 	var totalMoneyBuildingsConverted = 0;
 	var totalUpgrades = 0;
 	
-	var madnessMinions = [];
+	var madnessMinions = {};
 	var currMadnessPerSecond = 0;
 	var madnessPerSecondBonus = 1;
 	var currMoneyPerSecond = 0;
@@ -277,16 +330,16 @@
 	var knowPerSecondBonus = 1;
 	var currMightPerSecond = 0;
 	var mightPerSecondBonus = 1;
-	var triggeredMadnessDivs = []; // this is the array for divs which get unlocked by a direct action (new areas)
-	var unlockableMadnessDivs = []; // these unlock whenever the right conditions are met
-	var visibleMadnessDivs = [];
-	var boughtMadnessDivs = [];
+	var triggeredMadnessDivs = {}; // this is the array for divs which get unlocked by a direct action (new areas)
+	var unlockableMadnessDivs = {}; // these unlock whenever the right conditions are met
+	var visibleMadnessDivs = {};
+	var boughtMadnessDivs = {};
 	
 	var visibleMadnessClickButtons = [];
 	var disabledMadnessClickButtons = [];
 	
-	var visibleMadnessButtons = [];
-	var disabledMadnessButtons = [];
+	var visibleMadnessButtons = {};
+	var disabledMadnessButtons = {};
 	
 	var hiddenMadnessTabs = [];
 	var visibleMadnessTabs = [];
@@ -302,6 +355,20 @@
 	
 	var currTab = "madnessMadnessTab";
 	var currSubTab = "madnessMadnessBuildingsSubTab";
+	
+	var menuExpanded = false;
+	var infoExpanded = false;
+	var menuOffset = 50;
+	var infoOffset = 0;
+	
+	var savedStats = [];
+	var allMadnessButtonSaveData = {};
+	var allMadnessDivSaveData = {};
+	var allMadnessTabSaveData = {};
+	var allMadnessSubTabSaveData = {};
+	var allMadnessClickButtonSaveData = {};
+	
+	var topBarDisplayMessageCounter = 0;
 	
 	function madnessCost(aMadnessCost) {
 	  return aMadnessCost;
@@ -342,6 +409,14 @@
 	  return aPopUpNumber;
 	}
 	
+	function madnessButtonSaveData(aMadnessButtonSaveData) {
+	  return aMadnessButtonSaveData;
+	}
+	
+	function madnessDivSaveData(aMadnessDivSaveData) {
+	  return aMadnessDivSaveData;
+	}
+	
 	function loadImages(sources, callback) {
       images = {};
       var loadedImages = 0;
@@ -360,6 +435,15 @@
         images[src].src = sources[src];
       }
     }
+	
+	function showMenu() {
+	  document.getElementById("topMenuList").hidden = !document.getElementById("topMenuList").hidden;
+	  menuExpanded = !menuExpanded;
+	}
+	
+	function showInfo() {
+	
+	}
 
 	function madnessClickClick(id) {
 	  visibleMadnessClickButtons[id].click();
@@ -394,14 +478,19 @@
 	  mouseX = event.pageX;
 	  mouseY = event.pageY;
 	  // FIXME: change these numbers when I put a real image in
-	  if (mouseX >= 8 && mouseX <= 332 && mouseY >= 127 && mouseY <= 451) { // click on the picture
+	  var offset = 46;
+	  if (menuExpanded)
+	    offset += menuOffset;
+	  else if (infoExpanded)
+	    offset += infoOffset;
+	  if (mouseX >= 8 && mouseX <= 332 && mouseY >= 127 + offset && mouseY <= 451 + offset) { // click on the picture
 	    if (currTab == "madnessMadnessTab") {
-		  visibleMadnessClickButtons['madnessClickButton'].click(mouseX, mouseY);
+		  visibleMadnessClickButtons['madnessClickButton'].click(mouseX, mouseY - offset);
 		  showClickImage = true;
 		  clickImage = images.zzz;
 		}
 		else if (currTab == "madnessMoneyTab") {
-		  visibleMadnessClickButtons['moneyClickButton'].click(mouseX, mouseY);
+		  visibleMadnessClickButtons['moneyClickButton'].click(mouseX, mouseY - offset);
 		  showClickImage = true;
 		  clickImage = images.wait;
 		}
@@ -427,14 +516,16 @@
 	  visibleMadnessTabs[id].display.hidden = false;
 	  visibleMadnessTabs[id].active = true;
 	  visibleMadnessTabs[id].notifications = 0;
-	  visibleMadnessTabs[id].id.innerHTML = "<img src='images/" + visibleMadnessTabs[id].image + "'>";
+	  document.getElementById(visibleMadnessTabs[id].notifyid).style.zIndex = -100;
 	  visibleMadnessTabs[id].showingnotify = false;
 	  
-	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].contains.hidden = false;
-	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].active = true;
-	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].notifications = 0;
-	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].id.innerHTML = "<img src='images/" + visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].image + "'>";
-	  visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].showingnotify = false;
+	  if (typeof(visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab]) == "object") {
+	    visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].contains.hidden = false;
+	    visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].active = true;
+	    visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].notifications = 0;
+	    document.getElementById(visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].notifyid).style.zIndex = -100;
+	    visibleMadnessSubTabs[visibleMadnessTabs[id].buildingssubtab].showingnotify = false;
+	  }
 	}
 	
 	function changeMadnessSubTab(id) {
@@ -446,7 +537,7 @@
 	  visibleMadnessSubTabs[id].contains.hidden = false;
 	  visibleMadnessSubTabs[id].active = true;
 	  visibleMadnessSubTabs[id].notifications = 0;
-	  visibleMadnessSubTabs[id].id.innerHTML = "<img src='images/" + visibleMadnessSubTabs[id].image + "'>";
+	  document.getElementById(visibleMadnessSubTabs[id].notifyid).style.zIndex = -100;
 	  visibleMadnessSubTabs[id].showingnotify = false;
 	}
 	
@@ -470,6 +561,16 @@
 	    if (!hiddenMadnessSubTabs[id].active)
 		  hiddenMadnessSubTabs[id].notifications++;
 	  }
+	}
+	
+	function displayTopBarMessage(aString) {
+	  document.getElementById('topMenuMessages').innerHTML = aString;
+	  // FIXME: add it to the log here if not game saved
+	  topBarDisplayMessageCounter = 30;
+	}
+	
+	function clearTopBarMessage() {
+	  document.getElementById('topMenuMessages').innerHTML = "";
 	}
 	
 	function calculateMadnessPerSecond() {
@@ -652,8 +753,8 @@
 	function madnessTabNotificationsDisplay() {
 	  for (var key in visibleMadnessTabs) {
 	    if (visibleMadnessTabs[key].notifications > 0 && !visibleMadnessTabs[key].active && !visibleMadnessTabs[key].showingnotify) {
-		  visibleMadnessTabs[key].id.innerHTML = "<img src='images/" + visibleMadnessTabs[key].notifyimage + "'>";
-		  visibleMadnessTabs[key].showingnotify = true;;
+		  document.getElementById(visibleMadnessTabs[key].notifyid).style.zIndex = 100;
+		  visibleMadnessTabs[key].showingnotify = true;
 		}
 	  }
 	}
@@ -662,8 +763,8 @@
 	function madnessSubTabNotificationsDisplay() {
 	  for (var key in visibleMadnessSubTabs) {
 	    if (visibleMadnessSubTabs[key].notifications > 0 && !visibleMadnessSubTabs[key].active && !visibleMadnessSubTabs[key].showingnotify) {
-		  visibleMadnessSubTabs[key].id.innerHTML = "<img src='images/" + visibleMadnessSubTabs[key].notifyimage + "'>";
-		  visibleMadnessSubTabs[key].showingnotify = true;;
+		  document.getElementById(visibleMadnessSubTabs[key].notifyid).style.zIndex = 100;
+		  visibleMadnessSubTabs[key].showingnotify = true;
 		}
 	  }
 	}
@@ -740,6 +841,184 @@
 	  document.getElementById('madnessStatusDiv').innerHTML = aString;
 	}
 	
+	function saveGame() {
+	  displayTopBarMessage("Game Saved");
+	  
+	  savedStats[0] = currMadness;
+	  savedStats[1] = currMoney;
+	  savedStats[2] = currKnow;
+	  savedStats[3] = currMight;
+		  
+	  savedStats[4] = madnessPerClick;
+	  savedStats[5] = madnessPerClickBonus;
+	  savedStats[6] = madnessPerBuildingClickMult;
+	  savedStats[7] = moneyPerClick;
+	  savedStats[8] = moneyPerClickBonus;
+	  savedStats[9] = moneyPerBuildingClickMult;
+	  savedStats[10] = knowPerClick;
+	  savedStats[11] = knowPerClickBonus;
+	  savedStats[12] = knowPerBuildingClickMult;
+	  savedStats[13] = mightPerClick;
+	  savedStats[14] = mightPerClickBonus;
+	  savedStats[15] = mightPerBuildingClickMult;
+	
+	  savedStats[16] = moneyDailyInterest;
+	  savedStats[17] = moneyBankAccountKey;
+
+	  savedStats[18] = totalClicks;
+	  savedStats[19] = totalMadnessClicks;
+	  savedStats[20] = totalMadnessFromClicking;
+	  savedStats[21] = madnessSpent;
+	  savedStats[22] = totalMoneyClicks;
+	  savedStats[23] = totalMoneyFromClicking;
+	  savedStats[24] = moneySpent;
+	  savedStats[25] = totalKnowClicks;
+	  savedStats[26] = totalKnowFromClicking;
+	  savedStats[27] = knowSpent;
+	  savedStats[28] = totalMightClicks;
+	  savedStats[29] = totalMightFromClicking;
+	  savedStats[30] = mightSpent;
+	  savedStats[31] = totalConvertClicks;
+	  savedStats[32] = convertCostReduction;
+	  savedStats[33] = totalMinionsConverted;
+	  savedStats[34] = totalMoneyBuildingsConverted;
+	  savedStats[35] = totalUpgrades;
+
+	  savedStats[36] = madnessPerSecondBonus;
+	  savedStats[37] = moneyPerSecondBonus;
+	  savedStats[38] = knowPerSecondBonus;
+	  savedStats[39] = mightPerSecondBonus;
+
+	  savedStats[40] = tabsUnlocked;
+	  savedStats[41] = subTabsUnlocked;
+	  
+	  localStorage["CthulhuClickerStats"] = JSON.stringify(savedStats);
+	  localStorage["CthulhuClickerMinions"] = JSON.stringify(madnessMinions);
+	  
+	  for (var key in visibleMadnessButtons) {
+	    allMadnessButtonSaveData[key] = 	  
+	    (madnessButtonSaveData({
+          key: key,
+		  costMultiplier: visibleMadnessButtons[key].costMultiplier,
+		  costCount: visibleMadnessButtons[key].costCount,
+		  timesClicked: visibleMadnessButtons[key].timesClicked,
+        }));
+	  }		
+	  localStorage["CthulhuClickerVisibleMadnessButtons"] = JSON.stringify(allMadnessButtonSaveData);
+	
+	  for (var key in visibleMadnessDivs) {
+	    allMadnessDivSaveData[key] = 	  
+	    (madnessDivSaveData({
+          key: key,
+		  type: visibleMadnessDivs[key].type,
+        }));
+	  }	  
+	  localStorage["CthulhuClickerVisibleMadnessDivs"] = JSON.stringify(allMadnessDivSaveData);
+	  
+	  for (var key in visibleMadnessTabs) {
+	    allMadnessTabSaveData[key] = key;
+	  }	  
+	  localStorage["CthulhuClickerVisibleMadnessTabs"] = JSON.stringify(allMadnessTabSaveData);
+	  
+	  for (var key in visibleMadnessSubTabs) {
+	    allMadnessSubTabSaveData[key] = key;
+	  }	  
+	  localStorage["CthulhuClickerVisibleMadnessSubTabs"] = JSON.stringify(allMadnessSubTabSaveData);
+		
+	  //localStorage["CthulhuClickerUnlockableMadnessDivs"] = JSON.stringify(unlockableMadnessDivs);
+	  //localStorage["CthulhuClickerVisibleMadnessDivs"] = JSON.stringify(visibleMadnessDivs);	  
+	  //localStorage["CthulhuClickerBoughtMadnessDivs"] = JSON.stringify(boughtMadnessDivs);
+	  //localStorage["CthulhuClickerVisibleMadnessButtons"] = JSON.stringify(visibleMadnessButtons);
+	  //localStorage["CthulhuClickerDisabledMadnessButtons"] = JSON.stringify(disabledMadnessButtons);
+	}
+	
+	function resetGame() {
+	  GameOn = false;
+	  delete localStorage["CthulhuClickerStats"];
+	  delete localStorage["CthulhuClickerMinions"];
+	  delete localStorage["CthulhuClickerVisibleMadnessButtons"];
+	  delete localStorage["CthulhuClickerVisibleMadnessDivs"];
+	  delete localStorage["CthulhuClickerVisibleMadnessTabs"];
+	  delete localStorage["CthulhuClickerVisibleMadnessSubTabs"];
+	  
+	  currMadness = 0;
+	  currMoney = 0;
+	  currKnow = 0;
+	  currMight = 0;
+		  
+	  madnessPerClick = 1;
+	  madnessPerClickBonus = 1;
+	  madnessPerBuildingClickMult = 0;
+	  moneyPerClick = 1;
+	  moneyPerClickBonus = 1;
+	  moneyPerBuildingClickMult = 0;
+	  knowPerClick = 1;
+	  knowPerClickBonus = 1;
+	  knowPerBuildingClickMult = 0;
+	  mightPerClick = 1;
+	  mightPerClickBonus = 1;
+	  mightPerBuildingClickMult = 0;
+	
+	  moneyDailyInterest = 0;
+	  moneyBankAccountKey = "none";
+
+	  totalClicks = 0;
+	  totalMadnessClicks = 0;
+	  totalMadnessFromClicking = 0;
+	  madnessSpent = 0;
+	  totalMoneyClicks = 0;
+	  totalMoneyFromClicking = 0;
+	  moneySpent = 0;
+	  totalKnowClicks = 0;
+	  totalKnowFromClicking = 0;
+	  knowSpent = 0;
+	  totalMightClicks = 0;
+	  totalMightFromClicking = 0;
+	  mightSpent = 0;
+	  totalConvertClicks = 0;
+	  convertCostReduction = 0;
+	  totalMinionsConverted = 0;
+	  totalMoneyBuildingsConverted = 0;
+	  totalUpgrades = 0;
+
+	  madnessPerSecondBonus = 1;
+	  moneyPerSecondBonus = 1;
+	  knowPerSecondBonus = 1;
+	  mightPerSecondBonus = 1;
+
+	  tabsUnlocked = 0;
+	  subTabsUnlocked = 0;
+	  
+	  madnessMinions = {};
+	  triggeredMadnessDivs = {};
+	  unlockableMadnessDivs = {};
+	  visibleMadnessDivs = {};
+	  boughtMadnessDivs = {};
+	
+	  visibleMadnessClickButtons = [];
+	  disabledMadnessClickButtons = [];
+	
+	  visibleMadnessButtons = {};
+	  disabledMadnessButtons = {};
+	
+	  hiddenMadnessTabs = [];
+	  visibleMadnessTabs = [];
+	
+	  hiddenMadnessSubTabs = [];
+	  visibleMadnessSubTabs = [];
+	
+	  popUpNumbers = [];
+	  showClickImage = false;
+	
+	  currTab = "madnessMadnessTab";
+	  currSubTab = "madnessMadnessBuildingsSubTab";
+	
+	  menuExpanded = false;
+	  infoExpanded = false;
+	  
+	  location.reload();
+	}
+	
 	function Game(){  // every frame this happens
 	  if (GameOn) {
 	    frameCounter++;
@@ -750,11 +1029,16 @@
 		  secondCounter++;
 		  updateMadness();
 		  updateMoney();
+		  if (topBarDisplayMessageCounter > 0)
+		    topBarDisplayMessageCounter--;
+		  else
+		    clearTopBarMessage();
 		  //setDayNightCycle(secondCounter); // day cycles once per second with this on
 		}
 		if (secondCounter > 60) { // do once per minute stuff
 		  secondCounter = 1;
 		  minuteCounter++;
+		  saveGame();
 		  // FIXME: don't add day night back in until it looks good and is meaningful
 		  //setDayNightCycle(minuteCounter);
 		  //dailyInterest(); // interest every minute here
@@ -916,7 +1200,7 @@
 	  
 	  madnessMinions['moneyBuildingsEight'] = 
 	    (madnessMinion({
-          id: moneyBuildingsEight,
+          id: 'moneyBuildingsEight',
 		  idindiv: 'moneyBuildingsEightBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -930,7 +1214,7 @@
 	  
 	  madnessMinions['moneyBuildingsSeven'] = 
 	    (madnessMinion({
-          id: moneyBuildingsSeven,
+          id: 'moneyBuildingsSeven',
 		  idindiv: 'moneyBuildingsSevenBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -944,7 +1228,7 @@
 	  
 	  madnessMinions['moneyBuildingsSix'] = 
 	    (madnessMinion({
-          id: moneyBuildingsSix,
+          id: 'moneyBuildingsSix',
 		  idindiv: 'moneyBuildingsSixBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -958,7 +1242,7 @@
 	  
 	  madnessMinions['moneyBuildingsFive'] = 
 	    (madnessMinion({
-          id: moneyBuildingsFive,
+          id: 'moneyBuildingsFive',
 		  idindiv: 'moneyBuildingsFiveBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -972,7 +1256,7 @@
 	  
 	  madnessMinions['moneyBuildingsFour'] = 
 	    (madnessMinion({
-          id: moneyBuildingsFour,
+          id: 'moneyBuildingsFour',
 		  idindiv: 'moneyBuildingsFourBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -986,7 +1270,7 @@
 	  
 	  madnessMinions['moneyBuildingsThree'] = 
 	    (madnessMinion({
-          id: moneyBuildingsThree,
+          id: 'moneyBuildingsThree',
 		  idindiv: 'moneyBuildingsThreeBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -1000,7 +1284,7 @@
 	  
 	  madnessMinions['moneyBuildingsTwo'] = 
 	    (madnessMinion({
-          id: moneyBuildingsTwo,
+          id: 'moneyBuildingsTwo',
 		  idindiv: 'moneyBuildingsTwoBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -1014,7 +1298,7 @@
 	  
 	  madnessMinions['moneyBuildingsOne'] = 
 	    (madnessMinion({
-          id: moneyBuildingsOne,
+          id: 'moneyBuildingsOne',
 		  idindiv: 'moneyBuildingsOneBuyTotal',
           current: 0,
 		  allTime: 0,
@@ -1030,7 +1314,7 @@
 	  
 	  madnessMinions['madnessMinionsEight'] = 
 	    (madnessMinion({
-          id: madnessMinionsEight,
+          id: 'madnessMinionsEight',
 		  idindiv: 'madnessMinionsEightConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1044,7 +1328,7 @@
 	  
 	  madnessMinions['madnessMinionsSeven'] = 
 	    (madnessMinion({
-          id: madnessMinionsSeven,
+          id: 'madnessMinionsSeven',
 		  idindiv: 'madnessMinionsSevenConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1058,7 +1342,7 @@
 	  
 	  madnessMinions['madnessMinionsSix'] = 
 	    (madnessMinion({
-          id: madnessMinionsSix,
+          id: 'madnessMinionsSix',
 		  idindiv: 'madnessMinionsSixConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1072,7 +1356,7 @@
 	  
 	  madnessMinions['madnessMinionsFive'] = 
 	    (madnessMinion({
-          id: madnessMinionsFive,
+          id: 'madnessMinionsFive',
 		  idindiv: 'madnessMinionsFiveConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1086,7 +1370,7 @@
 	  
 	  madnessMinions['madnessMinionsFour'] = 
 	    (madnessMinion({
-          id: madnessMinionsFour,
+          id: 'madnessMinionsFour',
 		  idindiv: 'madnessMinionsFourConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1100,7 +1384,7 @@
 	  
 	  madnessMinions['madnessMinionsThree'] = 
 	    (madnessMinion({
-          id: madnessMinionsThree,
+          id: 'madnessMinionsThree',
 		  idindiv: 'madnessMinionsThreeConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1114,7 +1398,7 @@
 	  
 	  madnessMinions['madnessMinionsTwo'] = 
 	    (madnessMinion({
-          id: madnessMinionsTwo,
+          id: 'madnessMinionsTwo',
 		  idindiv: 'madnessMinionsTwoConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1128,7 +1412,7 @@
 	  
 	  madnessMinions['madnessMinionsOne'] = 
 	    (madnessMinion({
-          id: madnessMinionsOne,
+          id: 'madnessMinionsOne',
 		  idindiv: 'madnessMinionsOneConvertTotal',
           current: 0,
 		  allTime: 0,
@@ -1153,6 +1437,7 @@
 		  active: true,
 		  notifications: 0,
 		  image: "tempmadness.png",
+		  notifyid: "madnessnotify",
 		  notifyimage: "tempmadnessnotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -1171,6 +1456,7 @@
 		  active: false,
 		  notifications: 0,
 		  image: "tempminions.png",
+		  notifyid: "madnessbuildingsnotify",
 		  notifyimage: "tempminionsnotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -1189,6 +1475,7 @@
 		  active: false,
 		  notifications: 0,
 		  image: "tempupgrade.png",
+		  notifyid: "madnessupgradesnotify",
 		  notifyimage: "tempupgradenotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -1203,6 +1490,7 @@
 		  active: false,
 		  notifications: 0,
 		  image: "tempbought.png",
+		  notifyid: "madnessboughtupgradesnotify",
 		  notifyimage: "tempboughtnotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -1220,6 +1508,7 @@
 		  active: false,
 		  notifications: 0,
 		  image: "tempmoney.png",
+		  notifyid: "moneynotify",
 		  notifyimage: "tempmoneynotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -1237,7 +1526,8 @@
 		  contains: madnessInvestBuildings,
 		  active: false,
 		  notifications: 0,
-		  image: "tempminions.png",
+		  image: "tempbuildings.png",
+		  notifyid: "moneybuildingsnotify",
 		  notifyimage: "tempminionsnotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -1256,6 +1546,7 @@
 		  active: false,
 		  notifications: 0,
 		  image: "tempupgrade.png",
+		  notifyid: "moneyupgradesnotify",
 		  notifyimage: "tempupgradenotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -1270,6 +1561,7 @@
 		  active: false,
 		  notifications: 0,
 		  image: "tempbought.png",
+		  notifyid: "moneyboughtupgradesnotify",
 		  notifyimage: "tempboughtnotify.png",
 		  showingnotify: false,
 		  unlock: function () {
@@ -2270,8 +2562,8 @@
 		  type: "building",
 		  button: 'moneyBuildingsSevenBuyButton',
 		  title: "Talk Radio Station",
-		  text: "Whether they listen for entertainment or earnestly belive in what they hear talk radio is " +
-		  "a big business and spreads distrust and thereby madness very effectively.",
+		  text: "Whether they listen for entertainment, or earnestly believe in what they hear, talk radio " +
+		  "is a big business. It spreads distrust, and thereby madness, very effectively",
 		  unlock: function () {
 		    if (currMoney > 100000) 
 			  return true;
@@ -3810,7 +4102,7 @@
 		  type: "upgrade",
 		  button: 'upgradeMadnessMinionsEightBonusOneButton',
 		  title: "Cheap Labor",
-		  text: "With madness and fear spreading people are worried about their security. Your CEOs exploit" +
+		  text: "With madness and fear spreading people are worried about their security. Your CEOs exploit " +
 		  "this to get dirt cheap labourers.",
 		  unlock: function () {
 		    if (madnessMinions['madnessMinionsEight'].current >= 5)
@@ -5583,6 +5875,127 @@
 		  }
 		}
 		
+		// ------------------ LOAD SAVE --------------------
+		
+		if (localStorage["CthulhuClickerStats"]) { // current resources etc
+	      savedStats = JSON.parse(localStorage["CthulhuClickerStats"]);
+	    }
+		// FIXME: this might be more than I need, like a lot more
+		if (savedStats.length > 0) { // then assume it is full
+		  currMadness = savedStats[0];
+		  currMoney = savedStats[1];
+		  currKnow = savedStats[2];
+		  currMight = savedStats[3];
+		  
+		  madnessPerClick = savedStats[4];
+		  madnessPerClickBonus = savedStats[5];
+		  madnessPerBuildingClickMult = savedStats[6];
+		  moneyPerClick = savedStats[7];
+		  moneyPerClickBonus = savedStats[8];
+		  moneyPerBuildingClickMult = savedStats[9];
+		  knowPerClick = savedStats[10];
+		  knowPerClickBonus = savedStats[11];
+		  knowPerBuildingClickMult = savedStats[12];
+		  mightPerClick = savedStats[13];
+		  mightPerClickBonus = savedStats[14];
+		  mightPerBuildingClickMult = savedStats[15];
+	
+		  moneyDailyInterest = savedStats[16];
+		  moneyBankAccountKey = savedStats[17];
+
+		  totalClicks = savedStats[18];
+		  totalMadnessClicks = savedStats[19];
+		  totalMadnessFromClicking = savedStats[20];
+		  madnessSpent = savedStats[21];
+		  totalMoneyClicks = savedStats[22];
+		  totalMoneyFromClicking = savedStats[23];
+		  moneySpent = savedStats[24];
+		  totalKnowClicks = savedStats[25];
+		  totalKnowFromClicking = savedStats[26];
+		  knowSpent = savedStats[27];
+		  totalMightClicks = savedStats[28];
+		  totalMightFromClicking = savedStats[29];
+		  mightSpent = savedStats[30];
+		  totalConvertClicks = savedStats[31];
+		  convertCostReduction = savedStats[32];
+		  totalMinionsConverted = savedStats[33];
+		  totalMoneyBuildingsConverted = savedStats[34];
+		  totalUpgrades = savedStats[35];
+
+	      madnessPerSecondBonus = savedStats[36];
+		  moneyPerSecondBonus = savedStats[37];
+		  knowPerSecondBonus = savedStats[38];
+		  mightPerSecondBonus = savedStats[39];
+
+		  tabsUnlocked = savedStats[40];
+		  subTabsUnlocked = savedStats[41];
+		}
+		if (localStorage["CthulhuClickerMinions"])
+	      madnessMinions = JSON.parse(localStorage["CthulhuClickerMinions"]);
+		  
+		  
+		if (localStorage["CthulhuClickerVisibleMadnessButtons"]) {
+		  allMadnessButtonSaveData = JSON.parse(localStorage["CthulhuClickerVisibleMadnessButtons"]);
+		  for (var key in allMadnessButtonSaveData) {
+		    visibleMadnessButtons[key].clickMultiplier = allMadnessButtonSaveData[key].clickMultiplier;
+			visibleMadnessButtons[key].costCount = allMadnessButtonSaveData[key].costCount;
+			visibleMadnessButtons[key].timesClicked = allMadnessButtonSaveData[key].timesClicked;
+		  }
+		}
+		
+		if (localStorage["CthulhuClickerVisibleMadnessDivs"]) {
+          allMadnessDivSaveData = JSON.parse(localStorage["CthulhuClickerVisibleMadnessDivs"]);
+		  for (var key in allMadnessDivSaveData) {
+			visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		    delete unlockableMadnessDivs[key];
+			visibleMadnessDivs[key].type = allMadnessDivSaveData[key].type;
+			document.getElementById(key).hidden = false;
+			if (allMadnessDivSaveData[key].type == "boughtupgrade") {
+			  document.getElementById(visibleMadnessButtons[visibleMadnessDivs[key].button].divid).hidden = true;
+			  document.getElementById(visibleMadnessButtons[visibleMadnessDivs[key].button].boughtdivid).hidden = false;
+			}
+			calculateAndDisplayCost(visibleMadnessDivs[key].button);
+		  }
+		}
+		
+		if (localStorage["CthulhuClickerVisibleMadnessTabs"]) {
+		  allMadnessTabSaveData = JSON.parse(localStorage["CthulhuClickerVisibleMadnessTabs"]);
+		  for (var key in allMadnessTabSaveData) {
+		    visibleMadnessTabs[key] = madnessTab(hiddenMadnessTabs[key]);
+		    delete hiddenMadnessTabs[key];
+		    document.getElementById(key).hidden = false;
+		  }
+		  changeMadnessTab("madnessMadnessTab");
+		}
+		
+		if (localStorage["CthulhuClickerVisibleMadnessSubTabs"]) {
+		  allMadnessSubTabSaveData = JSON.parse(localStorage["CthulhuClickerVisibleMadnessSubTabs"]);
+		  for (var key in allMadnessSubTabSaveData) {
+		    visibleMadnessSubTabs[key] = madnessSubTab(hiddenMadnessSubTabs[key]);
+		    delete hiddenMadnessSubTabs[key];
+		    document.getElementById(key).hidden = false;
+		  }
+		}
+
+		/*if (localStorage["CthulhuClickerTriggeredMadnessDivs"])
+		  triggeredMadnessDivs = JSON.parse(localStorage["CthulhuClickerTriggeredMadnessDivs"]);
+		  
+		//if (localStorage["CthulhuClickerUnlockableMadnessDivs"])
+		  //unlockableMadnessDivs = JSON.parse(localStorage["CthulhuClickerUnlockableMadnessDivs"]);
+		if (localStorage["CthulhuClickerVisibleMadnessDivs"])
+		  visibleMadnessDivs = JSON.parse(localStorage["CthulhuClickerVisibleMadnessDivs"]);
+		  
+		if (localStorage["CthulhuClickerBoughtMadnessDivs"])
+		  boughtMadnessDivs = JSON.parse(localStorage["CthulhuClickerBoughtMadnessDivs"]);
+		  
+		if (localStorage["CthulhuClickerVisibleMadnessButtons"])
+		  visibleMadnessButtons = JSON.parse(localStorage["CthulhuClickerVisibleMadnessButtons"]);
+		  
+		if (localStorage["CthulhuClickerDisabledMadnessButtons"])
+		  disabledMadnessButtons = JSON.parse(localStorage["CthulhuClickerDisabledMadnessButtons"]);*/
+		
+		
+		GameOn = true;
 		
 	  Game();
 	}
