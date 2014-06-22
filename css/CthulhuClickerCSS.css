@@ -1,0 +1,89 @@
+.convertdiv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:110px;
+  max-width:600px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.upgradediv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:110px;
+  max-width:600px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.boughtupgradediv
+{
+  background-color:white;
+  margin:5px;
+  border:2px solid white;
+  border-radius:15px;
+  position:relative;
+  height:110px;
+  max-width:600px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.divheader
+{
+  color:white;
+  font-weight:bold;
+}
+.itemtitle
+{
+  position:absolute;
+  left:120px;
+  top:10px;
+  font-size:40px;
+}
+.itemtotal
+{
+  position:absolute;
+  right:10px;
+  top:10px;
+}
+.itemtext
+{
+  position:absolute;
+  margin:30px 20px;
+}
+.itemstats
+{
+  position:absolute;
+  left:120px;
+  bottom:10px;
+}
+.itemcost
+{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+}
+.itembutton
+{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+}
