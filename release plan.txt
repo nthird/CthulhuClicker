@@ -1,3 +1,13 @@
+.5 graphical redesign and info tab
+.6 knowledge
+.7 might
+.8 black stars
+.9 skills
+1.0 prestige
+1.1 add icons
+1.2 add backgrounds
+1.3 add premium store
+
 January - vampires done except skills, write up of upcoming updates, check that go daddy will
 handle some amount of traffic, check that donations are ok, accept donations, write up of how
 exactly the game will be freemium

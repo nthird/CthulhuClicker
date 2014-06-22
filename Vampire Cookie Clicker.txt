@@ -739,16 +739,99 @@ implement money building 2 upgrades - done
 find actual images - better temp
 implement money from buildings click bonus (promotion and cross promotion) - done
 implement money click bonus (investment types) - done
+put on github - done
+fix cthulhu stays at zzz if you mouse off not on him - done
+turn off day night - done
+choose new background - done, leaving black for now
+fix buying into negative - done
+fix clock, rolls at 1:00 displays 1:5 - done
+figure out the money first bug - done
+set up top tab bar - done
+add in tabs and basic divs for know/might - done
+bug - madness text appears too low, probably due to the tab bar - done
+make tab bar - done
+get fixed width for mobile - done
+image fixing - done
+implement auto saving - done
+implement top bar with menu and info button - done
+implement menu and change spacing based on it - done
+implement onclick for save and reset - done
+implement basic notifications for save - done
+make all button divs a single clickable button - done
+fixed base increase to be static and less - done
+remove unbought from upgrades - done
+
+set up info menu (about, version history, message log) - done
+write and set up about page - done
+write and set up version history page - done
+
+set up text logging - done
+display logged messages in log - done
+save and load logged messages - done
+fix the notifications for madness status on load - done
+draw and implement resources icons - done
+add logged messages for unlocks too - done
+address all text change suggestions (greg and phyphor) - done
+change icons for costs as well - done
+add + to ones with sacrifice - done
+
+change commafy to reduce 10,000,000 to 10M
 
 
-put on github
+TEST ON 6/13/14
 
-figure out the money first bug
-make tab bar 
+the elder gods are stirring returns on reload even if its not current
+upgrades don't need to say unbought any more
+if you hold down on mobile you can get the zzzzzzz, must be with how it interprets taps
+look into a sell button (sacrifice minions maybe?), sell for enough less its not worth manipulating for interest
+for rituals consider different danger levels based on minions you have and different death amounts occur
+link them up with the 5, 10, 25, 50, 100 breakpoints so if you have a ton of low minions you lose less
+fix the calculations to have deaths make new minions cheaper (calc off current not all time)
+
+
+
+seprate out base and multiplier
+increase the base with a += and have both upgrades hit the level of the next tier
+so .1 upgrades with + .1 and then plus .3 to bring it to .5
+
+
+mobile stuff
+
+increase icon and cthulhu and text size for +madness probably
+figure out what's up with some upgrades going three lines
+maybe I want titles for each section under it as well
+its not super clear what upgrades are and the icons serve as a good reminder but not an explanation
+the zzz images aren't showing in chrome on mobile
+consider graying out the whole box to indicate stuff you can't afford
+maybe add the word cost before the cost to see if that clarifies
+looks like I am redrawing the images every frame, let's not do that if they are the same
+John expected it to stay on upgrades when he came back to it
+consider having hot spots on cthulhu that give bonuses when clicked
+something like a leech that is sucking away your madness but not your money so you have to keep an eye on tabs
+maybe indicate it with a up or down arrow when its happening
+could have them give bonuses if you pop them before they expire
+could have good and bad so it mostly evens out if not active but come out way ahead if active
+show stuff that is coming next sooner
+
+100x100 icons for minion/upgrade images
+set up bar with notifications menu and info button
+so menu will show a few options like save
+info will have game info and the notification feed
+pixelate artwork
 consolidate once per second stuff into one loop before adding knowledge
+need to make a pass and ensure I'm adding notifications on manually unlocked divs as well
 add div generation for knowledge
-same for knowledge
+add resource display for knowledge in madnessResourceDisplay
+add first 4 knowledge minions
+librarian - reads the first book
+guides - finds the first place
+document preservationist - looks at next book
+explorer - finds the next place
+translator - madness research
 for knowledge I want a research capability bar
+before fight fix calcanddisplay to reduce with deaths
+madness fight minions will fight for you
+consider fibonacci for minion sacrifices for madness unlocks
 same for fight
 for might I want a combined might bar
 and fights will be decided by might vs might with losses
@@ -760,6 +843,11 @@ even if you lose their force will go down
 if you make kills the reanimator skill for might can raise them as zombies (or whatever)
 
 set up falling star
+
+lets drop the background to a darkish sea blue and have elements in the background
+falling madness symbols spinning for madness, dollars etc
+this will help distinguish between the different screens which will make things less confusing
+and if cthulhu is not a full image that will help a lot
 
 when finished post it to reddit for feedback
 while integrating feedback set up mobile versions
@@ -849,9 +937,126 @@ might is gug, moon beast, hound of tindalos, star spawn
 
 knowledge buildings - library, community center, university (miskatonic online can go in here), grade school
 
+Books - Book of Eibon, Pnakotic Manuscripts (also Eltdown Shards and Seven Cryptical Books of Hsan), Necronomicon, 
+Unaussprechlichen Kulten, De Vermis Mysteriis, Dhol Chants, 
+
+http://en.wikipedia.org/wiki/De_Vermis_Mysteriis
+http://en.wikipedia.org/wiki/Unaussprechlichen_Kulten
+http://en.wikipedia.org/wiki/Necronomicon
+http://en.wikipedia.org/wiki/Pnakotic_Manuscripts
+http://en.wikipedia.org/wiki/Tsathoggua
+http://en.wikipedia.org/wiki/Books_in_the_Cthulhu_Mythos
+
+I basically need 8 books or things to decode and 8 locations
+
+
 I want the final structure to be to awaken cthulhu, to fund an expedition, to research the bloop location, and to lead his army
 Its a four part victory condition each of which individually unlocks skills
 when all 4 are done the earth is destroyed and you can find a new realm
+
+consider extra madness at night as an upgrade
+
+*********SINGEL BUTTON STUFF**********
+
+
+copy over a full backup locally first
+set up minions and buttons as a single upgrade
+
+total size is 110 pixels so we could do a 100x100 icon so move the text over 120
+when I change the madness per second from an upgrade have it update the div that displays that
+change what the .stats value says and then update the div accordingly
+should be able to do that programatically like I'm doing for total
+
+will have to add bought div id to the divs for ugprades
+
+fixed the reseting issue
+
+so first I want to make the first minion work on its own as just a button - done
+suppress text selection - done
+
+then I want to separate it out as its own js file if possible and see if I can make that work
+then I want to add in text display
+then I want to add in text logging
+then I want to fix the upgrades by removing the increase base function
+then I want to populate the rest of the data
+make the stats an associative array also and load it externally as well
+will be WAY easier to switch stuff in and cleans up my code a lot
+
+
+need to rewrite the plus base function entirely but I still want to use it
+I'll add the recalc and display new m/s to those two functions
+
+recalc and display is working
+two functions are adapted to call it and work with new code
+
+might need to reset often
+
+let's do madness first then worry about money
+money converts - done
+money upgrades - done
+madness achieve clicks
+money achieve clicks
+
+let's do all madness converts - done
+
+copy over the code
+remove button from calc and display
+remove button line
+fix description
+statsdiv: "moneyBuildingsOneBuyStats",
+minion: 'moneyBuildingsOne',
+		
+
+achievement upgrades
+
+bought div id
+rest of code
+delete button
+delete divid down to id
+stats: "More madness from clicks for each minion you have",
+
+search for this.div and button
+  
+
+then all the unlocks - done
+
+bought div id
+the rest of that code
+delete button line
+change button from calc
+delete divid down to id
+stats: "Unlocks a new minion",
+addNotifySubTab('madnessMadnessBuildingsSubTab');
+
+
+then all the upgrades
+
+bought div id
+rest of the code
+delete button
+button from click
+change wording
+pricing on base stuff (.5, 1)
+write stats
+stats: "Carcosan Architects generate twice as much resources",
+stats: "Suspicious Sailors generate .5 more base madness",
+statsdiv
+
+
+copy over the necessary bits and place that right above the unlock function
+change .button to .id
+change the name in calc and display
+change this.divid to this.id
+stats: madnessMinions['madnessMinionsOne'].madnessPerSecond * madnessMinions['madnessMinionsOne'].bonus + " m/s",
+add a stats div
+
+remove button from the click
+
+add in displayTopBarMessage(visibleMadnessDivs[key].text); if its an unlock
+add in an addnotifysubtab if necessary
+
+
+
 
 for click bonus upgrades
 
@@ -864,6 +1069,33 @@ MinionsCon -> MoneyBuildingsCon
 totalMadness -> totalMoney
 
 .1: .5: 2: 10: 50: 250: 1,000: 5,000: 20,000: 100,000: 500,000: 2,000,00: 10,000,000: 50,000,000: 200,000,000: 1,000,000,000
+
+implement accordions for upgrades
+
+I'm looking at buttons for upgrades/minions(buildings)/bought/skills
+and putting a tab bar along the top for madness/money/know/might
+will have to sort out images for all of that
+so generically speaking this is starting to work, just need some more time at it
+will probably have to sort out the spacing for all of it to add it up
+
+look into attaching x and y coords to the tabs
+then I can drop the notification image over it
+
+nevermind I'm just going to use two images and be done with it
+so its temporarily not having anything with the current scheme
+
+the top bar is done for madness and money, need to do knowledge and might soon
+
+implement their tabs and then add their images
+draw images for notify
+
+************* PREMIUM STORE ******************
+
+10 mystic diamonds costs a dollar, the paid version or upgrading to it gives you 25
+you can trade them for 2 of the other gem types
+or you can use 10 to buy the secret skill once it unlocks
+there should also be boosts you can get for diamonds that are temporary
+like big mps boosts or chunks of them
 
 implement money building 2 upgrades
 
@@ -951,6 +1183,146 @@ CEO (costs 500k, mps 5000, $ps 10)
 .5, 2, 10, 50, 250, 1,000: 5,000: 25,000
 only replace MinionsNum not just num
 
+************ SAVING NOTES **************
+
+set up new top bar with menu and info button and notification thing
+
+I think I want to use tables
+and I want to toss them in their own div to see how that plays out
+just have the menus push it down and have a bool that I use
+and I can toggle on it for click detection further down
+define my tables well and it will be fine
+
+implement manual saving
+implement reset button
+
+some problem at line 513
+most likely because it wants madnessMadnessTab to exist but it doesn't
+
+stats - done
+
+minions
+
+this is working, cost is wrong because that comes from the buttons
+
+triggeredMadnessDivs - done
+unlockableMadnessDivs - done
+visibleMadnessDivs - done
+boughtMadnessDivs - done
+
+visibleMadnessButtons - done
+disabledMadnessButtons - done
+
+the above 6 are all broken
+
+ok really all I need is the keys for visibleMadnessDivs
+and the keys for bought
+and then move them into the right spot
+
+basically I only want to modify the arrays, I need them mostly intact or they lose their attached functions
+
+ok so for visibleMadnessButtons I really only need costCount and timesClicked
+I think I can then just grab all of them and calculateAndDisplayCost on them
+calculateAndDisplayCost('moneyBuildingsFiveBuyButton'); which is the id
+
+arrays I reference
+
+visibleMadnessClickButtons - nothing changes
+visibleMadnessButtons - costMultiplier, costCount, timesClicked - done
+visibleMadnessTabs - has unlock w/ del
+visibleMadnessSubTabs - has unlock w/ del
+hiddenMadnessTabs - had unlock w/ del
+hiddenMadnessSubTabs - has unlock w/ del
+visibleMadnessDivs - unlockables move here and stay here just change state
+
+need to know if they are visible and if they are bought .type
+
+unlockableMadnessDivs
+
+at 857
+do I need other stuff like visibility on divs they contain?
+or can I set that based on type?
+if its in visibleMadnessDivs I want to unhide it
+if its a bought upgrade I want to hide the main div id and unhide the bought div id
+
+deleting and creating
+visibleMadnessDivs[key] = madnessDiv(unlockableMadnessDivs[key]);
+		  delete unlockableMadnessDivs[key];
+
+
+unhiding a div
+document.getElementById(key).hidden = false;
+
+how I hide a just bought upgrade
+document.getElementById(this.divid).hidden = true;		
+document.getElementById(this.boughtdivid).hidden = false;
+
+
+
+ok so if visibleMadnessTabs is not empty I want to change to madnessMadnessTab and set it to currTab?
+I think I want to run the change tab no matter what to expand all those
+
+I am hitting an error if the buildings sub tab isn't active yet which could totally happen
+so I gotta do an object exists check first
+
+
+
+
+hiddenMadnessTabs
+visibleMadnessTabs
+
+visibleMadnessClickButtons
+disabledMadnessClickButtons
+
+hiddenMadnessSubTabs
+visibleMadnessSubTabs
+
+the current problem is from it being an associative array
+so I init with {} instead
+however this still catches me as it hits recursion since it contains the id
+
+so with the ids changed to being strings minions works
+so now I just need to do that for each array and see what it breaks
+
+
+var visibleMadnessDivs = [];
+	var boughtMadnessDivs = [];
+	
+	var visibleMadnessClickButtons = [];
+	var disabledMadnessClickButtons = [];
+	
+	var visibleMadnessButtons = [];
+	var disabledMadnessButtons = [];
+	
+	var hiddenMadnessTabs = [];
+	var visibleMadnessTabs = [];
+	var tabsUnlocked = 0;
+	var subTabsUnlocked = 0;
+	
+	var hiddenMadnessSubTabs = [];
+	var visibleMadnessSubTabs = [];
+
+
+set up the top bar with notifications and menu buttons for manual save
+save once a minute
+drop that saved text into there for now
+counts for all minions/buildings
+timesclicked for all minions buildings
+probably as associative array, key, value
+currMadness money know might clicks stuff (maybe just an ordered array)
+keys for bought upgrades
+keys for visible arrays
+
+so basically generate all those arrays as invisble and then do the add create destroy thing on each key that's done
+set counts and timesclicked for all the minions buildings
+set vars to their proper value
+
+set up a manual and automatic save button
+use an associative array and the same keys so I can just check keys against keys and see if there is data
+that way it will just add new keys later if I add upgrades etc
+
+**********
+
 implement money buildings
 lemonade stand - 10
 cookie store - 50
@@ -1012,6 +1384,49 @@ warriors train but they can only leve up in combat
 surviving a combat makes you a tougher warrior
 you can only train new levels of warriors after you get one from combat
 combat will kill some amount but those that survive go up in level
+
+************ IMAGE FIXING NOTES ***************
+
+ok so I think I want to use absolute positioning there like I'm working on
+and then I can run z-index on it
+add a reference to the id I assign to the notification
+place the button at like 1 and the notify at -100 and the image at 2
+then move the the notify to 100 when its active
+this should work
+document.getElementById('madnessnotify').style.zIndex = 100
+so I have to change the images in the button itself
+and add a notifyid to the tab
+and verify code works for all of that
+changing notification add code
+changing notification clear at changeMadnessTab at 418
+madnessboughtupgradesnotify
+
+********NOTIFICATIONS*********
+
+look at making like a facebook feed of events
+so when you unlock new stuff or buy upgrades it dumps to there
+and then I can offload some of the detail or all of the detail into there
+this would allow me to make the buttons image online like cookie clicker
+while maintaining all the text I wrote available to those who want to see it
+
+********HUNTERS**********
+
+Have specific PVP only worlds
+Add an entire skill tree and resource with regards to hunting
+Have the worlds be in flux until one side is entirely killed out
+hunters can respawn quickly, their offspring grow up
+monsters get banished to purgatory (or hell) and have to crawl their way out
+have hansel and gretel, sam and dean, buffy, tesla, lovecraft
+the new skills make the most sense for the classes, zombise can respawn faster etc
+you have to hti some threshhold before you become attackable (time or progress whichever first)
+when you would start a new game plus normally you can pass your knowledge on
+hunters actively train an apprentice to take over for them
+this starts over immediately
+threshholding stuff like awakening nyarlahotep builds across the world
+so 10 people performing that ritual is necessary for it to be at full strength
+otherwise costs are increased
+and hunters can suppress the rituals as well
+
 
 ********NEW GAME PLUS********
 
@@ -1155,6 +1570,67 @@ right a function to display numbers
 
 alien class that tries to blend in, lots of different alien types slowly taking over
 
+*********** TAB BAR NOTES ********************
+
+sort out tab bar for upgrades etc
+
+draw images
+set up buttons
+
+calling them subtabs
+going to have them be their own class like tabs and toggle display and such similarly
+pulled out .display from the tabs code, keepign .contains
+
+at 543 we might have some issues with unlocking
+something I did here made the titles for upgrades and bought not show
+ok so I was using the same div name twice
+I need to rewrite a lot more of this
+
+basically I need to add in unlock conditions for the buttons
+
+madnessMadnessBuildingsSubTab
+
+contains
+
+madnessSpreadUpgrades
+madnessSpreadConvert
+madnessSpreadBoughtUpgrades
+
+at 1144
+
+		// FIXME: eliminating this
+
+at around 756
+
+ok I need to rewrite the sub tabs to be a part of the tabs
+and then they need to properly reveal their own tab when clicked
+
+write functions for buttons
+
+madnessMadnessBuildingsSubTab 
+
+right now changing the tabs isn't changing the subtabs right
+so I need to decide if I want it to remember what tab you were on or default to the first
+I think remember makes the most sense
+no I'm thinking go to buildings
+so add a buildings subtab to the main tabs and change to them when I change
+
+this is working now
+
+// HERE
+
+set up notify images - done
+implement notifications
+
+madnessMadnessUpgradesSubTab
+
+at 3581 did other upgrades and money buildings stuff
+3654
+
+set aside space for the bars (maybe just make a sized div that contains them?)
+
+upgrade (up arrow) minions (person) buildings (building) bought upgrades (check mark) skills (boxes in tree)
+consider different minion ones like madness symbols for eyes
 
 feedback for nanobot - caches are odd, wish they came back
 nothing to do during first chunk of queen grow, let gen bots earlier
